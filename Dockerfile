@@ -13,6 +13,13 @@ ENV HOME=/${WORKDIR} \
 
 WORKDIR ${HOME}
 
+COPY package*.json ./
+RUN yarn install
+
+COPY . ./
+
+RUN yarn run build
+
 
 # 2021.12.13追記
 # FROM node:14.15.1-alpine
