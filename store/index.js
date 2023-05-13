@@ -1,9 +1,16 @@
 //vuexはコンポーネント間で共有するデータを管理するためのライブラリ
 
+const redirectPath = 'projects'
+
 // 変数 = data
 export const state = () => ({
   styles: {
     homeAppBarHeight: 56
+  },
+  loggedIn: {
+    redirectPath: {
+      name: redirectPath
+    }
   }
 })
 
