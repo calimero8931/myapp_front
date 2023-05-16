@@ -6,7 +6,7 @@
     elevation="1"
     >
       <nuxt-link
-        to="redirectPath"
+        to="homePath"
         class="text-decoration-none"
       >
         <app-logo />
@@ -19,5 +19,11 @@
 
 <script>
 export default {
+  data ({ $store }){
+    return {
+      homePath: $store.state.loggedIn.homePath
+    }
+  }
+
 }
 </script>
