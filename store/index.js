@@ -28,7 +28,17 @@ export const state = () => ({
 export const getters = {}
 
 // stateの値を変更できる唯一の方法
-export const mutations = {}
+export const mutations = {
+  setCurrentProject(state, payload) {
+    state.project.current = payload
+  }
+}
 
 // アプリ全体のメソッドを定義 = methods
-export const actions = {}
+export const actions = {
+  getCurrentProject({ state, commit }, params) {
+    const id =  Number(params.id)
+    const currentProject = state.project.list.find(project => project.id === id) || null
+    commit('setCurrentProject', currentProject)
+  }
+}
