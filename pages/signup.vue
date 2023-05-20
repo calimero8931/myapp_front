@@ -4,7 +4,7 @@
       <v-form
         ref="form"
         v-model="isValid"
-        @submit="signup"
+        @submit.prevent="signup"
       >
         <user-form-name
           :name.sync="params.user.name"

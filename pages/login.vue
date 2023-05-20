@@ -4,7 +4,7 @@
       <v-form
         ref="form"
         v-model="isValid"
-        @submit="login"
+        @submit.prevent="login"
       >
         <user-form-email
           :email.sync="params.user.email"
