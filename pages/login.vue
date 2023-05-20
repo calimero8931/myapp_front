@@ -4,6 +4,7 @@
       <v-form
         ref="form"
         v-model="isValid"
+        @submit="login"
       >
         <user-form-email
           :email.sync="params.user.email"
@@ -20,13 +21,13 @@
           </nuxt-link>
         </v-card-actions>
         <v-card-text class="px-0">
-          <v-btn
+        <v-btn
+          type="submit"
           :disabled="!isValid || loading"
           :loading="loading"
           block
           color="appblue"
           class="white--text"
-          @click="login"
         >
           ログインする
         </v-btn>
