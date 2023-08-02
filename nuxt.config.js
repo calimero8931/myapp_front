@@ -57,6 +57,9 @@ export default {
   axios: {
     // 環境変数API_URLが優先される
     // baseURL: '/',
+    // クロスドメインで認証情報を共有する
+    // Doc: https://axios.nuxtjs.org/options/#credentials
+    credentials: true
   },
 
   vuetify: {
