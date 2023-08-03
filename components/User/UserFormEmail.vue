@@ -18,7 +18,7 @@ export default {
     },
     placeholder: {
       type: Boolean,
-      default: ''
+      default: false
     }
   },
   data () {
