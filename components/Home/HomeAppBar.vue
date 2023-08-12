@@ -71,6 +71,7 @@ export default {
   },
   data ({ $store }) {
     return {
+      appBarHeight: 0,
       scrollY: 0,
       homeAppBarHeight: $store.state.styles.homeAppBarHeight
     }

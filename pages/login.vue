@@ -40,6 +40,7 @@
 
 <script>
 export default {
+  name: 'LayoutsDefault',
   layout: 'before-login',
   data ({ $store }) {
     return {
