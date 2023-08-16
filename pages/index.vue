@@ -78,6 +78,7 @@ import HomeCompany from '~/components/Home/HomeCompany'
 import AppFooter from '../components/App/AppFooter.vue'
 
 export default {
+  middleware: ['logged-in-redirect'],
   components: {
     HomeAbout,
     HomeProducts,
