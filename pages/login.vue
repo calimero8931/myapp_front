@@ -48,9 +48,8 @@ export default {
       loading: false,
       params: {
         auth: {
-          //  TODO デバッグ用なので削除
-          email: 'user0@example.com',
-          password: 'password'
+          email: '',
+          password: ''
         }
       },
       redirectPath: $store.state.loggedIn.rememberPath,
@@ -78,7 +77,7 @@ export default {
         const msg = 'ユーザーが見つかりません💀'
         return this.$store.dispatch('getToast', {  msg })
       }
-      // TODO エラー処理
+      return this.$my.apiErrorHandler(response)
     }
   }
 }
