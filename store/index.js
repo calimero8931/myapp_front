@@ -115,4 +115,16 @@ export const actions = {
     params = params || {}
     commit('setRememberPath', { name, params })
   }
+,
+  // サインアップ
+  // this.paramsを受け取って、APIを叩く
+  async signup ({ dispatch }, params) {
+    const res = await this.$axios.post('/api/v1/signup', params)
+    // 成功したらアラートを表示
+    dispatch('getToast', { msg: 'うまくいったで', color: 'success' })
+    const { token, expires, payload } = res.data
+    dispatch('getAuthToken', token)
+    dispatch('getAuthExpires', expires)
+    dispatch('getAuthPayload', payload)
+  }
 }

@@ -19,6 +19,7 @@
           />
         </v-radio-group>
       </v-card-actions>
+      {{ test }}
     </v-col>
     <v-col
       v-for="(plan, i) in plans"
@@ -66,6 +67,12 @@
 
 <script>
 export default {
+  props: {
+    test: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     const payments = [
       { label: 'month', color: 'indigo' },

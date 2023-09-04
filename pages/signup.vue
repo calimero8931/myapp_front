@@ -42,21 +42,34 @@ export default {
       loading: false,
       params: {
         user: {
-          name: '',
-          email: '',
-          password: ''
+          name: 'yuya',
+          email: 'hello.potechi@gmail.com',
+          password: 'password'
         }
       }
     }
   },
   methods: {
-    signup () {
-      this.loading = true
-      setTimeout(() => (
-        this.formReset(),
-        this.loading = false
-      ),1500)
-    },
+    async signup() {
+    this.loading = true;
+    try {
+      await this.$store.dispatch('signup', this.params);
+
+      if (this.$store.state.auth.status === 'success') {
+        alert('登録が完了しました');
+        // 登録が成功した場合、リダイレクトや他の処理を行う場合はここで行います
+        // this.$router.push('/mypage');
+      } else {
+        alert('登録に失敗しました');
+      }
+    } catch (error) {
+      console.error('登録エラー:', error);
+      alert('登録に失敗しました');
+    } finally {
+      this.loading = false;
+      this.formReset();
+    }
+  },
     formReset () {
       this.$refs.form.reset()
       for (const key in this.params.user) {
