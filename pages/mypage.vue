@@ -1,14 +1,33 @@
 <template>
   <div>
-    <home-price
+    <!-- <home-price
         :menus="menus"
         :img-height="imgHeight"
         :test="test"
-      />
-    <h1>test</h1>
+      /> -->
+    <h1>my page</h1>
+    <v-row justify="start" :align="'center'">
+      <v-col cols="2">
+        <v-text-field v-model="id_search" label="検索したいfriend id" @keydown.enter="searchFriend"></v-text-field>
+      </v-col>
+      <v-col cols="1">
+        <v-btn color="primary" @click="searchFriend">検索</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="2">
+        <p v-if="friend_name">
+          {{ friend_name }}&nbsp&nbsp
+        </p>
+      </v-col>
+      <v-col>
+        <v-btn v-if="friend_name" rounded outlined color="orange" style="font-weight: bold;" @click="sendFriendship">フレンド申請を送る</v-btn>
+      </v-col>
+    </v-row>
+
     <p v-if="geo1">あなたは今、緯度:{{ geo1.lat }}経度{{ geo1.lng }}にいます</p>
     <p v-else>位置情報を取得できませんでした</p>
-    <button @click="trophy">ボタン</button>
+    <p><v-btn color="primary" @click="trophy">トロフィー取得</v-btn></p>
     <!-- Google マップを表示する iframe -->
     <iframe
       width="600"
@@ -34,7 +53,8 @@
 </template>
 
 <script>
-import HomePrice from '~/components/Home/HomePrice'
+import axios from 'axios';
+import HomePrice from '~/components/Home/HomePrice';
 export default {
   middleware: ['get-project-list'],
   components: {
@@ -52,7 +72,9 @@ export default {
         { title: 'company', subtitle: '私たちの会社' }
       ],
       geo1: null, // 初期値を null に設定
-      apiKey: 'AIzaSyC6nX_ez1pxGPNEH4i6DVLUiRM52j5eZZU'
+      apiKey: 'AIzaSyC6nX_ez1pxGPNEH4i6DVLUiRM52j5eZZU',
+      id_search: null,
+      friend_name : null,
     }
   },
   computed: {
@@ -62,7 +84,7 @@ export default {
     googleMapUrl() {
       if (this.geo1) {
         // 緯度と経度を元に Google マップの URL を構築
-        return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${this.geo1.lat},${this.geo1.lng}`;
+        // return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${this.geo1.lat},${this.geo1.lng}`;
       } else {
         return '';
       }
@@ -99,6 +121,39 @@ export default {
       } else {
         alert("あかんなぁ");
       }
+    },
+    async searchFriend() {
+      try {
+        const response = await this.$axios.$get(`/api/v1/data/`,
+          {
+            params: {
+              user_id: this.id_search
+            }
+          }
+        );
+        console.log("レスポンスオブジェクト", response);
+        console.log("検索したID", response.id);
+        console.log("ヒットした名前", response.name);
+        this.friend_name = response.name;
+      } catch (error) {
+        console.error('データの取得に失敗しました', error);
+        this.friend_name = "データが見つかりません";
+      }
+    },
+    async sendFriendship() {
+      try {
+        console.log("フレンド申請を送りました");
+        const response = await this.$axios.$post(`/api/v1/friend_request/`,
+          {
+            params: {
+              user_id: this.$store.state.user.current.id,
+              friend_id: this.id_search
+            }
+          });
+      } catch (error) {
+        console.error('データの取得に失敗しました', error);
+        this.friend_name = "データが見つかりません";
+      }
     }
   }
 }
@@ -113,4 +168,7 @@ h1 {
   height: 400px;
   width: 100%;
 }
+/* .v-input {
+  width: 200px;
+} */
 </style>
