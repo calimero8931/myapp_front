@@ -1,11 +1,11 @@
 <template>
   <v-avatar
-    color="black"
+    color="#1867c0"
     size="34"
     class="my-app-log"
   >
     <span class="white--text text-subtitle-2">
-      Biz
+      Tr
     </span>
   </v-avatar>
 </template>

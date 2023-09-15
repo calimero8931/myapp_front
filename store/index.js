@@ -16,7 +16,7 @@ export const state = () => ({
     },
     // ログイン後アクセス不可ルート一覧(ページが増えたら追加する)
     redirectPaths: [
-      'index',
+      // 'index',
       'signup',
       'login'
     ]

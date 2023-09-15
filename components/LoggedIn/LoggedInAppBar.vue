@@ -8,7 +8,7 @@
     >
       <slot name="navigation-toggle-button" />
       <nuxt-link
-        :to="homePath"
+        to="/"
         class="text-decoration-none"
       >
         <app-logo />

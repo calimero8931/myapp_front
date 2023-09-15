@@ -10,7 +10,7 @@ export default async ({ $auth, store, route, redirect }) => {
     // ユーザー以外の値が存在する可能性があるので全てを削除する
     await $auth.logout()
 
-    const msg = 'まずはログインしてください'
+    const msg = 'まずログインしてください'
     const color = 'info'
     // TODO トースター出力
     store.dispatch('getToast', { msg, color })

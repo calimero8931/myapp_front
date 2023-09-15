@@ -43,7 +43,7 @@ export default {
       params: {
         user: {
           name: 'yuya',
-          email: 'hello.potechi@gmail.com',
+          email: '',
           password: 'password'
         }
       }
