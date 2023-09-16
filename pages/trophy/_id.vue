@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- <p>response: {{ trophyData }}</p> -->
+    <p>{{ trophyData.title }}</p>
+    <p>{{ trophyData.description }}</p>
+
+
+    <!-- <p>Description: {{ trophyData.description }}</p> -->
     <p v-if="geo1">あなたは今、緯度:{{ geo1.lat }}経度{{ geo1.lng }}にいます</p>
     <p v-else>位置情報を取得できませんでした</p>
     <p><v-btn color="primary" @click="trophy">トロフィー取得</v-btn></p>
@@ -23,7 +29,8 @@ export default {
   data () {
     return {
       geo1: null,
-      apiKey: 'AIzaSyC6nX_ez1pxGPNEH4i6DVLUiRM52j5eZZU'
+      apiKey: 'AIzaSyC6nX_ez1pxGPNEH4i6DVLUiRM52j5eZZU',
+      trophyData: []
     }
   },
   computed: {
@@ -45,6 +52,11 @@ export default {
     } catch (error) {
       console.error(error);
     }
+  },
+  async asyncData({ params, $axios }) {
+    // ページ遷移時にデータを取得
+    const response = await $axios.$get(`/api/v1/trophy/${params.id}`);
+    return { trophyData: response };
   },
   methods: {
     getGeoLocation() {

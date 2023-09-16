@@ -40,8 +40,9 @@
             </v-btn>
             <div v-if="subCategory.id === selectedSubCategoryId">
               <div v-for="(trophy, i) in trophies" :key="`trophy-${i}`">
-                <v-btn outlined color="pink" style="font-weight: bold;">
-                  <!-- <img :src="trophy.image_url" alt="" width="30px"> -->
+                <v-btn
+                :to="`/trophy/${trophy.id}`"
+                 outlined color="pink" style="font-weight: bold;">
                   {{ trophy.title }}
                 </v-btn>
               </div>
