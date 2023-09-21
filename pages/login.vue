@@ -48,7 +48,7 @@ export default {
       loading: false,
       params: {
         auth: {
-          email: 'hello.potechi@gmail.com',
+          email: 'user0@example.com',
           password: 'password'
         }
       },

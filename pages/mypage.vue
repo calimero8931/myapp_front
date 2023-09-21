@@ -11,7 +11,7 @@
         <v-text-field v-model="id_search" label="検索したいfriend id" @keydown.enter="searchFriend"></v-text-field>
       </v-col>
       <v-col cols="1">
-        <v-btn color="primary" @click="searchFriend">検索</v-btn>
+        <v-btn color="primary" @click="searchFriend"><v-icon>mdi-magnify</v-icon></v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -26,13 +26,13 @@
     </v-row>
     <v-row justify="start" :align="'center'">
       <v-col cols="2">
-        <p>あなたのID:{{ this.$store.state.user.current.id }}</p>
+        <p>フレンドコード:{{ this.$store.state.user.current.id }}</p>
       </v-col>
       <v-col cols="1">
-        <v-btn color="orange" @click="searchFriend">SNSでシェア</v-btn>
+        <v-btn color="orange" class="white--text" @click="searchFriend"><v-icon>mdi-share-variant</v-icon></v-btn>
       </v-col>
       <v-col cols="1">
-        <v-btn color="green" @click="searchFriend">クリップボードにコピー</v-btn>
+        <v-btn color="green" class="white--text" @click="searchFriend"><v-icon>mdi-clipboard-text-multiple</v-icon></v-btn>
       </v-col>
     </v-row>
 

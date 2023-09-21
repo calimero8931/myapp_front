@@ -33,6 +33,9 @@ export const state = () => ({
     expires: 0,
     payload: {}
   },
+  favorite: {
+    already: false
+  },
   toast: {
     msg: null,
     color: 'error',
@@ -68,6 +71,9 @@ export const mutations = {
   },
   setRememberPath (state, payload) {
     state.loggedIn.rememberPath = payload
+  },
+  setFavoriteAlready(state, payload) {
+    state.favorite.already = payload
   }
 }
 

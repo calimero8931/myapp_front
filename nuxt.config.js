@@ -56,7 +56,15 @@ export default {
   },
 
   router: {
-    middleware: ['silent-refresh-token']
+    middleware: ['silent-refresh-token'],
+    extendRoutes(routes, resolve) {
+      routes.push(
+        {
+          path: '/results/:param1/:param2',
+          component: resolve(__dirname, 'pages/results/_param1/_param2.vue')
+        }
+      );
+    }
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

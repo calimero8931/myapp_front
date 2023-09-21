@@ -18,6 +18,11 @@
       "settings": "アカウント設定",
       "password": "パスワード変更"
     },
+    "results": {
+      "param1": {
+        "param2": "検索結果"
+      }
+    },
     "project": {
       "id": {
         "dashboard": "ダッシュボード",

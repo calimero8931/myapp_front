@@ -21,7 +21,7 @@
           class="text-center"
         >
           <h1 class="display-1 mb-4">
-            人生ってつらいね。
+            LIFE IS TROPHY
           </h1>
         </v-col>
       </v-row>
@@ -35,10 +35,30 @@
         </v-btn>
         <div v-if="category.id === selectedCategoryId">
           <div v-for="(subCategory, i) in subCategoryData" :key="`subCategory-${i}`">
-            <v-btn outlined color="green" @click="fetchTrophies(subCategory.id)" style="font-weight: bold;">
+            <v-btn outlined color="green" @click="fetchRegions(subCategory.id)" style="font-weight: bold;">
               {{ subCategory.name }}
             </v-btn>
+            <!-- 以下にregionsデータを羅列 -->
             <div v-if="subCategory.id === selectedSubCategoryId">
+              <div v-for="(region, i) in regionsData" :key="`region-${i}`">
+                <v-btn outlined color="blue" @click="fetchPrefectures(region.id)" style="font-weight: bold;">
+                  {{ region.name }}
+                </v-btn>
+                <!-- 以下にprefecturesデータを羅列 -->
+                <div v-if="region.id === selectedRegionId">
+                  <div v-for="(prefecture, i) in prefecturesData" :key="`prefecture-${i}`">
+                    <v-btn outlined color="orange" @click="fetchTrophies(prefecture.id)" style="font-weight: bold;">
+                      <nuxt-link :to="{ name: 'results-param1-param2' , params:{ param1:selectedSubCategoryId, param2:prefecture.id }}">
+                      {{ prefecture.name }}
+                    </nuxt-link>
+                    </v-btn>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div v-if="subCategory.id === selectedSubCategoryId">
               <div v-for="(trophy, i) in trophies" :key="`trophy-${i}`">
                 <v-btn
                 :to="`/trophy/${trophy.id}`"
@@ -46,7 +66,7 @@
                   {{ trophy.title }}
                 </v-btn>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -81,6 +101,10 @@ export default {
       selectedCategoryId: null,
       subCategoryData: [],
       selectedSubCategoryId: null,
+      regionsData: [],
+      selectedRegionId: null,
+      prefecturesData: [],
+      selectedPrefectureId: null,
       trophies : []
     }
   },
@@ -110,6 +134,38 @@ export default {
         console.log("サブカテゴリの取得に成功しました", response);
       } catch (error) {
         console.error('サブカテゴリの取得に失敗しました', error);
+      }
+    },
+    async fetchRegions (subCategoryId) {
+      try {
+        const response = await this.$axios.$get(`/api/v1/regions_request/`,
+          {
+            params: {
+              country_id: 1
+            }
+          }
+        );
+        this.selectedSubCategoryId = subCategoryId;
+        this.regionsData = response;
+        console.log("地域の取得に成功しました", response);
+      } catch (error) {
+        console.error('地域の取得に失敗しました', error);
+      }
+    },
+    async fetchPrefectures (regionId) {
+      try {
+        const response = await this.$axios.$get(`/api/v1/prefectures_request/`,
+          {
+            params: {
+              region_id: regionId
+            }
+          }
+        );
+        this.selectedRegionId = regionId;
+        this.prefecturesData = response;
+        console.log("都道府県の取得に成功しました", response);
+      } catch (error) {
+        console.error('都道府県の取得に失敗しました', error);
       }
     },
     async fetchTrophies (subCategoryId) {
