@@ -36,6 +36,9 @@ export const state = () => ({
   favorite: {
     already: false
   },
+  achievements: {
+    list: []
+  },
   toast: {
     msg: null,
     color: 'error',
@@ -74,6 +77,9 @@ export const mutations = {
   },
   setFavoriteAlready(state, payload) {
     state.favorite.already = payload
+  },
+  setAchievementsList(state, payload) {
+    state.achievements.list = payload
   }
 }
 

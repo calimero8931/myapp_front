@@ -6,6 +6,46 @@
         :test="test"
       /> -->
     <h1>my page</h1>
+    <v-container>
+      <h2>Challenging Trophies</h2>
+      <v-list>
+        <v-list-item v-for="item in achievements " :key="item.id" v-if="!item.achievement">
+          <v-list-item-content>
+            <v-list-item-title><nuxt-link :to="`/trophy/${item.trophy_id}`">{{ item.trophy_title }}</nuxt-link></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.trophy_description }}</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>
+              <v-btn color="primary" @click="getTrophy(item.trophy_id)"><v-icon>mdi-trophy</v-icon>&nbsp;GET</v-btn>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-container>
+    <v-container>
+      <h2>Achieved Trophies</h2>
+      <v-list>
+        <v-list-item v-for="item in achievements" :key="item.id" v-if="item.achievement">
+          <v-list-item-content>
+            <v-list-item-title><nuxt-link :to="`/trophy/${item.trophy_id}`"><v-icon color="yellow">mdi-crown</v-icon>{{ item.trophy_title }}</nuxt-link></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.trophy_description }}</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.success_at }}</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>取得率(予定)</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title><v-btn color="pink" class="white--text" @click=""><v-icon>mdi-camera-plus</v-icon></v-btn></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-container>
     <v-row justify="start" :align="'center'">
       <v-col cols="2">
         <v-text-field v-model="id_search" label="検索したいfriend id" @keydown.enter="searchFriend"></v-text-field>
@@ -35,7 +75,8 @@
         <v-btn color="green" class="white--text" @click="searchFriend"><v-icon>mdi-clipboard-text-multiple</v-icon></v-btn>
       </v-col>
     </v-row>
-
+    <p v-if="geo1">あなたは今、緯度:{{ geo1.lat }}経度{{ geo1.lng }}にいます</p>
+      <p v-else>位置情報を取得できませんでした</p>
   </div>
 
 
@@ -43,19 +84,78 @@
 
 <script>
 import axios from 'axios';
+import { ref } from 'vue';
 export default {
   layout: 'logged-in',
+  middleware: ['get-achievements-list'],
   components: {
   },
   data () {
     return {
+      geo1: null,
       id_search: null,
       friend_name : null
     }
   },
   computed: {
+    achievements() {
+      return this.$store.state.achievements.list;
+    },
+    googleMapUrl() {
+      if (this.geo1) {
+        // 緯度と経度を元に Google マップの URL を構築
+        return `https://www.google.com/maps/search/${this.geo1.lat},${this.geo1.lng}`;
+        // return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${this.geo1.lat},${this.geo1.lng}`;
+      } else {
+        return '';
+      }
+    }
+  },
+  async created() {
+    // コンポーネントが作成された後、非同期処理を行う
+    try {
+      const position = await this.getGeoLocation();
+      this.geo1 = position; // 位置情報を geo1 プロパティに保存
+
+    } catch (error) {
+      console.error(error);
+    }
   },
   methods: {
+    getGeoLocation() {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            var data = position.coords;
+            var lat = data.latitude;
+            var lng = data.longitude;
+            resolve({ lat, lng });
+          },
+          error => {
+            reject(error);
+          }
+        );
+      });
+    },
+    async getTrophy (trophyId) {
+      if( this.geo1.lat >= 34.6751698 - 0.0001 && this.geo1.lat <= 34.6751698 + 0.0001 ) {
+      // if( true ) {
+        try {
+          const response = await this.$axios.$get(`/api/v1/achieve_trophy/`,
+            {
+              params: {
+                user_id: this.$store.state.user.current.id,
+                trophy_id: trophyId
+              }
+            }
+          );
+          alert(response.message);
+          location.reload();
+        } catch (error)  {
+          alert(response.message);
+        }
+      }
+    },
     async searchFriend() {
       try {
         const response = await this.$axios.$get(`/api/v1/data/`,
@@ -96,7 +196,8 @@ export default {
 <style scoped>
 /* スタイル部分 */
 h1 {
-  color: blue;
+  color: #000;
+  text-align: center;
 }
 #map {
   height: 400px;

@@ -1,24 +1,32 @@
 <template>
   <div>
-    <h1>{{ trophyData.title }}</h1>
-    <p>{{ trophyData.description }}</p>
+    <v-container>
+      <h1>{{ trophyData.title }}</h1>
+      <p>{{ trophyData.description }}</p>
+      <p><v-btn :href="googleMapUrl"><v-icon>mdi-google-maps</v-icon>Google Mapでみる</v-btn></p>
 
-    <!-- <p>Description: {{ trophyData.description }}</p> -->
-    <p v-if="geo1">あなたは今、緯度:{{ geo1.lat }}経度{{ geo1.lng }}にいます</p>
-    <p v-else>位置情報を取得できませんでした</p>
-    <p><v-btn color="primary" @click="getTrophy"><v-icon>mdi-trophy</v-icon>&nbsp;GET</v-btn></p>
-    <p><v-btn color="pink" class="white--text" @click=""><v-icon>mdi-camera-plus</v-icon></v-btn></p>
-    <p v-if="this.$store.state.favorite.already"><v-btn color="green" class="white--text" @click="favorite"><v-icon>mdi-star-minus</v-icon></v-btn></p>
-    <p v-else><v-btn color="yellow" class="white--text" @click="favorite"><v-icon>mdi-star-plus</v-icon></v-btn></p>
-    <!-- Google マップを表示する iframe -->
-    <iframe
+
+      <!-- <p>Description: {{ trophyData.description }}</p> -->
+
+
+      <v-layout row>
+
+        <v-flex>
+          <p v-if="this.$store.state.favorite.already"><v-btn color="green" class="white--text" @click="favorite"><v-icon>mdi-star-minus</v-icon></v-btn></p>
+          <p v-else><v-btn color="yellow" class="white--text" @click="favorite"><v-icon>mdi-star-plus</v-icon></v-btn></p>
+        </v-flex>
+        <v-flex>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <!-- <iframe
       width="600"
       height="450"
       frameborder="0"
       style="border:0"
       :src="googleMapUrl"
       allowfullscreen
-    ></iframe>
+    ></iframe> -->
   </div>
 </template>
 
@@ -30,7 +38,6 @@ export default {
   middleware: ['get-favorite'],
   data () {
     return {
-      geo1: null,
       apiKey: 'AIzaSyC6nX_ez1pxGPNEH4i6DVLUiRM52j5eZZU',
       trophyData: []
     }
@@ -38,24 +45,6 @@ export default {
   computed: {
     favoriteAlready() {
       return this.$store.state.favorite.already;
-    },
-    googleMapUrl() {
-      if (this.geo1) {
-        // 緯度と経度を元に Google マップの URL を構築
-        // return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${this.geo1.lat},${this.geo1.lng}`;
-      } else {
-        return '';
-      }
-    }
-  },
-  async created() {
-    // コンポーネントが作成された後、非同期処理を行う
-    try {
-      const position = await this.getGeoLocation();
-      this.geo1 = position; // 位置情報を geo1 プロパティに保存
-
-    } catch (error) {
-      console.error(error);
     }
   },
   async asyncData({ params, $axios, route }) {
@@ -69,28 +58,6 @@ export default {
     return { trophyData: response };
   },
   methods: {
-    getGeoLocation() {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            var data = position.coords;
-            var lat = data.latitude;
-            var lng = data.longitude;
-            resolve({ lat, lng });
-          },
-          error => {
-            reject(error);
-          }
-        );
-      });
-    },
-    getTrophy () {
-      if( this.geo1.lat >= 34.6751698 - 0.0001 && this.geo1.lat <= 34.6751698 + 0.0001 ) {
-        alert("とろふぃできたでぇ");
-      } else {
-        alert("あかんなぁ");
-      }
-    },
     async favorite ( ) {
       try {
         const response = await this.$axios.$get(`/api/v1/favorite_request/`,
