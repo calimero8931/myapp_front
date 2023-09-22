@@ -24,8 +24,13 @@
       </v-btn>
     </v-toolbar-items>
 
-    <before-login-app-bar-signup-button />
-    <before-login-app-bar-login-button />
+    <div  v-if="!isLogin">
+      <before-login-app-bar-signup-button />
+      <before-login-app-bar-login-button />
+    </div>
+    <div v-else>
+      <logged-in-app-bar-mypage-button />
+    </div>
 
     <v-menu
       bottom
@@ -73,7 +78,8 @@ export default {
     return {
       appBarHeight: 0,
       scrollY: 0,
-      homeAppBarHeight: $store.state.styles.homeAppBarHeight
+      homeAppBarHeight: $store.state.styles.homeAppBarHeight,
+      isLogin: $store.state.user.current
     }
   },
   computed: {

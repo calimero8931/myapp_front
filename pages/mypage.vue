@@ -100,15 +100,6 @@ export default {
   computed: {
     achievements() {
       return this.$store.state.achievements.list;
-    },
-    googleMapUrl() {
-      if (this.geo1) {
-        // 緯度と経度を元に Google マップの URL を構築
-        return `https://www.google.com/maps/search/${this.geo1.lat},${this.geo1.lng}`;
-        // return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${this.geo1.lat},${this.geo1.lng}`;
-      } else {
-        return '';
-      }
     }
   },
   async created() {

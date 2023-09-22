@@ -17,8 +17,14 @@
 
     <v-spacer />
 
-    <before-login-app-bar-signup-button />
-    <before-login-app-bar-login-button />
+    <div>
+      <before-login-app-bar-signup-button />
+      <before-login-app-bar-login-button />
+    </div>
+    <!-- <div v-else>
+      <logged-in-app-bar-mypage-button />
+      <after-login-app-bar-logout-button />
+    </div> -->
   </v-app-bar>
 </template>
 

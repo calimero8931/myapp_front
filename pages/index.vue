@@ -56,24 +56,11 @@
                 </div>
               </div>
             </div>
-
-
-            <!-- <div v-if="subCategory.id === selectedSubCategoryId">
-              <div v-for="(trophy, i) in trophies" :key="`trophy-${i}`">
-                <v-btn
-                :to="`/trophy/${trophy.id}`"
-                 outlined color="pink" style="font-weight: bold;">
-                  {{ trophy.title }}
-                </v-btn>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
       <v-spacer></v-spacer>
     </v-sheet>
-    <nuxt-link
-    to="/mypage" >マイページ</nuxt-link>
     <app-footer />
   </v-app>
 </template>
@@ -83,6 +70,7 @@ import axios from 'axios';
 import AppFooter from '../components/App/AppFooter.vue'
 
 export default {
+  // layout: 'logged-in',
   middleware: ['logged-in-redirect'],
   components: {
     AppFooter

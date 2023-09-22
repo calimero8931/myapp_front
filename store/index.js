@@ -1,6 +1,6 @@
 //vuexはコンポーネント間で共有するデータを管理するためのライブラリ
 
-const homePath = 'projects'
+const homePath = 'index'
 // 変数 = data
 export const state = () => ({
   styles: {
