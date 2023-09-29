@@ -50,8 +50,10 @@ export default {
           const timeout = 4000;
           return this.$store.dispatch('getToast', { msg, color, timeout });
         } catch (error) {
-          console.error('データの取得に失敗しました', error);
-          const msg = error.response.data.message;
+          const msg = error.response.data.message
+          const color = 'error'
+          const timeout = 4000
+          return this.$store.dispatch('getToast', {  msg, color, timeout })
         }
       } else {
           const msg = 'メールアドレスが一致しません';

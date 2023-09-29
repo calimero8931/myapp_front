@@ -3,15 +3,19 @@
     <app-toaster />
     <h2>パスワードの変更</h2>
     <user-password-change-form
-    :email.sync="params.user.email"
-    :email2.sync="params.user.email2"
+    :password.sync="params.user.password"
+    :password2.sync="params.user.password2"
+    :password3.sync="params.user.password3"
     />
     <v-btn
       color="primary"
-      @click="changeEmail"
+      @click="changePassword"
     >
       変更を保存
     </v-btn>
+    <p>{{ params.user.password }}</p>
+    <p>{{ params.user.password2 }}</p>
+    <p>{{ params.user.password3 }}</p>
   </div>
 </template>
 
@@ -22,26 +26,25 @@ export default {
     return {
       params: {
         user: {
-          email: '',
-          email2: ''
+          password: 'password',
+          password2: 'testtest',
+          password3: 'testtest',
         }
       }
     };
   },
   mounted() {
-    if (this.$route.query.token){
-      this.redirectWithParams();
-    }
   },
   methods: {
-    async changeEmail() {
-      if (this.params.user.email === this.params.user.email2) {
+    async changePassword() {
+      if (this.params.user.password2 === this.params.user.password3) {
         try {
-          const response = await this.$axios.$post(`/api/v1/change_email/`,
+          const response = await this.$axios.$post(`/api/v1/change_password/`,
             {
               params: {
                 user_id: this.$store.state.user.current.id,
-                new_email: this.params.user.email
+                old_password: this.params.user.password,
+                new_password: this.params.user.password2
               }
             }
           );
@@ -50,36 +53,16 @@ export default {
           const timeout = 4000;
           return this.$store.dispatch('getToast', { msg, color, timeout });
         } catch (error) {
-          console.error('データの取得に失敗しました', error);
-          const msg = error.response.data.message;
+          const msg = error.response.data.message
+          const color = 'error'
+          const timeout = 3000
+          return this.$store.dispatch('getToast', {  msg, color, timeout })
         }
       } else {
           const msg = 'メールアドレスが一致しません';
           const color = 'error';
           const timeout = 4000;
           return this.$store.dispatch('getToast', { msg, color, timeout });
-      }
-    },
-    async redirectWithParams( route ) {
-      try {
-        const response = await this.$axios.$get(`/api/v1/confirm_email2/`,
-          {
-            params: {
-              token: this.$route.query.token,
-              user_id: this.$route.query.id
-            }
-          }
-        );
-        const msg = response.message
-        const color = 'success'
-        const timeout = 3000
-        return this.$store.dispatch('getToast', {  msg, color, timeout })
-      }
-      catch (error) {
-        const msg = error.response.data.message
-        const color = 'error'
-        const timeout = 3000
-        return this.$store.dispatch('getToast', {  msg, color, timeout })
       }
     }
   }

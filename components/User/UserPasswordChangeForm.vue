@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-text-field
-      v-model="setNewEmail"
+      v-model="setPassword"
       :rules="form.rules"
       :hint="form.hint"
       label="現在のパスワードを入力"
@@ -14,27 +14,53 @@
       autocomplete="on"
       @click:append="show = !show"
     />
+    <br>
+    <br>
     <v-text-field
-      v-model="setConfirmEmail"
-      :rules="[form.rules, emailMatchRule]"
+      v-model="setPassword2"
+      :rules="form.rules"
       :hint="form.hint"
       label="新しいパスワードを入力"
       :placeholder="form.placeholder"
       :hide-details="!setValidation"
       :counter="setValidation"
-      :append-icon="toggle.icon"
-      :type="toggle.type"
+      :append-icon="toggle2.icon"
+      :type="toggle2.type"
       outlined
       autocomplete="on"
-      @click:append="show = !show"
+      @click:append="show2 = !show2"
+    />
+    <br>
+    <v-text-field
+      v-model="setPassword3"
+      :rules="form.rules"
+      :hint="form.hint"
+      label="再度新しいパスワードを入力"
+      :placeholder="form.placeholder"
+      :hide-details="!setValidation"
+      :counter="setValidation"
+      :append-icon="toggle3.icon"
+      :type="toggle3.type"
+      outlined
+      autocomplete="on"
+      @click:append="show3 = !show3"
     />
   </div>
 </template>
 
 <script>
 export default {
+  layout: 'logged-in',
   props: {
     password: {
+      type: String,
+      default: ''
+    },
+    password2: {
+      type: String,
+      default: ''
+    },
+    password3: {
       type: String,
       default: ''
     },
@@ -46,13 +72,8 @@ export default {
   data () {
     return {
       show: false,
-      newEmail: "",
-      confirmEmail: "",
-      rules: [
-        v => !!v || '',
-        //railsの方でバリデーションをかけているので、ここではバリデーションは軽めに
-        v => /.+@.+\..+/.test(v) || ''
-      ]
+      show2: false,
+      show3: false
     }
   },
   computed: {
@@ -64,21 +85,21 @@ export default {
         return this.$emit('update:password', newVal)
       },
     },
-    setNewEmail: {
+    setPassword2: {
       get () {
-        return this.email
+        return this.password2
       },
       set (newVal) {
-        return this.$emit('update:email', newVal)
-      }
+        return this.$emit('update:password2', newVal)
+      },
     },
-    setConfirmEmail: {
+    setPassword3: {
       get () {
-        return this.email2
+        return this.password3
       },
       set (newVal) {
-        return this.$emit('update:email2', newVal)
-      }
+        return this.$emit('update:password3', newVal)
+      },
     },
     emailMatchRule () {
       return this.newEmail == this.confirmEmail || 'メールアドレスが一致しません'
@@ -98,6 +119,16 @@ export default {
     toggle () {
       const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
       const type = this.show ? 'text' : 'password'
+      return { icon, type }
+    },
+    toggle2 () {
+      const icon = this.show2 ? 'mdi-eye' : 'mdi-eye-off'
+      const type = this.show2 ? 'text' : 'password'
+      return { icon, type }
+    },
+    toggle3 () {
+      const icon = this.show3 ? 'mdi-eye' : 'mdi-eye-off'
+      const type = this.show3 ? 'text' : 'password'
       return { icon, type }
     }
   }
