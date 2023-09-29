@@ -15,8 +15,19 @@
     "login": "ログイン",
     "logout": "ログアウト",
     "account": {
-      "settings": "アカウント設定",
-      "password": "パスワード変更"
+      "id": {
+        "settings": "アカウント設定",
+        "mypage": "トロフィー",
+        "interest": "興味があるもの",
+        "password": "パスワード変更",
+        "delete": "アカウント削除",
+        "public": {
+          "profile":  "公開用プロフィール"
+        },
+        "mail": {
+          "address":  "メールアドレス変更"
+        }
+      }
     },
     "results": {
       "param1": {

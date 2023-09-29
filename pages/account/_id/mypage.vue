@@ -5,7 +5,7 @@
         :img-height="imgHeight"
         :test="test"
       /> -->
-    <h1>my page</h1>
+    <!-- <h1>my page</h1> -->
     <v-container>
       <h2>Challenging Trophies</h2>
       <v-list>
@@ -15,6 +15,9 @@
           </v-list-item-content>
           <v-list-item-content>
             <v-list-item-title>{{ item.trophy_description }}</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.create_at }}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-content>
             <v-list-item-title>
@@ -32,9 +35,6 @@
             <v-list-item-title><nuxt-link :to="`/trophy/${item.trophy_id}`"><v-icon color="yellow">mdi-crown</v-icon>{{ item.trophy_title }}</nuxt-link></v-list-item-title>
           </v-list-item-content>
           <v-list-item-content>
-            <v-list-item-title>{{ item.trophy_description }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
             <v-list-item-title>{{ item.success_at }}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-content>
@@ -46,15 +46,15 @@
         </v-list-item>
       </v-list>
     </v-container>
-    <v-row justify="start" :align="'center'">
+    <!-- <v-row justify="start" :align="'center'">
       <v-col cols="2">
         <v-text-field v-model="id_search" label="検索したいfriend id" @keydown.enter="searchFriend"></v-text-field>
       </v-col>
       <v-col cols="1">
         <v-btn color="primary" @click="searchFriend"><v-icon>mdi-magnify</v-icon></v-btn>
       </v-col>
-    </v-row>
-    <v-row>
+    </v-row> -->
+    <!-- <v-row>
       <v-col cols="2">
         <p v-if="friend_name">
           {{ friend_name }}&nbsp&nbsp
@@ -76,22 +76,22 @@
       </v-col>
     </v-row>
     <p v-if="geo1">あなたは今、緯度:{{ geo1.lat }}経度{{ geo1.lng }}にいます</p>
-      <p v-else>位置情報を取得できませんでした</p>
+    <p v-else>位置情報を取得できませんでした</p> -->
   </div>
-
-
 </template>
 
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
 export default {
+  // layout: 'logged-in',
   layout: 'logged-in',
   middleware: ['get-achievements-list'],
   components: {
   },
   data () {
     return {
+      drawer: null,
       geo1: null,
       id_search: null,
       friend_name : null

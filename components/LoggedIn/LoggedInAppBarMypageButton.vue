@@ -3,7 +3,7 @@
     outlined
     class="ml-2 font-weight-bold"
     color="appblue"
-    to="/mypage"
+    to="/account/mypage"
   >
     My page
   </v-btn>

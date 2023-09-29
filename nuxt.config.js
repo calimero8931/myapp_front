@@ -90,7 +90,8 @@ export default {
           success: '44D69E',
           warning: 'FEB65E',
           error: 'FB8678',
-          background: 'f6f6f4',
+          // background: 'f6f6f4',
+          background: '1E2022',
           appblue: '1867c0',
         }
       }

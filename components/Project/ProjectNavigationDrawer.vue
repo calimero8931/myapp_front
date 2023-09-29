@@ -20,9 +20,9 @@
               class="d-flex justify-center align-center"
             >
               <v-icon>
-                mdi-chevron-double-left
+                mdi-close-outline
               </v-icon>
-              閉じる
+              close
             </v-item-action-text>
           </v-list-item-content>
         </v-list-item>
@@ -61,12 +61,12 @@ export default {
     return {
       mobileBreakpoint: 960,
       navMenus: [
-        { name: 'project-id-dashboard', icon: 'mdi-view-dashboard' },
-        { name: 'project-id-layouts', icon: 'mdi-view-compact' },
-        { name: 'project-id-pages', icon: 'mdi-image' },
-        { name: 'project-id-components', icon: 'mdi-view-comfy' },
-        { name: 'project-id-settings', icon: 'mdi-cog' },
-        { name: 'project-id-help', icon: 'mdi-help-circle' }
+        { name: 'account-id-mypage', icon: 'mdi-trophy' },
+        { name: 'account-id-public-profile', icon: 'mdi-account-eye' },
+        { name: 'account-id-interest', icon: 'mdi-heart-multiple' },
+        { name: 'account-id-mail-address', icon: 'mdi-email-edit-outline' },
+        { name: 'account-id-password', icon: 'mdi-lock' },
+        { name: 'account-id-delete', icon: 'mdi-delete' }
       ]
     }
   },
