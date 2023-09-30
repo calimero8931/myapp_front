@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <app-toaster />
     <nuxt />
   </v-app>
 </template>
