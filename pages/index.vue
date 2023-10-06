@@ -3,7 +3,6 @@
     <home-app-bar
       :img-height="imgHeight"
     />
-
     <v-img
       id="scroll-top"
       dark
@@ -70,14 +69,14 @@ import axios from 'axios';
 import AppFooter from '../components/App/AppFooter.vue'
 
 export default {
-  // layout: 'logged-in',
+  layout: 'default',
   middleware: ['logged-in-redirect'],
   components: {
     AppFooter
   },
   data () {
     return {
-      imgHeight: 250,
+      imgHeight: 2500,
       menus: [
         { title: 'about', subtitle: 'このサイトはブログ"独学プログラマ"で公開されているチュートリアルのデモアプリケーションです' },
         { title: 'products', subtitle: '他にはない優れた機能の数々' },

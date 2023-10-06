@@ -29,10 +29,11 @@
       <before-login-app-bar-login-button />
     </div>
     <div v-else>
-      <logged-in-app-bar-mypage-button />
+      <!-- <logged-in-app-bar-mypage-button /> -->
+
     </div>
 
-    <v-menu
+    <!-- <v-menu
       bottom
       nudge-left="110"
       nudge-width="100"
@@ -58,7 +59,7 @@
           </v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-menu>
+    </v-menu> -->
   </v-app-bar>
 </template>
 

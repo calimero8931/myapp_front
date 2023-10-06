@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <!-- <v-btn
+    <v-btn
       small
       plain
       color="primary"
@@ -11,20 +11,20 @@
         mdi-chevron-double-left
       </v-icon>
       ここはaccount.vueの領域
-    </v-btn> -->
+    </v-btn>
     <nuxt-child />
   </v-container>
 </template>
 
 <script>
 export default {
-  name: 'AccountPage',
+  name: 'public-profile',
   layout: 'logged-in',
   comments: {
 
   },
   validate({ route }) {
-    return route.name !== 'account'
+    return route.name !== 'public-profile'
   },
   data () {
     return {

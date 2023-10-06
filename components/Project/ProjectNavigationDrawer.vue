@@ -22,7 +22,6 @@
               <v-icon>
                 mdi-close-outline
               </v-icon>
-              close
             </v-item-action-text>
           </v-list-item-content>
         </v-list-item>
@@ -62,7 +61,8 @@ export default {
       mobileBreakpoint: 960,
       navMenus: [
         { name: 'account-id-mypage', icon: 'mdi-trophy' },
-        { name: 'account-id-public-profile', icon: 'mdi-account-eye' },
+        { name: 'account-id-public-profile-edit', icon: 'mdi-account-eye' },
+        { name: 'account-id-public-profile-hash-hash', icon: 'mdi-account-eye' },
         { name: 'account-id-interest', icon: 'mdi-heart-multiple' },
         { name: 'account-id-mail-address', icon: 'mdi-email-edit-outline' },
         { name: 'account-id-password', icon: 'mdi-lock' },

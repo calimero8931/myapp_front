@@ -29,7 +29,7 @@ export default {
     'plugins/auth',
     'plugins/axios',
     'plugins/my-inject',
-    'plugins/nuxt-client-init'
+    'plugins/nuxt-client-init',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -62,6 +62,12 @@ export default {
         {
           path: '/results/:param1/:param2',
           component: resolve(__dirname, 'pages/results/_param1/_param2.vue')
+          // name: 'results'
+        },
+        {
+          path: '/account/public-profile/:hush',
+          component: resolve(__dirname, 'pages/account/_id/public-profile/_hash/_hash.vue'),
+          // name: 'public-profile-show'
         }
       );
     }

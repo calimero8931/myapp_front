@@ -17,11 +17,6 @@
         :class="{'hidden-mobile-and-down': isNotHomePath}"
       />
 
-      <!-- page title -->
-      <logged-in-app-bar-breadcrumbs
-        v-if="isNotHomePath"
-      />
-
       <v-spacer />
       <!-- account menu -->
       <logged-in-app-bar-account-menu />

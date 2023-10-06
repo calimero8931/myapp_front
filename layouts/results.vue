@@ -2,19 +2,11 @@
   <v-app>
     <logged-in-app-bar
       clipped-left
-    >
-    </logged-in-app-bar>
-    <project-navigation-drawer
-      :drawer.sync="drawer"
     />
     <v-main>
       <app-toaster />
       <nuxt />
     </v-main>
-    <v-btn
-      @click="drawer = !drawer">
-      <v-icon>mdi-menu</v-icon>
-    </v-btn>
   </v-app>
 </template>
 
@@ -23,7 +15,6 @@ export default {
   middleware: ['authentication'],
   data () {
     return {
-      drawer: null
     }
   }
 }

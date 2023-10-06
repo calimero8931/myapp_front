@@ -34,23 +34,24 @@
         アカウント
       </v-subheader>
 
-      <template v-for="(menu, i) in menus">
-        <v-divider
-          v-if="menu.divider"
-          :key="`menu-divider-${i}`"
-        />
-
-        <v-list-item
-          :key="`menu-list-${i}`"
-          :to="{ name: menu.name }"
-        >
-          <v-list-item-icon class="mr-2">
-            <v-icon size="22" v-text="menu.icon" />
-          </v-list-item-icon>
-          <v-list-item-title>
-            {{ $my.pageTitle(menu.name) }}
-          </v-list-item-title>
-        </v-list-item>
+      <template>
+        <div v-for="(menu, i) in menus">
+          <v-divider
+            v-if="menu.divider"
+            :key="`menu-divider-${i}`"
+          />
+          <v-list-item
+            :key="`menu-list-${i}`"
+            :to="{ name: menu.name }"
+          >
+            <v-list-item-icon class="mr-2">
+              <v-icon size="22" v-text="menu.icon" />
+            </v-list-item-icon>
+            <v-list-item-title>
+              {{ $my.pageTitle(menu.name) }}
+            </v-list-item-title>
+          </v-list-item>
+        </div>
       </template>
     </v-list>
   </v-menu>

@@ -1,21 +1,23 @@
 <template>
-  <div :style="{ marginTop: `${height}px`}">
-    <v-footer
-      absolute
-      dark
-      color="black"
-      :height="height"
-    >
-      <v-col
-        cols="12"
-        class="py-0"
+  <div>
+    <div :style="{ marginTop: `${height}px`}">
+      <v-footer
+        absolute
+        dark
+        color="black"
+        :height="height"
       >
-        <div class="text-center text-body-2">
-          &copy;{{ copyRightYear }}
-          <strong>{{ appName }}</strong>
-        </div>
-      </v-col>
-    </v-footer>
+        <v-col
+          cols="12"
+          class="py-0"
+        >
+          <div class="text-center text-body-2">
+            &copy;{{ copyRightYear }}
+            <strong>{{ appName }}</strong>
+          </div>
+        </v-col>
+      </v-footer>
+    </div>
   </div>
 </template>
 

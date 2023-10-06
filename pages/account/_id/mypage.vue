@@ -8,8 +8,8 @@
     <!-- <h1>my page</h1> -->
     <v-container>
       <h2>Challenging Trophies</h2>
-      <v-list>
-        <v-list-item v-for="item in achievements " :key="item.id" v-if="!item.achievement">
+      <v-list v-if="!achievements">
+        <v-list-item v-for="item in achievements " :key="item.id">
           <v-list-item-content>
             <v-list-item-title><nuxt-link :to="`/trophy/${item.trophy_id}`">{{ item.trophy_title }}</nuxt-link></v-list-item-title>
           </v-list-item-content>
@@ -26,11 +26,14 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <p v-else>
+          挑戦中のトロフィーはありません
+      </p>
     </v-container>
     <v-container>
       <h2>Achieved Trophies</h2>
-      <v-list>
-        <v-list-item v-for="item in achievements" :key="item.id" v-if="item.achievement">
+      <v-list  v-if="achievements">
+        <v-list-item v-for="item in achievements" :key="item.id">
           <v-list-item-content>
             <v-list-item-title><nuxt-link :to="`/trophy/${item.trophy_id}`"><v-icon color="yellow">mdi-crown</v-icon>{{ item.trophy_title }}</nuxt-link></v-list-item-title>
           </v-list-item-content>
@@ -45,6 +48,9 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <p v-else>
+          取得済みのトロフィーはありません
+      </p>
     </v-container>
     <!-- <v-row justify="start" :align="'center'">
       <v-col cols="2">

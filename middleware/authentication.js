@@ -1,6 +1,6 @@
 export default async ({ $auth, store, route, redirect }) => {
   // リダイレクトを必要としないパス
-  const notRedirectPaths = ['account', 'project']
+  const notRedirectPaths = [ 'index', 'share']
   if (notRedirectPaths.includes(route.name)) {
     return false
   }

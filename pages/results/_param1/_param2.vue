@@ -24,7 +24,7 @@
 <script>
 import axios from 'axios';
 export default {
-  layout: 'logged-in',
+  layout: 'results',
   components: {
   },
   data () {

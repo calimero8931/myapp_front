@@ -18,3 +18,8 @@ $display-breakpoints: (
   'mobile-and-up':
   'only screen and (min-width: #{map-get($grid-breakpoints, 'mobile')})'
 );
+
+.theme--light .v-footer {
+  // color: rgba(0,0,0,0.1);
+  background-color: rgba(255, 255, 255, 0);
+}

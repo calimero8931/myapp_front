@@ -35,7 +35,12 @@ export default {
     async SelectedSubCategories(){
       try {
       const loggedInUserId = this.$store.state.user.current.id;
-      const response = await this.$axios.$get(`/api/v1/interested_sub_categories/`);
+      const response = await this.$axios.$get(`/api/v1/interested_sub_categories/`,
+        {
+          params: {
+            user_id: loggedInUserId
+          }
+        });
       // console.log("サブカテゴリの取得に成功しました", response);
       if (Array.isArray(response)) {
         this.processedData = response.map(data => {

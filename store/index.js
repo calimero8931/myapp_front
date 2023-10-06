@@ -1,7 +1,4 @@
-//vuexはコンポーネント間で共有するデータを管理するためのライブラリ
-
 const homePath = 'index'
-// 変数 = data
 export const state = () => ({
   styles: {
     homeAppBarHeight: 56
@@ -16,7 +13,6 @@ export const state = () => ({
     },
     // ログイン後アクセス不可ルート一覧(ページが増えたら追加する)
     redirectPaths: [
-      // 'index',
       'signup',
       'login'
     ]
@@ -34,6 +30,9 @@ export const state = () => ({
     payload: {}
   },
   favorite: {
+    already: false
+  },
+  interest: {
     already: false
   },
   achievements: {
@@ -77,6 +76,9 @@ export const mutations = {
   },
   setFavoriteAlready(state, payload) {
     state.favorite.already = payload
+  },
+  setInterestAlready(state, payload) {
+    state.interest.already = payload
   },
   setAchievementsList(state, payload) {
     state.achievements.list = payload
