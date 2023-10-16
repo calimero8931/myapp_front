@@ -1,43 +1,46 @@
 <template>
   <div>
     <v-container>
-      <h1>{{ trophyData.title }}</h1>
+      <p class="text-center">
+        <v-avatar size="200"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
+      </p>
+      <h1 class="text-center">{{ trophyData.title }}</h1>
       <p>{{ trophyData.description }}</p>
       <p>completion_rate:{{ achievementRate }}</p>
       <p>興味を持っている人数:{{ achievementRate.interested_users_count }}</p>
       <p>トロフィー取った人:{{ achievementRate.earned_users_count }}</p>
       <p>取得率:{{ achievementRate.completion_rate }}%</p>
       <p>このトロフィーのサブカテ{{ trophyData.category_id }}</p>
+      <v-row justify="center" align="center">
+      <v-col>
+        <p>
+          <a :href="googleMapUrl" target="_blank">
+            <v-btn>
+              <v-icon>mdi-google-maps</v-icon> Google Mapでみる
+            </v-btn>
+          </a>
+        </p>
+      </v-col>
+      <v-col v-if="this.$store.state.interest.already">
+        <p v-if="this.$store.state.favorite.already">
+          <v-btn color="green" class="white--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon></v-btn>
+        </p>
+        <p v-else>
+          <v-btn color="yellow" class="white--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon></v-btn>
+        </p>
+      </v-col>
+      <v-col v-else>
+        <p>
+          <v-btn color="pink" class="white--text" @click="interest" block><v-icon>mdi-thumb-up</v-icon></v-btn>
+        </p>
+      </v-col>
+    </v-row>
       <apexchart
         type="radialBar"
         height="400"
         :options="chart.options"
         :series="achievementRate2"
       ></apexchart>
-      <v-layout row>
-        <v-flex>
-          <p>
-            <a :href="googleMapUrl" target="_blank">
-              <v-btn>
-                <v-icon>mdi-google-maps</v-icon> Google Mapでみる
-              </v-btn>
-            </a>
-          </p>
-        </v-flex>
-        <v-flex v-if="this.$store.state.interest.already">
-          <p v-if="this.$store.state.favorite.already">
-            <v-btn color="green" class="white--text" @click="favorite"><v-icon>mdi-star-minus</v-icon></v-btn>
-          </p>
-          <p v-else>
-            <v-btn color="yellow" class="white--text" @click="favorite"><v-icon>mdi-star-plus</v-icon></v-btn>
-          </p>
-        </v-flex>
-        <p v-else>
-          <v-btn color="pink" class="white--text" @click="interest"><v-icon>mdi-thumb-up</v-icon></v-btn>
-        </p>
-        <v-flex>
-        </v-flex>
-      </v-layout>
     </v-container>
     <!-- <iframe
       width="600"
@@ -56,7 +59,7 @@ import { ref } from 'vue';
 import VueApexCharts from 'vue-apexcharts'
 export default {
   name: 'LayoutsDefault',
-  layout: 'logged-in',
+  layout: 'results',
   middleware: [
     'get-favorite',
     'get-interested',
@@ -164,3 +167,8 @@ export default {
   }
 }
 </script>
+<style>
+.trophy-page-btn {
+  width: 300px;
+}
+</style>

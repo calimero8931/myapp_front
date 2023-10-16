@@ -5,14 +5,16 @@
     :height="appBarHeight"
     :color="toolbarStyle.color"
     :elevation="toolbarStyle.elevation"
+    style="width: 100vw;"
   >
   <app-logo
     @click.native="$vuetify.goTo('#scroll-top')"
   />
     <app-title class="hidden-mobile-and-down" />
-    <v-spacer />
+    <v-spacer v-if="!isLogin" />
+    <div v-else></div>
 
-    <v-toolbar-items class="ml-2 hidden-ipad-and-down">
+    <!-- <v-toolbar-items class="ml-2 hidden-ipad-and-down">
       <v-btn
         v-for="(menu, i) in menus"
         :key="`menu-btn-${i}`"
@@ -22,7 +24,7 @@
       >
         {{ $t(`menus.${menu.title}`) }}
       </v-btn>
-    </v-toolbar-items>
+    </v-toolbar-items> -->
 
     <div  v-if="!isLogin">
       <before-login-app-bar-signup-button />
@@ -89,7 +91,7 @@ export default {
       return this.scrollY > (this.imgHeight - this.homeAppBarHeight)
     },
     toolbarStyle () {
-      const color = this.isScrollPoint ? 'white' : 'transparent'
+      const color = this.isScrollPoint ? 'appblue' : 'transparent'
       const elevation = this.isScrollPoint ? 4 : 0
       return { color, elevation }
     }

@@ -32,22 +32,26 @@
     </v-container>
     <v-container>
       <h2>Achieved Trophies</h2>
-      <v-list  v-if="achievements">
-        <v-list-item v-for="item in achievements" :key="item.id">
-          <v-list-item-content>
-            <v-list-item-title><nuxt-link :to="`/trophy/${item.trophy_id}`"><v-icon color="yellow">mdi-crown</v-icon>{{ item.trophy_title }}</nuxt-link></v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.success_at }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>取得率(予定)</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title><v-btn color="pink" class="white--text" @click=""><v-icon>mdi-camera-plus</v-icon></v-btn></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <v-list v-if="achievements">
+  <v-list-item v-for="item in achievements" :key="item.id">
+    <v-list-item-content>
+      <v-list-item-title class="text-left">
+        <nuxt-link :to="`/trophy/${item.trophy_id}`">
+          <v-icon color="yellow">mdi-crown</v-icon>{{ item.trophy_title }}
+        </nuxt-link>
+      </v-list-item-title>
+      <v-list-item-subtitle class="text-left">{{ item.SuccessAt }}</v-list-item-subtitle>
+    </v-list-item-content>
+    <v-list-item-content>
+      <v-list-item-title class="text-right">
+        <v-btn color="pink" class="white--text" @click="">
+          <v-icon>mdi-camera-plus</v-icon>
+        </v-btn>
+      </v-list-item-title>
+    </v-list-item-content>
+  </v-list-item>
+</v-list>
+
       <p v-else>
           取得済みのトロフィーはありません
       </p>
@@ -89,6 +93,8 @@
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
+import { format } from 'date-fns';
+
 export default {
   // layout: 'logged-in',
   layout: 'logged-in',
@@ -100,7 +106,8 @@ export default {
       drawer: null,
       geo1: null,
       id_search: null,
-      friend_name : null
+      friend_name : null,
+      formattedSuccessAt: ''
     }
   },
   computed: {
@@ -109,15 +116,19 @@ export default {
     }
   },
   async created() {
-    // コンポーネントが作成された後、非同期処理を行う
-    try {
-      const position = await this.getGeoLocation();
-      this.geo1 = position; // 位置情報を geo1 プロパティに保存
-
-    } catch (error) {
-      console.error(error);
+  // コンポーネントが作成された後、非同期処理を行う
+  try {
+    const position = await this.getGeoLocation();
+    this.geo1 = position; // 位置情報を geo1 プロパティに保存
+    if (this.achievements) {
+      this.achievements.forEach((item) => {
+        achievements.SuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
+      });
     }
-  },
+  } catch (error) {
+    console.error(error);
+  }
+},
   methods: {
     getGeoLocation() {
       return new Promise((resolve, reject) => {

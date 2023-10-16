@@ -2,11 +2,11 @@
   <v-app-bar
     app
     :height="homeAppBarHeight"
-    color="white"
+    color="appblue"
   >
     <nuxt-link
       to="/"
-      class="text-decoration-none"
+      class="text-decoration-none white--text"
     >
       <app-logo />
     </nuxt-link>

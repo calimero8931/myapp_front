@@ -2,7 +2,7 @@
   <v-btn
     outlined
     class="ml-2 font-weight-bold"
-    color="appblue"
+    color="appyellow"
     to="/signup"
   >
     {{ $my.pageTitle('signup') }}

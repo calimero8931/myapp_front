@@ -89,6 +89,7 @@ export default {
     // カスタムcssのパス
     customVariables: ['~/assets/sass/variables.scss'],
     theme: {
+      dark: true,
       themes: {
         light: {
           primary: '4080BE',
@@ -97,8 +98,21 @@ export default {
           warning: 'FEB65E',
           error: 'FB8678',
           // background: 'f6f6f4',
-          background: '1E2022',
+          background: '332F2E',
           appblue: '1867c0',
+          color: '112F2E',
+        },
+        dark: {
+        // background: '1B2440',
+        // background: '000000',
+          primary: '4080BE',
+          info: '4FC1E9',
+          appblue: '1B2440',
+          appyellow: 'F3DF4C',
+          background: '332F2E',
+          success: '44D69E',
+          warning: 'FEB65E',
+          error: 'FB8678'
         }
       }
     }

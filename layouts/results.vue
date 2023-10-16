@@ -7,6 +7,7 @@
       <app-toaster />
       <nuxt />
     </v-main>
+    <logged-in-app-bar-mypage-button class="mypage_btn" />
   </v-app>
 </template>
 
@@ -19,3 +20,9 @@ export default {
   }
 }
 </script>
+<style>
+.mypage_btn {
+  bottom: 100px;
+  z-index: 100;
+}
+</style>

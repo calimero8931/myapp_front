@@ -5,15 +5,13 @@
     <v-layout
       class="fixed-bottom d-flex justify-center align-center"
       >
-      <v-btn
+      <nuxt-link
       id="mypage_btn"
-      outlined
-      class="font-weight-bold"
-      color="appblue"
+      color="appyellow"
       :to="`/account/${state.user.current.id}/mypage`"
     >
-      My page
-    </v-btn>
+      <v-icon>mdi-account-circle</v-icon>
+    </nuxt-link>
     </v-layout>
   </v-container>
   </v-footer>

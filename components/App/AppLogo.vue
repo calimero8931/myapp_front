@@ -1,13 +1,14 @@
 <template>
-  <v-avatar
-    color="#1867c0"
-    size="34"
-    class="my-app-log"
+
+  <div
   >
-    <span class="white--text text-subtitle-2">
-      Tr
-    </span>
-  </v-avatar>
+    <v-icon
+    color="white"
+    >mdi-trophy-award</v-icon>Trophées
+    <!-- <p
+    font-size="3px"
+    >Trophées</p> -->
+  </div>
 </template>
 
 <script>

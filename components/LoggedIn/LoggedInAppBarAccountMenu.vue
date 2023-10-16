@@ -15,7 +15,7 @@
         </v-icon>
       </v-btn>
     </template>
-    <v-list dense>
+    <v-list dense  id="account-list">
       <v-subheader>
         ログイン中のユーザー
       </v-subheader>
@@ -34,8 +34,8 @@
         アカウント
       </v-subheader>
 
-      <template>
-        <div v-for="(menu, i) in menus">
+      <template v-for="(menu, i) in menus">
+        <div>
           <v-divider
             v-if="menu.divider"
             :key="`menu-divider-${i}`"
@@ -62,11 +62,19 @@ export default {
   data () {
     return {
       menus: [
-        { name: 'account-settings', icon: 'mdi-account-cog' },
-        { name: 'account-password', icon: 'mdi-lock-outline' },
-        { name: 'logout', icon: 'mdi-logout-variant', divider: true }
+        // { name: 'account-settings', icon: 'mdi-account-cog' },
+        // { name: 'account-password', icon: 'mdi-lock-outline' },
+        { name: 'account-id-mail-address', icon: 'mdi-email-edit-outline' },
+        { name: 'account-id-password', icon: 'mdi-lock' },
+        { name: 'account-id-delete', icon: 'mdi-delete' },
+        { name: 'logout', icon: 'mdi-logout-variant', divider: true },
       ]
     }
   }
 }
 </script>
+<style>
+  #account-list {
+    background-color: #363636;
+  }
+</style>

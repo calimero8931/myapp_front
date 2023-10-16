@@ -17,7 +17,7 @@
             to="#"
             class="body-2 text-decoration-none"
           >
-            パスワードを忘れちゃいました？
+            パスワードを忘れましたか？
           </nuxt-link>
         </v-card-actions>
         <v-card-text class="px-0">
@@ -40,7 +40,6 @@
 
 <script>
 export default {
-  name: 'LayoutsDefault',
   layout: 'before-login',
   data ({ $store }) {
     return {

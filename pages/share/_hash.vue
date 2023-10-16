@@ -23,7 +23,7 @@
 </template>
 <script>
 export default {
-  layout: 'share',
+  layout: 'default',
   name: 'LayoutsDefault',
   data() {
     return {

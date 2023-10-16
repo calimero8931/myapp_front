@@ -19,9 +19,9 @@
             <v-item-action-text
               class="d-flex justify-center align-center"
             >
-              <v-icon>
+              <!-- <v-icon>
                 mdi-close-outline
-              </v-icon>
+              </v-icon> -->
             </v-item-action-text>
           </v-list-item-content>
         </v-list-item>
@@ -59,16 +59,11 @@ export default {
   data () {
     return {
       mobileBreakpoint: 960,
-      navMenus: [
-        { name: 'account-id-mypage', icon: 'mdi-trophy' },
-        { name: 'account-id-public-profile-edit', icon: 'mdi-account-eye' },
-        { name: 'account-id-public-profile-hash-hash', icon: 'mdi-account-eye' },
-        { name: 'account-id-interest', icon: 'mdi-heart-multiple' },
-        { name: 'account-id-mail-address', icon: 'mdi-email-edit-outline' },
-        { name: 'account-id-password', icon: 'mdi-lock' },
-        { name: 'account-id-delete', icon: 'mdi-delete' }
-      ]
+      navMenus: []
     }
+  },
+  mounted () {
+    this.dynamicNavMenus;
   },
   computed: {
     setDrawer: {
@@ -82,6 +77,24 @@ export default {
     isMobileBreakpointLessThan () {
       const windowWidth = this.$vuetify.breakpoint.width
       return windowWidth < this.mobileBreakpoint
+    },
+    dynamicNavMenus() {
+      const dynamicMenus = [
+        { name: 'account-id-mypage', icon: 'mdi-trophy' },
+        { name: 'account-id-public-profile-edit', icon: 'mdi-account-eye' },
+        { name: 'account-id-public-profile-hash-hash', icon: 'mdi-account-eye' },
+        { name: 'account-id-interest', icon: 'mdi-heart-multiple' }
+      ];
+
+      // アドミンのみトロフィー作成メニューを追加
+      if (this.$store.state.user.current.id === 1) {
+        dynamicMenus.push({ name: 'account-id-trophy-edit', icon: 'mdi-heart-multiple' });
+      }
+
+      // dynamicMenusをnavMenusに代入
+      this.navMenus = dynamicMenus;
+
+      return this.navMenus;
     }
   }
 }

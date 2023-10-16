@@ -1,22 +1,18 @@
 <template>
   <v-app-bar
-    app
-    color="white"
+    color="appblue"
     dense
     elevation="1"
     :clipped-left="clippedLeft"
+    style="width: 100vw; max-height: 48px;"
     >
       <slot name="navigation-toggle-button" />
       <nuxt-link
         to="/"
-        class="text-decoration-none"
+        class="text-decoration-none white--text"
       >
         <app-logo />
       </nuxt-link>
-      <app-title
-        :class="{'hidden-mobile-and-down': isNotHomePath}"
-      />
-
       <v-spacer />
       <!-- account menu -->
       <logged-in-app-bar-account-menu />
@@ -44,3 +40,8 @@ export default {
 
 }
 </script>
+<style>
+  v-app-bar {
+    width: 100vw;
+  }
+</style>

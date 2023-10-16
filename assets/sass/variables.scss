@@ -1,7 +1,76 @@
 // custom変数 => https://vuetifyjs.com/en/customization/sass-variables/#sass-variables
+
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@800&family=Pixelify+Sans&display=swap');
+
+body {
+  background-color: #1B2440!important;
+  color: #f6f6f4!important;
+}
+
+.theme--dark.v-application {
+  background-color: #1B2440;
+  background: none!important;
+}
+
+.v-application .black {
+  background-color: #1B2440!important;
+  background: none!important;
+}
+
+.container {
+  background-color: #1B2440!important;
+  background: none!important;
+}
+
+.theme--dark.v-sheet {
+  // background-color: rgba(255, 255, 255, 0.05);
+}
+.v-snack__wrapper.theme--dark.success--text {
+  background-color: rgba(39, 95, 74, 0.9);
+}
+
+.v-snack__wrapper.theme--dark.error--text {
+  background-color: rgba(95, 39, 39, 0.9);
+}
+
+.theme--dark.v-list {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme--dark.v-card {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.v-snack .v-snack__wrapper {
+  // background-color: rgba(0, 0, 0, 0.9);
+  // opacity: 0.6;
+}
+
+.v-application .black {
+  background-color: #1B2440;
+  background: none!important;
+
+}
+
+.theme--dark.v-footer {
+  background-color: #1B2440;
+  background: none!important;
+}
+
+body h1 {
+  font-family: 'Pixelify Sans', cursive;
+}
+
 $material-light: (
   'background': #f6f6f4
 );
+
+.ellipsis {
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
 
 $grid-breakpoints: (
   'ipad': 768px,
