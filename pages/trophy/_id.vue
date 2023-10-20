@@ -1,46 +1,47 @@
 <template>
   <div>
     <v-container>
+      <h1 class="text-center mb-2">{{ trophyData.title }}</h1>
       <p class="text-center">
-        <v-avatar size="200"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
+        <v-avatar size="150"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
       </p>
-      <h1 class="text-center">{{ trophyData.title }}</h1>
+      <!-- <h2 class="text-center reality">rarity <span>{{ getRareness() }}</span></h2> -->
       <p>{{ trophyData.description }}</p>
-      <p>completion_rate:{{ achievementRate }}</p>
+      <!-- <p>completion_rate:{{ achievementRate }}</p>
       <p>興味を持っている人数:{{ achievementRate.interested_users_count }}</p>
       <p>トロフィー取った人:{{ achievementRate.earned_users_count }}</p>
       <p>取得率:{{ achievementRate.completion_rate }}%</p>
-      <p>このトロフィーのサブカテ{{ trophyData.category_id }}</p>
-      <v-row justify="center" align="center">
-      <v-col>
-        <p>
-          <a :href="googleMapUrl" target="_blank">
-            <v-btn>
-              <v-icon>mdi-google-maps</v-icon> Google Mapでみる
-            </v-btn>
-          </a>
-        </p>
-      </v-col>
-      <v-col v-if="this.$store.state.interest.already">
-        <p v-if="this.$store.state.favorite.already">
-          <v-btn color="green" class="white--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon></v-btn>
-        </p>
-        <p v-else>
-          <v-btn color="yellow" class="white--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon></v-btn>
-        </p>
-      </v-col>
-      <v-col v-else>
-        <p>
-          <v-btn color="pink" class="white--text" @click="interest" block><v-icon>mdi-thumb-up</v-icon></v-btn>
-        </p>
-      </v-col>
-    </v-row>
+      <p>このトロフィーのサブカテ{{ trophyData.category_id }}</p> -->
+      <v-divider class="my-4"></v-divider>
       <apexchart
-        type="radialBar"
-        height="400"
-        :options="chart.options"
-        :series="achievementRate2"
+        :options="chartOptions"
+        :labels="chartOptions"
+        :series="[this.rate]"
       ></apexchart>
+      <!-- <p>achievementRate2:{{ [achievementRate2[2]] }}%</p> -->
+      <v-row justify="center" align="center">
+        <v-col cols="6">
+          <p>
+            <a :href="googleMapUrl" target="_blank">
+              <v-btn color="white" class="black--text no-text-decoration" block>
+                <v-icon>mdi-google-maps</v-icon> Google Map</v-btn>
+            </a>
+          </p>
+        </v-col>
+        <v-col v-if="this.$store.state.interest.already" cols="6">
+          <p v-if="this.$store.state.favorite.already">
+            <v-btn color="green" class="black--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon></v-btn>
+          </p>
+          <p v-else>
+            <v-btn color="appyellow" class="black--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon></v-btn>
+          </p>
+        </v-col>
+        <v-col v-else cols="6">
+          <p>
+            <v-btn color="pink" class="white--text" @click="interest" block><v-icon>mdi-thumb-up</v-icon></v-btn>
+          </p>
+        </v-col>
+      </v-row>
     </v-container>
     <!-- <iframe
       width="600"
@@ -73,15 +74,42 @@ export default {
       trophyData: [],
       achievementRate: [],
       achievementRate2: [],
-      chart: {
-        options: {
-          labels: ['Interest', 'GET!', '取得率'],
-          title: {
-            text: 'トロフィー取得率',
-            align: 'center',
+      rate: 0,
+      chartOptions: {
+        chart: {
+          height: 350,
+          type: "radialBar"
+        },
+        series: [22],
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              size: '70%',
+            },
+            dataLabels: {
+              showOn: "always",
+              name: {
+                offsetY: 10,
+                show: true,
+                color: "#F3DF4C",
+                fontSize: "30px",
+              },
+              value: {
+                offsetY: 20,
+                color: "#F3DF4C",
+                fontSize: "14px",
+                show: true,
+                formatter: function (val) {
+                  return "希少性:" + val + '%'
+                }
+              }
+            },
           },
         },
-        series: [ 44, 55, 41 ],
+        // type: 'radialBar',
+        colors: ['#F3DF4C'],
+        labels: [],
+        // labels: ["Progress"]
       },
     }
   },
@@ -100,6 +128,9 @@ export default {
         return '';
       }
     }
+  },
+  mounted() {
+    this.getRareness();
   },
   async asyncData({ params, $axios, route }) {
     try {
@@ -123,6 +154,9 @@ export default {
     } catch (error) {
       console.error('データの取得に失敗しました', error);
     }
+  },
+  mounted() {
+    this.getRareness();
   },
   methods: {
     async interest ( ) {
@@ -163,12 +197,44 @@ export default {
       } catch (error) {
         console.error('データの取得に失敗しました', error);
       }
+    },
+    getRareness() {
+    this.rate = 100 - this.achievementRate2[2];
+    const prix = "get率";
+    console.log("レート" + this.achievementRate2[2]);
+    console.log("レアリティ" + this.rate);
+    if (this.rate >= 90) {
+      this.chartOptions.labels.push("SSレア");
+    } else if (this.rate >= 70) {
+      this.chartOptions.labels.push("Sレア");
+    } else if (this.rate >= 50) {
+      this.chartOptions.labels.push("Aレア");
+    } else if (this.rate >= 30) {
+      this.chartOptions.labels.push("Bレア");
+    } else if (this.rate >= 10) {
+      this.chartOptions.labels.push("Cレア");
+    } else {
+      this.chartOptions.labels.push("Dレア");
     }
+  }
   }
 }
 </script>
 <style>
+
 .trophy-page-btn {
   width: 300px;
 }
+
+#SvgjsText1015 {
+  font-size: 16px;
+  fill: #F3DF4C;
+}
+.reality {
+  font-weight: bold;
+}
+.reality span {
+    font-size: 30px;
+    color: #F3DF4C;
+  }
 </style>

@@ -10,7 +10,7 @@
   <app-logo
     @click.native="$vuetify.goTo('#scroll-top')"
   />
-    <app-title class="hidden-mobile-and-down" />
+    <!-- <app-title class="hidden-mobile-and-down" /> -->
     <v-spacer v-if="!isLogin" />
     <div v-else></div>
 

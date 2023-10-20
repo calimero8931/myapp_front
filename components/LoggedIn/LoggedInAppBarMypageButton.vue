@@ -28,4 +28,9 @@ export default {
 }
 </script>
 <style>
+#mypage_btn {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 60px;
+  border: 1px solid yellow;
+}
 </style>

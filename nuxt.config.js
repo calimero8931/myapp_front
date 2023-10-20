@@ -105,7 +105,7 @@ export default {
         dark: {
         // background: '1B2440',
         // background: '000000',
-          primary: '4080BE',
+          primary: 'F3DF4C',
           info: '4FC1E9',
           appblue: '1B2440',
           appyellow: 'F3DF4C',

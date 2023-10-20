@@ -1,92 +1,40 @@
 <template>
   <div>
-    <!-- <home-price
-        :menus="menus"
-        :img-height="imgHeight"
-        :test="test"
-      /> -->
-    <!-- <h1>my page</h1> -->
     <v-container>
-      <h2>Challenging Trophies</h2>
-      <v-list v-if="!achievements">
-        <v-list-item v-for="item in achievements " :key="item.id">
-          <v-list-item-content>
-            <v-list-item-title><nuxt-link :to="`/trophy/${item.trophy_id}`">{{ item.trophy_title }}</nuxt-link></v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.trophy_description }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.create_at }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>
-              <v-btn color="primary" @click="getTrophy(item.trophy_id)"><v-icon>mdi-trophy</v-icon>&nbsp;GET</v-btn>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <h1 class="text-center white--text my-4">Challenging Trophies</h1>
+      <v-row v-if="pagedAchievements.length > 0">
+        <v-col
+          v-for="(item, index) in pagedAchievements"
+          :key="item.id"
+          cols="6"
+        >
+          <v-card style="background-color: #313953;border-radius: 7px 7px 0 0;">
+            <nuxt-link :to="`/trophy/${item.id}`">
+              <v-img
+                class="white--text align-end rounded-top"
+                height="100px"
+                :src="item.image_url"
+                style="border-radius: 7px 7px 0 0;"
+              ></v-img>
+            </nuxt-link>
+            <v-card-title style="justify-content: center; font-size: 16px;margin: 4px auto;">{{ item.trophy_title }}</v-card-title>
+            <v-card-text>{{ item.description }}</v-card-text>
+            <v-btn color="primary" @click="getTrophy(item.trophy_id)" block>
+              <v-icon>mdi-trophy</v-icon> GET
+            </v-btn>
+          </v-card>
+        </v-col>
+      </v-row>
       <p v-else>
           挑戦中のトロフィーはありません
       </p>
+      <v-pagination
+        v-if="totalPages > 1"
+        v-model="currentPage"
+        :length="totalPages"
+        color="primary"
+      ></v-pagination>
     </v-container>
-    <v-container>
-      <h2>Achieved Trophies</h2>
-      <v-list v-if="achievements">
-  <v-list-item v-for="item in achievements" :key="item.id">
-    <v-list-item-content>
-      <v-list-item-title class="text-left">
-        <nuxt-link :to="`/trophy/${item.trophy_id}`">
-          <v-icon color="yellow">mdi-crown</v-icon>{{ item.trophy_title }}
-        </nuxt-link>
-      </v-list-item-title>
-      <v-list-item-subtitle class="text-left">{{ item.SuccessAt }}</v-list-item-subtitle>
-    </v-list-item-content>
-    <v-list-item-content>
-      <v-list-item-title class="text-right">
-        <v-btn color="pink" class="white--text" @click="">
-          <v-icon>mdi-camera-plus</v-icon>
-        </v-btn>
-      </v-list-item-title>
-    </v-list-item-content>
-  </v-list-item>
-</v-list>
-
-      <p v-else>
-          取得済みのトロフィーはありません
-      </p>
-    </v-container>
-    <!-- <v-row justify="start" :align="'center'">
-      <v-col cols="2">
-        <v-text-field v-model="id_search" label="検索したいfriend id" @keydown.enter="searchFriend"></v-text-field>
-      </v-col>
-      <v-col cols="1">
-        <v-btn color="primary" @click="searchFriend"><v-icon>mdi-magnify</v-icon></v-btn>
-      </v-col>
-    </v-row> -->
-    <!-- <v-row>
-      <v-col cols="2">
-        <p v-if="friend_name">
-          {{ friend_name }}&nbsp&nbsp
-        </p>
-      </v-col>
-      <v-col>
-        <v-btn v-if="friend_name" rounded outlined color="orange" style="font-weight: bold;" @click="sendFriendship">フレンド申請を送る</v-btn>
-      </v-col>
-    </v-row>
-    <v-row justify="start" :align="'center'">
-      <v-col cols="2">
-        <p>フレンドコード:{{ this.$store.state.user.current.id }}</p>
-      </v-col>
-      <v-col cols="1">
-        <v-btn color="orange" class="white--text" @click="searchFriend"><v-icon>mdi-share-variant</v-icon></v-btn>
-      </v-col>
-      <v-col cols="1">
-        <v-btn color="green" class="white--text" @click="searchFriend"><v-icon>mdi-clipboard-text-multiple</v-icon></v-btn>
-      </v-col>
-    </v-row>
-    <p v-if="geo1">あなたは今、緯度:{{ geo1.lat }}経度{{ geo1.lng }}にいます</p>
-    <p v-else>位置情報を取得できませんでした</p> -->
   </div>
 </template>
 
@@ -107,19 +55,27 @@ export default {
       geo1: null,
       id_search: null,
       friend_name : null,
-      formattedSuccessAt: ''
+      formattedSuccessAt: '',
+      currentPage: 1,
+      itemsPerPage: 6,
     }
   },
   computed: {
     achievements() {
       return this.$store.state.achievements.list;
-    }
+    },
+    totalPages() {
+      return Math.ceil(this.achievements.length / this.itemsPerPage);
+    },
+    pagedAchievements() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      return this.achievements.slice(startIndex, startIndex + this.itemsPerPage);
+    },
   },
   async created() {
-  // コンポーネントが作成された後、非同期処理を行う
   try {
     const position = await this.getGeoLocation();
-    this.geo1 = position; // 位置情報を geo1 プロパティに保存
+    this.geo1 = position;
     if (this.achievements) {
       this.achievements.forEach((item) => {
         achievements.SuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
@@ -147,7 +103,6 @@ export default {
     },
     async getTrophy (trophyId) {
       if( this.geo1.lat >= 34.6751698 - 0.0001 && this.geo1.lat <= 34.6751698 + 0.0001 ) {
-      // if( true ) {
         try {
           const response = await this.$axios.$get(`/api/v1/achieve_trophy/`,
             {
@@ -158,7 +113,7 @@ export default {
             }
           );
           alert(response.message);
-          location.reload();
+          this.$router.push({ name: 'account-id-public-profile-hash-hash' });
         } catch (error)  {
           alert(response.message);
         }
@@ -196,7 +151,17 @@ export default {
         console.error('データの取得に失敗しました', error);
         this.friend_name = "データが見つかりません";
       }
-    }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
   }
 }
 </script>

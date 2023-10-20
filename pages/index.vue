@@ -2,6 +2,7 @@
   <v-app>
     <home-app-bar
       :img-height="imgHeight"
+      id="scroll-top"
     />
     <div style="height: 60px;"></div>
     <!-- 以下にrecommendDataの中をv-forで全出力する -->
@@ -12,7 +13,7 @@
       <v-sheet>
         <v-slide-group multiple style="margin: 20px 0;">
           <v-slide-item v-for="(recommend, i) in recommendData" :key="`recommend-${i}`">
-            <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 20px 0 0; width: 150px; height: 200px;">
+            <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 20px 0 0; width: 150px; height: 150px;">
               <v-img
                 class="white--text align-end"
                 height="100px"
@@ -21,11 +22,11 @@
               <v-card-title style="font-size: 14px; justify-content: center;">
                 {{ recommend.title  }}
               </v-card-title>
-              <v-card-text class="text--primary">
+              <!-- <v-card-text class="text--primary">
                 <div class="v-text-truncate">
                   {{ recommend.description | truncate(40) }}
                 </div>
-              </v-card-text>
+              </v-card-text> -->
             </v-card>
           </v-slide-item>
         </v-slide-group>
@@ -35,7 +36,7 @@
       <v-container class="elevation-6">
         <h2 class="text-center">どこへ行きたいですか？</h2>
         <div v-for="(category, i) in categoryData" :key="`category-${i}`" class="mt-2">
-          <v-btn color="appyellow" @click="fetchSubCategories(category.id),toggleButtonVisibility()" style="font-weight: bold; color: #000;" block>
+          <v-btn color="appyellow" @click="fetchSubCategories(category.id),toggleButtonVisibility()" style="font-weight: bold; color: #1B2440!important;" block>
             {{ category.name }}
           </v-btn>
           <div v-if="category.id === selectedCategoryId && showButton" class="flex">
@@ -101,7 +102,7 @@ export default {
   },
   data () {
     return {
-      imgHeight: 250,
+      imgHeight: 150,
       recommendData: [],
       categoryData: [],
       selectedCategoryId: null,
