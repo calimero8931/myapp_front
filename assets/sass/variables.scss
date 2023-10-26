@@ -8,9 +8,19 @@ body {
   text-decoration: none!important;
 }
 
+h1 {
+  font-size: 24px!important;
+  line-height: 1.2!important;
+  text-align: center!important;
+}
+
 .theme--dark.v-application {
   background-color: #1B2440;
   background: none!important;
+}
+
+.v-btn {
+  height: 40px!important;
 }
 
 .v-application .black {

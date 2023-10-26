@@ -14,7 +14,7 @@
         />
         <v-card-actions>
           <nuxt-link
-            to="#"
+            to="/password-reset"
             class="body-2 text-decoration-none"
           >
             パスワードを忘れましたか？
@@ -26,8 +26,8 @@
           :disabled="!isValid || loading"
           :loading="loading"
           block
-          color="appblue"
-          class="white--text"
+          color="appyellow"
+          class="black--text"
         >
           ログインする
         </v-btn>
@@ -55,6 +55,11 @@ export default {
       loggedInHomePath: $store.state.loggedIn.homePath
     }
   },
+  mounted() {
+    if (this.$route.query.token){
+      this.redirectWithParams();
+    }
+  },
   methods: {
     async login () {
       this.loading = true
@@ -73,10 +78,32 @@ export default {
     },
     authFailure ({ response }) {
       if( response && response.status === 404 ){
-        const msg = 'ユーザーが見つかりません💀'
+        const msg = 'ユーザーが見つかりません'
         return this.$store.dispatch('getToast', {  msg })
       }
       return this.$my.apiErrorHandler(response)
+    },
+    async redirectWithParams( route ) {
+      try {
+        const response = await this.$axios.$post(`/api/v1/confirm_signup2/`,
+          {
+            params: {
+              token: this.$route.query.token
+            }
+          }
+        );
+        this.$router.push('/login')
+        const msg = response.message
+        const color = 'success'
+        const timeout = 10000
+        return this.$store.dispatch('getToast', {  msg, color, timeout })
+      }
+      catch (error) {
+        const msg = error.response.data.message
+        const color = 'error'
+        const timeout = 6000
+        return this.$store.dispatch('getToast', {  msg, color, timeout })
+      }
     }
   }
 }

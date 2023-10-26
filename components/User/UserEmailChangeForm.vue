@@ -3,15 +3,16 @@
     <v-text-field
       v-model="setNewEmail"
       :rules="rules"
-      label="メールアドレスを入力"
+      label="新しいメールアドレスを入力"
       :placeholder="placeholder ? 'your@email.com' : undefined"
       outlined
     />
     <v-text-field
       v-model="setConfirmEmail"
       :rules="[...rules, emailMatchRule]"
-      label="もう一度メールアドレスを入力"
+      label="もう一度新しいメールアドレスを入力"
       :placeholder="placeholder ? 'your@email.com' : undefined"
+      style="margin-top: -12px;"
       outlined
     />
   </div>

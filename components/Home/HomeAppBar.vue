@@ -2,14 +2,19 @@
   <v-app-bar
     app
     :dark="!isScrollPoint"
-    :height="appBarHeight"
     :color="toolbarStyle.color"
     :elevation="toolbarStyle.elevation"
+    :height="appBarHeight"
     style="width: 100vw;"
   >
-  <app-logo
-    @click.native="$vuetify.goTo('#scroll-top')"
-  />
+  <nuxt-link
+        to="/"
+        class="text-decoration-none white--text"
+      >
+    <app-logo
+      @click.native="$vuetify.goTo('#scroll-top')"
+    />
+  </nuxt-link>
     <!-- <app-title class="hidden-mobile-and-down" /> -->
     <v-spacer v-if="!isLogin" />
     <div v-else></div>
@@ -74,12 +79,12 @@ export default {
     },
     imgHeight: {
       type: Number,
-      default: 0
+      default: 1
     }
   },
   data ({ $store }) {
     return {
-      appBarHeight: 0,
+      appBarHeight: 56,
       scrollY: 0,
       homeAppBarHeight: $store.state.styles.homeAppBarHeight,
       isLogin: $store.state.user.current

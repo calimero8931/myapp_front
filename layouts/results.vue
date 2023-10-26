@@ -20,7 +20,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .mypage_btn {
   bottom: 100px;
   z-index: 100;

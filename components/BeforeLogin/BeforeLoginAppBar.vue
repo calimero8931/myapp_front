@@ -32,6 +32,7 @@
 export default {
   data ({ $store }) {
     return {
+      appBarHeight: 56,
       homeAppBarHeight: $store.state.styles.homeAppBarHeight
     }
   }

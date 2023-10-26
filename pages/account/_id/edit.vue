@@ -1,25 +1,40 @@
 <template>
   <div>
-    <h1>公開用のプロフィール設定</h1>
-    <v-form>
-      <!-- ユーザー名 -->
-      <v-text-field v-model="profile.user_name" label="ニックネーム" required></v-text-field>
-
-      <!-- プロフィール画像のアップロード -->
+    <h1 class="my-4">プロフィール設定</h1>
+    <p>ここで設定した情報は誰でも見ることができるあなたのシェアページの情報として使われます。</p>
+    <v-form
+      ref="form"
+    >
+      <v-text-field
+        v-model="profile.user_name"
+        :name.sync="profile.user_name"
+        label="ニックネーム"
+        count="30"
+        set-validation
+        outlined
+        @input="validateForm"
+        required></v-text-field>
+        <!-- {{ profile.user_name }} -->
       <v-file-input
         v-model="profile.profile_image"
         label="プロフィール画像のアップロード"
         accept="image/*"
+        outlined
       ></v-file-input>
-
-      <!-- 自己紹介文 -->
-      <v-textarea v-model="profile.bio" label="自己紹介"></v-textarea>
-
-      <!-- ウェブサイトリンク -->
-      <v-text-field v-model="profile.website" label="ウェブサイトリンク"></v-text-field>
-
-      <!-- 保存ボタン -->
-      <v-btn color="primary" @click="saveProfile" block>保存</v-btn>
+      <user-form-textarea
+        v-model="profile.bio"
+        :setBio.sync="profile.bio"
+        label="自己紹介"
+        :rules="rules"
+        outlined></user-form-textarea>
+      <!-- {{ profile.bio }} -->
+      <user-form-my-email
+        v-model="profile.website"
+        :email.sync="profile.website"
+        placeholder="Email"
+        ></user-form-my-email>
+      <!-- {{ profile.website }} -->
+      <v-btn color="primary" @click="saveProfile" class="black--text" :disabled="isSubmitDisabled" block>保存</v-btn>
     </v-form>
   </div>
 </template>
@@ -28,14 +43,21 @@
 export default {
   layout: 'logged-in',
   data() {
+    const max = 30
     return {
       profile: {
         user_name: "",
         profile_image_url: "",
         profile_image: null,
         bio: "",
-        website: ""
-      }
+        website: "",
+      },
+      max,
+      rules: [
+        v => !!v || '',
+        v => (!!v && v.length <= max) || `ユーザー名は${max}文字以内で入力してください`
+      ],
+      isSubmitDisabled: true,
     };
   },
   methods: {
@@ -100,16 +122,29 @@ export default {
           }
         );
         console.log(response);
-      const msg = response.message
-      const color = 'success'
-      const timeout = 4000
-      return this.$store.dispatch('getToast', {  msg, color, timeout })
+        const msg = response.message
+        const color = 'success'
+        const timeout = 3000
+        this.$store.dispatch('getToast', { msg, color, timeout });
+        setTimeout(() => {
+          this.$router.push(`/account/public-profile/${this.$store.state.user.current.id}`);
+        }, timeout);
       } catch (error) {
         console.error('データの取得に失敗しました', error);
         const msg = response.message
       const color = 'success'
       const timeout = 4000
-      return this.$store.dispatch('getToast', {  msg, color, timeout })
+      this.$store.dispatch('getToast', { msg, color, timeout });
+      setTimeout(() => {
+          this.$router.push(`/account/public-profile/${this.$store.state.user.current.id}`);
+        }, timeout);
+      }
+    },
+    validateForm() {
+      if(this.profile.user_name.length > 0) {
+        this.isSubmitDisabled = false
+      } else {
+        this.isSubmitDisabled = true
       }
     }
   }

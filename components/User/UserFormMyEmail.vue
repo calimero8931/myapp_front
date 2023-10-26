@@ -3,8 +3,8 @@
     v-model="setEmail"
     :rules="rules"
 
-    label="メールアドレスを入力"
-    :placeholder="placeholder ? 'your@email.com' : undefined"
+    label="あなたのSNSなど、アドレスを入力"
+    :placeholder="placeholder ? 'yourAccount@sns.com' : undefined"
     outlined
   />
 </template>
@@ -15,10 +15,6 @@ export default {
     email: {
       type: String,
       default: ''
-    },
-    placeholder: {
-      type: Boolean,
-      default: false
     },
     label: {
       type: String,

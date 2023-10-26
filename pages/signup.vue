@@ -22,8 +22,8 @@
           :disabled="!isValid || loading"
           :loading="loading"
           block
-          color="appblue"
-          class="white--text"
+          color="appyellow"
+          class="black--text"
           @click="signup"
         >
           登録する
@@ -43,7 +43,7 @@ export default {
       params: {
         user: {
           name: 'yuya',
-          email: '',
+          email: 'hello.potechi@gmail.com',
           password: 'password'
         }
       }
@@ -53,15 +53,11 @@ export default {
     async signup() {
     this.loading = true;
     try {
-      await this.$store.dispatch('signup', this.params);
-
-      if (this.$store.state.auth.status === 'success') {
-        alert('登録が完了しました');
-        // 登録が成功した場合、リダイレクトや他の処理を行う場合はここで行います
-        // this.$router.push('/mypage');
-      } else {
-        alert('登録に失敗しました');
-      }
+      const response = await this.$axios.$post('/api/v1/signup', this.params);
+      const msg = response.message;
+      const color = 'success';
+      const timeout = 4000;
+      return this.$store.dispatch('getToast', { msg, color, timeout });
     } catch (error) {
       console.error('登録エラー:', error);
       alert('登録に失敗しました');

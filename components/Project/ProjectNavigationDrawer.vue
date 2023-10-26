@@ -81,7 +81,7 @@ export default {
     dynamicNavMenus() {
       const dynamicMenus = [
         { name: 'account-id-mypage', icon: 'mdi-trophy' },
-        { name: 'account-id-public-profile-edit', icon: 'mdi-account-eye' },
+        { name: 'account-id-edit', icon: 'mdi-account' },
         { name: 'account-id-public-profile-hash-hash', icon: 'mdi-account-eye' },
         { name: 'account-id-interest', icon: 'mdi-heart-multiple' }
       ];

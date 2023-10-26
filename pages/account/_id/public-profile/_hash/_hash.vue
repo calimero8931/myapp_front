@@ -11,10 +11,23 @@
       </v-avatar>
     </p>
     <!-- <h1>{{ userProfile }}</h1> -->
-    <h1 class="text-center">{{ userProfile.username }}</h1>
-    <h2>{{ userProfile.bio }}</h2>
-    <!-- <p>{{ achievements }}</p> -->
-    <h2>achievements</h2>
+    <h1 class="text-center" style="font-size: 20px;">{{ userProfile.username }}</h1>
+    <p class="mb-6">
+      {{ userProfile.bio }}<br>
+      <a :href="'http://'+userProfile.website" target="_blank">{{ userProfile.website }}</a>
+    </p>
+    <p>
+      <v-btn color="primary" @click="copyToClipboard" class="black--text" style="margin-bottom: -4px;" block><v-icon>mdi-clipboard</v-icon>shareページのURLをコピー</v-btn>
+    </p>
+    <p>
+      <v-btn outlined :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア" color="appyellow" class="black--text" block>
+          <v-icon>mdi-twitter</v-icon> share
+      </v-btn>
+      <!-- <a :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア">
+        </a> -->
+    </p>
+    <v-divider class="my-6"></v-divider>
+    <h2 class="text-center mb-4">achievements</h2>
     <!-- <p>{{ img_url }}</p> -->
     <v-row>
       <v-col
@@ -24,14 +37,17 @@
         :style="index % 2 === 1 ? 'padding-left: 0;' : ''"
       >
         <v-card>
-          <v-img
-            class="white--text align-end"
-            height="100px"
-            :src="item.image_url"
-          ></v-img>
-          <v-card-title style=" justify-content: center;">{{ item.title }}</v-card-title>
-          <v-card-text style=" justify-content: center;">{{ item.success_at }}</v-card-text>
-          <v-btn color="red" @click="openFileInput(item.id)" block>
+          <nuxt-link :to="`/trophy/${item.trophy_id}`">
+            <v-img
+              class="white--text align-end"
+              height="100px"
+              style="border-radius: 7px 7px 0 0;"
+              :src="item.image_url"
+            ></v-img>
+          </nuxt-link>
+          <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
+          <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
+          <v-btn color="red" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
             <v-icon>mdi-image</v-icon> 記念写真
           </v-btn>
           <!-- プロフィール画像のアップロード -->
@@ -56,22 +72,14 @@
       @input="paginateAchievements"
       class="my-8"
     ></v-pagination>
-    <p>
-      <v-btn color="primary"  @click="copyToClipboard" block><v-icon>mdi-clipboard</v-icon>クリップボードにコピー</v-btn>
-    </p>
-    <p>
-      <v-btn color="appyellow" block>
-        <a :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア">
-          <v-icon>mdi-twitter</v-icon> share
-        </a>
-      </v-btn>
-    </p>
   </v-container>
 </template>
 
 <script>
+import { format } from 'date-fns';
+
 export default {
-  layout: 'logged-in',
+  layout: 'default',
   name: 'LayoutsDefault',
   data() {
     return {
@@ -83,6 +91,7 @@ export default {
       itemsPerPage: 4, // 1ページに表示するアイテム数
       selectedFile: null,
       selectedTrophyId: null,
+      formattedSuccessAt: '',
     };
   },
   async created() {
@@ -97,6 +106,12 @@ export default {
       }
       const img_response = await this.$axios.$get(`/api/v1/get_profile_img/${this.$store.state.user.current.id}`);
       this.img_url = img_response.image_url;
+      if (this.displayedAchievements) {
+        this.displayedAchievements.forEach((item) => {
+          item.formattedSuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
+          console.log("successあっと" + item.formattedSuccessAt);
+        });
+      }
     } catch (error) {
       console.error(error.message);
     }
@@ -166,34 +181,52 @@ export default {
       this.selectedTrophyId = trophyId;
     },
     async uploadFile() {
-      if (this.selectedFile) {
-        const file = this.selectedFile;
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-          const response = await this.$axios.$post(`/api/v1/upload_achievement_image/`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            },
-            params: {
-              user_id: this.$store.state.user.current.id,
-              achievement_id: this.selectedTrophyId
-            }
-          });
-          const msg = response.message
-          const color = 'success'
-          const timeout = 4000
-          // this.$router.push(`/account/public-profile/${this.userProfile.unique_hash}`);
-          this.getProfileAndAchievements( this.userProfile.unique_hash );
-          return this.$store.dispatch('getToast', {  msg, color, timeout })
-        } catch (error) {
-          console.error('ファイルのアップロードに失敗しました', error);
-        }
-        } else {
-          // ファイルが選択されていないか、存在しない場合
-          console.error('ファイルが選択されていません');
-        }
+  if (this.selectedFile) {
+    const file = this.selectedFile;
+
+    // ファイルがnullバイトを含まないかをチェック
+    if (this.containsNullByte(file)) {
+      console.error('ファイルにnullバイトが含まれています');
+      return; // アップロードを中止
     }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const response = await this.$axios.$post(`/api/v1/upload_achievement_image/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        params: {
+          user_id: this.$store.state.user.current.id,
+          achievement_id: this.selectedTrophyId
+        }
+      });
+      const msg = response.message;
+      const color = 'success';
+      const timeout = 4000;
+      this.getProfileAndAchievements(this.userProfile.unique_hash);
+      return this.$store.dispatch('getToast', { msg, color, timeout });
+    } catch (error) {
+      console.error('ファイルのアップロードに失敗しました', error);
+    }
+  } else {
+    // ファイルが選択されていないか、存在しない場合
+    console.error('ファイルが選択されていません');
+  }
+},
+containsNullByte(file) {
+  const fileData = new Uint8Array(file);
+
+  for (let i = 0; i < fileData.length; i++) {
+    if (fileData[i] === 0) {
+      return true; // nullバイトが見つかった場合
+    }
+  }
+
+  return false; // nullバイトが見つからなかった場合
+}
+
   },
 }
 </script>

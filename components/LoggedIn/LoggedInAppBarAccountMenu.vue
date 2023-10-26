@@ -19,7 +19,6 @@
       <v-subheader>
         ログイン中のユーザー
       </v-subheader>
-
       <v-list-item>
         <v-list-item-content>
           <v-list-item-subtitle>
@@ -33,7 +32,6 @@
       <v-subheader>
         アカウント
       </v-subheader>
-
       <template v-for="(menu, i) in menus">
         <div>
           <v-divider

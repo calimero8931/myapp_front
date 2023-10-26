@@ -13,9 +13,9 @@
     >
       変更を保存
     </v-btn>
-    <p>{{ params.user.password }}</p>
+    <!-- <p>{{ params.user.password }}</p>
     <p>{{ params.user.password2 }}</p>
-    <p>{{ params.user.password3 }}</p>
+    <p>{{ params.user.password3 }}</p> -->
   </div>
 </template>
 
@@ -26,9 +26,9 @@ export default {
     return {
       params: {
         user: {
-          password: 'password',
-          password2: 'testtest',
-          password3: 'testtest',
+          password: '',
+          password2: '',
+          password3: '',
         }
       }
     };

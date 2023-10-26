@@ -19,17 +19,20 @@
       "password": "パスワード",
       "id": {
         "settings": "アカウント設定",
-        "mypage": "トロフィー",
-        "interest": "興味があるもの",
+        "mypage": "チャレンジ中",
+        "interest": "興味がある分野",
         "password": "パスワード変更",
         "delete": "アカウント削除",
+        "edit": "プロフィール",
         "public": {
           "profile":  {
-            "edit": "公開プロフ設定",
             "hash":{
-              "hash": "公開プロフ確認"
+              "hash": "ゲットトロフィー"
             }
           }
+        },
+        "trophy": {
+          "edit": "トロフィー申請"
         },
         "mail": {
           "address":  "メールアドレス変更"

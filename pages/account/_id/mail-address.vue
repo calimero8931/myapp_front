@@ -1,16 +1,18 @@
 <template>
   <div>
-    <app-toaster />
-    <h2>メールアドレスの変更</h2>
+    <h1 class="mb-4">メールアドレスの変更</h1>
+    <p>現在のあなたのメールアドレス<br>{{ now_email }}</p>
     <user-email-change-form
     :email.sync="params.user.email"
     :email2.sync="params.user.email2"
     />
     <v-btn
       color="primary"
+      class="black--text"
       @click="changeEmail"
+      block
     >
-      変更を保存
+      メールを送信
     </v-btn>
   </div>
 </template>
@@ -20,6 +22,7 @@ export default {
   layout: 'logged-in',
   data() {
     return {
+      now_email: "",
       params: {
         user: {
           email: '',
@@ -29,6 +32,7 @@ export default {
     };
   },
   mounted() {
+    this.get_email();
     if (this.$route.query.token){
       this.redirectWithParams();
     }
@@ -74,14 +78,32 @@ export default {
         );
         const msg = response.message
         const color = 'success'
-        const timeout = 3000
-        return this.$store.dispatch('getToast', {  msg, color, timeout })
+        const timeout = 5000
+        this.$store.dispatch('getToast', {  msg, color, timeout })
+        this.get_email();
       }
       catch (error) {
         const msg = error.response.data.message
         const color = 'error'
-        const timeout = 3000
-        return this.$store.dispatch('getToast', {  msg, color, timeout })
+        const timeout = 5000
+        this.$store.dispatch('getToast', {  msg, color, timeout })
+        this.get_email();
+      }
+    },
+    async get_email() {
+      const response = await this.$axios.$post(`/api/v1/get_user_data/`,
+      {
+        params: {
+          user_id: this.$store.state.user.current.id
+        }
+      }
+    );
+    const email = response.email;
+
+      if (email.length > 4) {
+        this.now_email = email.substring(0, 4) + '*'.repeat(email.length - 4);
+      } else {
+        this.now_email = email;
       }
     }
   }

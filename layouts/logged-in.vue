@@ -11,12 +11,12 @@
       <nuxt />
     </v-main>
     <app-toaster
-      style="margin-top: 50px;"
+      style="margin-top: 56px;"
     />
     <v-btn
       id="menu-btn"
       color="appyellow"
-      style="height: 40px;"
+      style="height: 40px; border-radius: 7px 7px 0 0;"
       @click="drawer = !drawer">
       <v-icon>mdi-menu</v-icon>
     </v-btn>

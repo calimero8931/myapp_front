@@ -5,7 +5,10 @@
       <p class="text-center">
         <v-avatar size="150"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
       </p>
-      <!-- <h2 class="text-center reality">rarity <span>{{ getRareness() }}</span></h2> -->
+      <h2 class="text-center reality"><span>{{ getRareness() }}</span></h2>
+      <p style="display: none;">{{ [rarenessLabel] }}</p>
+      <!-- <p>{{ "ラベル:"+rarenessLabel }}</p> -->
+      <!-- <p>{{ [this.rate] }}</p> -->
       <p>{{ trophyData.description }}</p>
       <!-- <p>completion_rate:{{ achievementRate }}</p>
       <p>興味を持っている人数:{{ achievementRate.interested_users_count }}</p>
@@ -15,11 +18,11 @@
       <v-divider class="my-4"></v-divider>
       <apexchart
         :options="chartOptions"
-        :labels="chartOptions"
+        :labels="chartOptions.labels"
         :series="[this.rate]"
       ></apexchart>
       <!-- <p>achievementRate2:{{ [achievementRate2[2]] }}%</p> -->
-      <v-row justify="center" align="center">
+      <v-row v-if="this.$store.state.user.current" justify="center" align="center">
         <v-col cols="6">
           <p>
             <a :href="googleMapUrl" target="_blank">
@@ -30,18 +33,19 @@
         </v-col>
         <v-col v-if="this.$store.state.interest.already" cols="6">
           <p v-if="this.$store.state.favorite.already">
-            <v-btn color="green" class="black--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon></v-btn>
+            <v-btn color="green" class="black--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon>リスト削除</v-btn>
           </p>
           <p v-else>
-            <v-btn color="appyellow" class="black--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon></v-btn>
+            <v-btn color="appyellow" class="black--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon>チャレンジ</v-btn>
           </p>
         </v-col>
         <v-col v-else cols="6">
           <p>
-            <v-btn color="pink" class="white--text" @click="interest" block><v-icon>mdi-thumb-up</v-icon></v-btn>
+            <v-btn color="pink" class="white--text" @click="interest" block><v-icon>mdi-thumb-up</v-icon>気になる</v-btn>
           </p>
         </v-col>
       </v-row>
+      <div v-else></div>
     </v-container>
     <!-- <iframe
       width="600"
@@ -60,7 +64,7 @@ import { ref } from 'vue';
 import VueApexCharts from 'vue-apexcharts'
 export default {
   name: 'LayoutsDefault',
-  layout: 'results',
+  layout: 'default',
   middleware: [
     'get-favorite',
     'get-interested',
@@ -109,6 +113,7 @@ export default {
         // type: 'radialBar',
         colors: ['#F3DF4C'],
         labels: [],
+        rarenessLabel: [],
         // labels: ["Progress"]
       },
     }
@@ -127,10 +132,27 @@ export default {
       } else {
         return '';
       }
-    }
+    },
+    rarenessLabel() {
+      // レアネスラベルを計算するコンピューテッドプロパティ
+      if (this.rate >= 90) {
+        this.chartOptions.labels.push("SSレア");
+      } else if (this.rate >= 70) {
+        this.chartOptions.labels.push("Sレア");
+      } else if (this.rate >= 50) {
+        this.chartOptions.labels.push("Aレア");
+      } else if (this.rate >= 30) {
+        this.chartOptions.labels.push("Bレア");
+      } else if (this.rate >= 10) {
+        this.chartOptions.labels.push("Cレア");
+      } else {
+        this.chartOptions.labels.push("Dレア");
+      }
+    },
   },
   mounted() {
     this.getRareness();
+    this.$store.dispatch('getRememberPath', { name: this.$route.name, params: { key: this.$route.params.id } })
   },
   async asyncData({ params, $axios, route }) {
     try {
@@ -155,11 +177,11 @@ export default {
       console.error('データの取得に失敗しました', error);
     }
   },
-  mounted() {
-    this.getRareness();
-  },
   methods: {
     async interest ( ) {
+      if (!store.state.user.current) {
+        return false
+      }
       try {
         const response = await this.$axios.$get(`/api/v1/check_interested_sub_categories/`,
           {
@@ -199,24 +221,10 @@ export default {
       }
     },
     getRareness() {
-    this.rate = 100 - this.achievementRate2[2];
-    const prix = "get率";
-    console.log("レート" + this.achievementRate2[2]);
-    console.log("レアリティ" + this.rate);
-    if (this.rate >= 90) {
-      this.chartOptions.labels.push("SSレア");
-    } else if (this.rate >= 70) {
-      this.chartOptions.labels.push("Sレア");
-    } else if (this.rate >= 50) {
-      this.chartOptions.labels.push("Aレア");
-    } else if (this.rate >= 30) {
-      this.chartOptions.labels.push("Bレア");
-    } else if (this.rate >= 10) {
-      this.chartOptions.labels.push("Cレア");
-    } else {
-      this.chartOptions.labels.push("Dレア");
-    }
-  }
+      this.rate = 100 - this.achievementRate2[2];
+      console.log("レート" + this.achievementRate2[2]);
+      console.log("レアリティ" + this.rate);
+    },
   }
 }
 </script>
@@ -237,4 +245,8 @@ export default {
     font-size: 30px;
     color: #F3DF4C;
   }
+
+a {
+  text-decoration: none!important;
+}
 </style>

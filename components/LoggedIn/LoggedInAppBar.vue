@@ -1,10 +1,9 @@
 <template>
   <v-app-bar
     color="appblue"
-    dense
     elevation="1"
     :clipped-left="clippedLeft"
-    style="width: 100vw; max-height: 48px;"
+    style="width: 100vw; max-height: 56px;"
     >
       <slot name="navigation-toggle-button" />
       <nuxt-link

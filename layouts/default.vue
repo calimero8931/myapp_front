@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <v-main style="padding-top: 0;">
+    <home-app-bar
+      :img-height="imgHeight"
+      id="scroll-top"
+    />
+    <v-main>
       <app-toaster />
       <div class="background-image111">
         <nuxt />
@@ -27,10 +31,6 @@ export default {
 
 .mypage_btn {
   z-index: 100;
-}
-.mypage_btn i {
-  font-size: 60px!important;
-  color: #F3DF4C!important;
 }
 /* 背景画像の設定 */
 .background-image111 {

@@ -1,5 +1,9 @@
 export default async ({ store, $axios, route }) => {
+  if (!store.state.user.current) {
+    return false
+  }
   try {
+
     const response = await $axios.$get(`/api/v1/get_favorite/`,
       {
         params: {

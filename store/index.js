@@ -123,6 +123,7 @@ export const actions = {
   // ログイン前ユーザーがアクセスしたルートを記憶する
   getRememberPath ({ state, commit }, { name, params }) {
     // ログイン前パスが渡された場合はloggedIn.homePathに書き換える
+    console.log('リメンバー');
     if (state.loggedIn.redirectPaths.includes(name)) {
       name = state.loggedIn.homePath.name
     }
@@ -135,7 +136,7 @@ export const actions = {
   async signup ({ dispatch }, params) {
     const res = await this.$axios.post('/api/v1/signup', params)
     // 成功したらアラートを表示
-    dispatch('getToast', { msg: 'うまくいったで', color: 'success' })
+    dispatch('getToast', { msg: 'success', color: 'success' })
     const { token, expires, payload } = res.data
     dispatch('getAuthToken', token)
     dispatch('getAuthExpires', expires)

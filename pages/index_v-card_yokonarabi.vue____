@@ -1,7 +1,15 @@
 <template>
   <v-app>
+    <home-app-bar
+      :img-height="imgHeight"
+      id="scroll-top"
+    />
+    <div style="height: 60px;"></div>
+    <!-- 以下にrecommendDataの中をv-forで全出力する -->
+    <!-- <div v-for="(recommend, i) in recommendData" :key="`recommend-${i}`">
+      {{ recommend.name  }}
+    </div> -->
     <template>
-      <h2 class="text-center my-4">Recommend</h2>
       <v-sheet>
         <v-slide-group multiple style="margin: 20px 0;">
           <v-slide-item v-for="(recommend, i) in recommendData" :key="`recommend-${i}`">
@@ -24,66 +32,69 @@
         </v-slide-group>
       </v-sheet>
     </template>
-    <h2 class="text-center mt-8">トロフィーを探す</h2>
-    <v-sheet style="margin-top: 10px;">
-      <v-container class="elevation-6" style="padding-top: 0;">
-        <div v-for="(category, i) in categoryData" :key="`category-${i}`" class="my-4">
-          <v-card>
-            <v-img
-              src="https://picsum.photos/seed/picsum/200/300"
-              :height="imgHeight"
-              style="border-radius: 7px 7px 0 0;"
-            ></v-img>
-            <v-btn color="appyellow" @click="fetchSubCategories(category.id),toggleButtonVisibility()" style="font-weight: bold; color: #1B2440!important;" block>
-              {{ category.name }}
-            </v-btn>
-          </v-card>
-          <div v-if="category.id === selectedCategoryId && showButton" class="flex">
-            <div v-for="(subCategory, i) in subCategoryData" :key="`subCategory-${i}`" class="mr-2 mt-2">
-              <v-btn outlined color="appyellow" @click="fetchRegions(subCategory.id)" style="font-weight: bold;">
-                {{ subCategory.name }}
-              </v-btn>
-              <!-- 以下にregionsデータを羅列 -->
-              <div v-if="subCategory.id === selectedSubCategoryId" class="flex">
-                <div v-for="(region, i) in regionsData" :key="`region-${i}`" class="mr-2 mt-2">
-                  <v-btn outlined color="blue" @click="fetchPrefectures(region.id)" style="font-weight: bold;">
-                    {{ region.name }}
-                  </v-btn>
-                  <!-- 以下にprefecturesデータを羅列 -->
-                  <div v-if="region.id === selectedRegionId" class="flex">
-                    <div v-for="(prefecture, i) in prefecturesData" :key="`prefecture-${i}`" class="mr-2 mt-2">
-                      <v-btn
-                        outlined
-                        color="orange"
-                        @click="fetchTrophies(prefecture.id)"
-                        style="font-weight: bold;"
-                      >
-                        <nuxt-link
-                          :to="{ name: 'results-param1-param2',
-                          params:{ param1:selectedSubCategoryId, param2:prefecture.id }}"
-                          style="text-decoration: none;color: orange;"
-                        >
-                        {{ prefecture.name }}
-                      </nuxt-link>
-                      </v-btn>
+    <v-sheet style="margin-top: 20px;">
+      <v-container class="elevation-6">
+        <h2 class="text-center">どこへ行きたいですか？</h2>
+        <div>
+          <v-row>
+            <v-col cols="6"
+              v-for="(category, i) in categoryData" :key="`category-${i}`" class="mt-2"
+              :style="index % 2 === 1 ? 'padding-left: 0;' : ''"
+            > <!-- cols="6"は半分の幅を指定 -->
+              <v-card>
+                <v-img
+                  src="https://picsum.photos/seed/picsum/200/300"
+                  :height="imgHeight"
+                  style="border-radius: 7px 7px 0 0;"
+                ></v-img>
+                <v-btn
+                  color="appyellow"
+                  @click="fetchSubCategories(category.id),toggleButtonVisibility()"
+                  style="font-weight: bold; color: #1B2440!important;"
+                  block>
+                  {{ category.name }}
+                </v-btn>
+                <div v-if="category.id === selectedCategoryId && showButton" class="flex">
+                  <div v-for="(subCategory, i) in subCategoryData" :key="`subCategory-${i}`" class="mr-2 mt-2">
+                    <v-btn outlined color="appyellow" @click="fetchRegions(subCategory.id)" style="font-weight: bold;">
+                      {{ subCategory.name }}
+                    </v-btn>
+                    <!-- 以下にregionsデータを羅列 -->
+                    <div v-if="subCategory.id === selectedSubCategoryId" class="flex">
+                      <div v-for="(region, i) in regionsData" :key="`region-${i}`" class="mr-2 mt-2">
+                        <v-btn outlined color="blue" @click="fetchPrefectures(region.id)" style="font-weight: bold;">
+                          {{ region.name }}
+                        </v-btn>
+                        <!-- 以下にprefecturesデータを羅列 -->
+                        <div v-if="region.id === selectedRegionId" class="flex">
+                          <div v-for="(prefecture, i) in prefecturesData" :key="`prefecture-${i}`" class="mr-2 mt-2">
+                            <v-btn
+                              outlined
+                              color="orange"
+                              @click="fetchTrophies(prefecture.id)"
+                              style="font-weight: bold;"
+                            >
+                              <nuxt-link
+                                :to="{ name: 'results-param1-param2',
+                                params:{ param1:selectedSubCategoryId, param2:prefecture.id }}"
+                                style="text-decoration: none;color: orange;"
+                              >
+                              {{ prefecture.name }}
+                            </nuxt-link>
+                            </v-btn>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
+              </v-card>
+            </v-col>
+          </v-row>
         </div>
       </v-container>
       <v-spacer></v-spacer>
     </v-sheet>
-    <v-btn color="#fadfsse" class="text-center mt-8 mb-4" style="height:60px;border-radius: 0;">
-        <nuxt-link
-          :to="{ name: 'about' }"
-          style="text-decoration: none;color: white!important; font-size: 16px;"
-        >Trophées(トロフェ)の使い方
-        <v-icon>mdi-question</v-icon>
-      </nuxt-link>
-      </v-btn>
     <app-footer />
   </v-app>
 </template>
@@ -121,6 +132,10 @@ export default {
       selectedPrefectureId: null,
       trophies : [],
       showButton: false,
+      category: {
+        id: null,
+        name: null
+      },
     }
   },
   mounted() {
@@ -185,7 +200,6 @@ export default {
       }
     },
     async fetchRegions (subCategoryId) {
-
       try {
         const response = await this.$axios.$get(`/api/v1/regions_request/`,
           {
