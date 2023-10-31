@@ -179,7 +179,7 @@ export default {
   },
   methods: {
     async interest ( ) {
-      if (!store.state.user.current) {
+      if (!this.$store.state.user.current) {
         return false
       }
       try {
