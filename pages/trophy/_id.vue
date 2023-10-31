@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <h1 class="text-center mb-2">{{ trophyData.title }}</h1>
+      <h1 class="text-center mt-8 mb-6">{{ trophyData.title }}</h1>
       <p class="text-center">
         <v-avatar size="150"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
       </p>
@@ -15,7 +15,7 @@
       <p>トロフィー取った人:{{ achievementRate.earned_users_count }}</p>
       <p>取得率:{{ achievementRate.completion_rate }}%</p>
       <p>このトロフィーのサブカテ{{ trophyData.category_id }}</p> -->
-      <v-divider class="my-4"></v-divider>
+      <v-divider class="my-6"></v-divider>
       <apexchart
         :options="chartOptions"
         :labels="chartOptions.labels"
@@ -93,15 +93,15 @@ export default {
             dataLabels: {
               showOn: "always",
               name: {
-                offsetY: 10,
+                offsetY: 0,
                 show: true,
                 color: "#F3DF4C",
                 fontSize: "30px",
               },
               value: {
-                offsetY: 20,
+                offsetY: 10,
                 color: "#F3DF4C",
-                fontSize: "14px",
+                fontSize: "12px",
                 show: true,
                 formatter: function (val) {
                   return "希少性:" + val + '%'
@@ -136,17 +136,17 @@ export default {
     rarenessLabel() {
       // レアネスラベルを計算するコンピューテッドプロパティ
       if (this.rate >= 90) {
-        this.chartOptions.labels.push("SSレア");
+        this.chartOptions.labels.push("SS");
       } else if (this.rate >= 70) {
-        this.chartOptions.labels.push("Sレア");
+        this.chartOptions.labels.push("S");
       } else if (this.rate >= 50) {
-        this.chartOptions.labels.push("Aレア");
+        this.chartOptions.labels.push("A");
       } else if (this.rate >= 30) {
-        this.chartOptions.labels.push("Bレア");
+        this.chartOptions.labels.push("B");
       } else if (this.rate >= 10) {
-        this.chartOptions.labels.push("Cレア");
+        this.chartOptions.labels.push("C");
       } else {
-        this.chartOptions.labels.push("Dレア");
+        this.chartOptions.labels.push("D");
       }
     },
   },

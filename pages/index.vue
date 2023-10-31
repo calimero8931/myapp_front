@@ -1,24 +1,27 @@
 <template>
   <v-app>
-    <template>
+    <template
+    style="background-image: url(https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg);"
+
+    >
       <h2 class="text-center my-4">Recommend</h2>
-      <v-sheet>
+      <v-sheet class="slide">
         <v-slide-group multiple style="margin: 20px 0;">
           <v-slide-item v-for="(recommend, i) in recommendData" :key="`recommend-${i}`">
-            <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 20px 0 0; width: 150px; height: 150px;">
+            <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 20px 0 0; width: 150px; height: auto;">
               <v-img
                 class="white--text align-end"
                 height="100px"
                 :src="recommend.image_url"
               ></v-img>
-              <v-card-title style="font-size: 14px; justify-content: center;">
+              <v-card-title class="pt-2" style="font-size: 16px; justify-content: center;">
                 {{ recommend.title  }}
               </v-card-title>
-              <!-- <v-card-text class="text--primary">
+              <v-card-text class="text--primary">
                 <div class="v-text-truncate">
-                  {{ recommend.description | truncate(40) }}
+                  {{ recommend.description | truncate(30) }}
                 </div>
-              </v-card-text> -->
+              </v-card-text>
             </v-card>
           </v-slide-item>
         </v-slide-group>
@@ -30,7 +33,7 @@
         <div v-for="(category, i) in categoryData" :key="`category-${i}`" class="my-4">
           <v-card>
             <v-img
-              src="https://picsum.photos/seed/picsum/200/300"
+              src="AdobeStock_144605328.jpeg"
               :height="imgHeight"
               style="border-radius: 7px 7px 0 0;"
             ></v-img>
@@ -76,7 +79,7 @@
       </v-container>
       <v-spacer></v-spacer>
     </v-sheet>
-    <v-btn color="#fadfsse" class="text-center mt-8 mb-4" style="height:60px;border-radius: 0;">
+    <v-btn color="error" class="text-center mt-8 mb-4" style="height:60px;border-radius: 0;">
         <nuxt-link
           :to="{ name: 'about' }"
           style="text-decoration: none;color: white!important; font-size: 16px;"
@@ -255,8 +258,12 @@ export default {
     background-color: rgba(255, 255, 255, 0.05);
   }
 
+  .slide {
+    padding: 10px 0;
+  }
+
   .v-card__subtitle, .v-card__text, .v-card__title {
-    padding: 0 8px;
+    padding: 0 8px 6px 8px;
   }
 
   .v-btn:not(.v-btn--round).v-size--default {

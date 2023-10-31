@@ -56,7 +56,7 @@
         <v-text-field v-model="profile.longitude" label="経度を入力"></v-text-field>
 
         <!-- 保存ボタン -->
-        <v-btn color="primary" @click="saveProfile" block>申請</v-btn>
+        <v-btn color="primary" @click="saveProfile" class="black--text" block>申請</v-btn>
       </v-form>
     </div>
     <div v-else>
@@ -128,7 +128,7 @@ export default {
           console.log(response.message);
           this.profile.profile_image_url = response.file_url;
         } catch (error) {
-          console.error('ファイルのアップロードに失敗しました', error);
+          console.error(error.message);
         }
         } else {
           // ファイルが選択されていないか、存在しない場合
@@ -230,7 +230,7 @@ export default {
           });
           console.log(response.message);
         } catch (error) {
-          console.error('ファイルのアップロードに失敗しました', error);
+          console.error(error.message);
         }
         } else {
           console.error('ファイルが選択されていません');
