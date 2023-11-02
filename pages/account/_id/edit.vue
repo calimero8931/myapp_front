@@ -10,6 +10,7 @@
         :name.sync="profile.user_name"
         label="ニックネーム"
         count="30"
+        :rules="rules"
         set-validation
         outlined
         @input="validateForm"
@@ -21,12 +22,15 @@
         accept="image/*"
         outlined
       ></v-file-input>
-      <user-form-textarea
+      <v-textarea
         v-model="profile.bio"
         :setBio.sync="profile.bio"
         label="自己紹介"
-        :rules="rules"
-        outlined></user-form-textarea>
+        count="160"
+        :rules="rulesBio"
+        :error-messages="errorBio"
+        @input="validateForm"
+        outlined></v-textarea>
       <!-- {{ profile.bio }} -->
       <user-form-my-email
         v-model="profile.website"
@@ -54,8 +58,12 @@ export default {
       },
       max,
       rules: [
-        v => !!v || '',
-        v => (!!v && v.length <= max) || `ユーザー名は${max}文字以内で入力してください`
+        v => !!v || 'ユーザー名は必須です',
+        v => (!!v && v.length <= 30) || `ユーザー名は30文字以内で入力してください`
+      ],
+      rulesBio: [
+        v => !!v || '自己紹介は必須です',
+        v => (v && v.length <= 160) || '自己紹介は160文字以内で入力してください'
       ],
       isSubmitDisabled: true,
     };
@@ -141,7 +149,7 @@ export default {
       }
     },
     validateForm() {
-      if(this.profile.user_name.length > 0) {
+      if(this.profile.user_name.length > 0 && this.profile.user_name.length <= 30 && this.profile.bio.length > 0 && this.profile.bio.length <= 160) {
         this.isSubmitDisabled = false
       } else {
         this.isSubmitDisabled = true

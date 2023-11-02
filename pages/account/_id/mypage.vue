@@ -1,12 +1,21 @@
 <template>
   <div>
     <v-container>
-      <h1 class="text-center white--text my-4">Challenging Trophies</h1>
-      <v-row v-if="pagedAchievements.length > 0">
+      <h1 class="text-center white--text my-4">挑戦中のトロフィー</h1>
+      <v-btn
+        :disabled="loading"
+        :loading="loading"
+        color="#FB515A"
+        @click="clickGetGeoButton()"
+        block>
+        <v-icon>mdi-map-marker</v-icon>
+        現在の位置を取得する</v-btn>
+      <v-row v-if="pagedAchievements.length > 0" class="mt-4">
         <v-col
           v-for="(item, index) in pagedAchievements"
           :key="item.id"
           cols="6"
+          class="cards"
         >
         <!-- {{ item }} -->
           <v-card style="background-color: #313953;border-radius: 7px 7px 0 0;">
@@ -18,9 +27,15 @@
                 style="border-radius: 7px 7px 0 0;"
               ></v-img>
             </nuxt-link>
-            <v-card-title style="justify-content: center; font-size: 16px;margin: 6px auto;line-height: 1.4;">{{ item.trophy_title }}</v-card-title>
+            <v-card-title style="justify-content: center; font-size: 14px!important;margin: 6px auto;line-height: 1.4;">{{ item.trophy_title }}</v-card-title>
             <v-card-text style="line-height: 1.4;">{{ item.description }}</v-card-text>
-            <v-btn color="primary" @click="getTrophy(item.trophy_id)" style="color:black; border-radius: 0 0 7px 7px;" block>
+            <v-btn
+              :disabled="loading"
+              :loading="loading"
+              color="primary"
+              @click="getTrophy(item.trophy_id)"
+              style="color:black; border-radius: 0 0 7px 7px;"
+              block>
               <v-icon>mdi-trophy</v-icon> GET
             </v-btn>
           </v-card>
@@ -34,6 +49,7 @@
         v-model="currentPage"
         :length="totalPages"
         color="primary"
+        class="my-8"
       ></v-pagination>
     </v-container>
     <div>
@@ -44,8 +60,8 @@
     <div class="dark-overlay congratulations" @click="hideCongratulations">
       <!-- おめでとう！のメッセージ -->
       <div class="center">
-        <!-- <v-icon>mdi-star</v-icon> -->
-        <p style="font-size: 30px;">トロフィー獲得！</p>
+        <v-img src="/trophy.svg" style="margin: 0 auto; width: 150px;"></v-img>
+        <h2 style="font-size: 30px;">トロフィー獲得！</h2>
       </div>
     </div>
   </div>
@@ -65,6 +81,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       drawer: null,
       geo1: null,
       id_search: null,
@@ -87,36 +104,41 @@ export default {
     },
   },
   async created() {
-  try {
-    const position = await this.getGeoLocation();
-    this.geo1 = position;
-    if (this.achievements) {
-      this.achievements.forEach((item) => {
-        achievements.SuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
-      });
-    }
-  } catch (error) {
-    console.error(error);
-  }
-},
+  },
   methods: {
-    getGeoLocation() {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            var data = position.coords;
-            var lat = data.latitude;
-            var lng = data.longitude;
-            resolve({ lat, lng });
-          },
-          error => {
-            reject(error);
-          }
-        );
-      });
+    async clickGetGeoButton() {
+        try {
+            this.loading = true;
+            const position = await this.getGeoLocation();
+            this.geo1 = position;
+            const msg = "現在地を取得しました";
+            const color = 'success';
+            const timeout = 4000;
+            this.loading = false;
+            return this.$store.dispatch('getToast', { msg, color, timeout });
+        } catch (error) {
+            console.error("位置情報の取得に失敗しました", error);
+        }
     },
+    getGeoLocation() {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const data = position.coords;
+                    const lat = data.latitude;
+                    const lng = data.longitude;
+                    resolve({ lat, lng });
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    },
+
     async getTrophy(trophyId) {
       try {
+        this.loading = true;
         // pagedAchievementsからtrophyIdに対応するデータを検索
         const trophyData = this.pagedAchievements.find(achievement => achievement.trophy_id === trophyId);
         console.log("今いる場所のラティ:"+this.geo1.lat);
@@ -140,6 +162,7 @@ export default {
 
           if (latDiff <= threshold && longDiff <= threshold) {
             // 条件に一致する場合の処理
+            this.loading = false;
             const response = await this.$axios.$get(`/api/v1/achieve_trophy/`, {
               params: {
                 user_id: this.$store.state.user.current.id,
@@ -153,6 +176,7 @@ export default {
             const msg = "トロフィー地点から離れています";
             const color = 'error';
             const timeout = 4000;
+            this.loading = false;
             return this.$store.dispatch('getToast', { msg, color, timeout });
           }
         } else {
@@ -161,7 +185,11 @@ export default {
         }
       } catch (error) {
         // エラーハンドリング
-        alert('エラーが発生しました: ' + error.message);
+        const msg = "まず現在地を取得してください";
+        const color = 'error';
+        const timeout = 4000;
+        this.loading = false;
+        return this.$store.dispatch('getToast', { msg, color, timeout });
       }
     },
     // async getTrophy (trophyId) {
@@ -266,8 +294,8 @@ h1 {
   opacity: 0; /* 初期の透明度を0に設定 */
   transition: opacity 0.3s; /* オーバーレイの表示/非表示にトランジションを追加 */
   pointer-events: none;
-  animation-duration: 1s;
-  transition-duration: 1s;
+  animation-duration: 0.5s;
+  transition-duration: 0.5s;
 }
 
 .congratulations {

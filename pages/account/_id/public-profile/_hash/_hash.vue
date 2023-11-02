@@ -27,13 +27,14 @@
         </a> -->
     </p>
     <v-divider class="my-6"></v-divider>
-    <h2 class="text-center mb-4">achievements</h2>
+    <h2 class="text-center mb-8">achievements</h2>
     <!-- <p>{{ img_url }}</p> -->
     <v-row>
       <v-col
         v-for="(item, index) in displayedAchievements"
         :key="item.id"
         cols="6"
+        class="cards"
         :style="index % 2 === 1 ? 'padding-left: 0;' : ''"
       >
         <v-card>
@@ -47,7 +48,7 @@
           </nuxt-link>
           <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
           <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
-          <v-btn color="red" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
+          <v-btn color="#FB515A" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
             <v-icon>mdi-image</v-icon> 記念写真
           </v-btn>
           <!-- プロフィール画像のアップロード -->
@@ -99,6 +100,7 @@ export default {
       const response = await this.$axios.$get(`/api/v1/account/get_hash/${this.$store.state.user.current.id}`);
       const hash = response.unique_hash;
       if (hash) {
+        console.log("ハッシュ取れてる？" + hash)
         await this.$router.push(`/account/public-profile/${hash}`);
         await this.getProfileAndAchievements(hash);
       } else {
@@ -139,12 +141,15 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.getProfileAndAchievements();
+      if (to.hash) { // hash が存在しない場合のみ実行
+        this.getProfileAndAchievements();
+      }
     },
   },
   methods: {
     async getProfileAndAchievements(hash) {
       try {
+        console.log("ハッシュ受け取れてるかな？" + hash);
         const response = await this.$axios.$get(`/api/v1/account/public-profile/${hash}`);
         this.userProfile = response.public_profile;
         this.achievements = response.achievements;

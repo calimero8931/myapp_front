@@ -50,6 +50,7 @@
 
 <script>
 export default {
+  name: 'project-navigation-drawer',
   props: {
     drawer: {
       type: Boolean,
@@ -82,13 +83,13 @@ export default {
       const dynamicMenus = [
         { name: 'account-id-mypage', icon: 'mdi-trophy' },
         { name: 'account-id-edit', icon: 'mdi-account' },
-        { name: 'account-id-public-profile-hash-hash', icon: 'mdi-account-eye' },
+        { name: 'account-id-public-profile-hash-hash', icon: 'mdi-trophy-award' },
         { name: 'account-id-interest', icon: 'mdi-heart-multiple' }
       ];
 
       // アドミンのみトロフィー作成メニューを追加
       if (this.$store.state.user.current.id === 1) {
-        dynamicMenus.push({ name: 'account-id-trophy-edit', icon: 'mdi-heart-multiple' });
+        dynamicMenus.push({ name: 'account-id-trophy-edit', icon: 'mdi-application-edit-outline' });
       }
 
       // dynamicMenusをnavMenusに代入
@@ -99,3 +100,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.v-list-item__icon {
+  margin-right: 12px!important;
+  margin-left: 20px;
+}
+
+</style>

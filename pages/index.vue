@@ -1,25 +1,22 @@
 <template>
   <v-app>
-    <template
-    style="background-image: url(https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg);"
-
-    >
-      <h2 class="text-center my-4">Recommend</h2>
+    <template>
+      <h2 class="text-center my-4">リコメンド</h2>
       <v-sheet class="slide">
-        <v-slide-group multiple style="margin: 20px 0;">
+        <v-slide-group multiple style="margin: 0px 0;">
           <v-slide-item v-for="(recommend, i) in recommendData" :key="`recommend-${i}`">
-            <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 20px 0 0; width: 150px; height: auto;">
+            <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 10px 0 0; width: 150px; height: auto;">
               <v-img
                 class="white--text align-end"
                 height="100px"
                 :src="recommend.image_url"
               ></v-img>
-              <v-card-title class="pt-2" style="font-size: 16px; justify-content: center;">
+              <v-card-title class="mt-2" style="font-size: 14px; justify-content: center;">
                 {{ recommend.title  }}
               </v-card-title>
-              <v-card-text class="text--primary">
-                <div class="v-text-truncate">
-                  {{ recommend.description | truncate(30) }}
+              <v-card-text class="text--primary mb-4" style="margin-top: -6px;">
+                <div class="v-text-truncate text-center">
+                  {{ recommend.prefecture_name }}
                 </div>
               </v-card-text>
             </v-card>
@@ -27,29 +24,51 @@
         </v-slide-group>
       </v-sheet>
     </template>
-    <h2 class="text-center mt-8">トロフィーを探す</h2>
-    <v-sheet style="margin-top: 10px;">
+    <h2 class="text-center mt-8 mb-4">トロフィー<span style="font-size: 18px;">を</span>探<span style="font-size: 18px;">す</span></h2>
+    <v-sheet style="margin-top: 0;">
       <v-container class="elevation-6" style="padding-top: 0;">
-        <div v-for="(category, i) in categoryData" :key="`category-${i}`" class="my-4">
+        <div v-for="(category, i) in categoryData" :key="`category-${i}`" class="my-2">
           <v-card>
             <v-img
-              src="AdobeStock_144605328.jpeg"
+              :src="category_image[i]"
               :height="imgHeight"
               style="border-radius: 7px 7px 0 0;"
             ></v-img>
-            <v-btn color="appyellow" @click="fetchSubCategories(category.id),toggleButtonVisibility()" style="font-weight: bold; color: #1B2440!important;" block>
+            <v-btn
+              :disabled="loading"
+              :loading="loading"
+              color="appyellow"
+              @click="fetchSubCategories(category.id),toggleButtonVisibility()"
+              style="font-weight: bold; color: #1B2440!important; border-radius: 0 0 6px 6px;"
+              block>
               {{ category.name }}
             </v-btn>
           </v-card>
           <div v-if="category.id === selectedCategoryId && showButton" class="flex">
             <div v-for="(subCategory, i) in subCategoryData" :key="`subCategory-${i}`" class="mr-2 mt-2">
-              <v-btn outlined color="appyellow" @click="fetchRegions(subCategory.id)" style="font-weight: bold;">
+              <v-btn
+                :disabled="loading"
+                :loading="loading"
+                :outlined="selectedSubCategoryId != subCategory.id"
+                color="#2AC4DB"
+                @click="fetchRegions(subCategory.id)"
+                style="font-weight: bold;"
+                block
+                >
                 {{ subCategory.name }}
               </v-btn>
               <!-- 以下にregionsデータを羅列 -->
               <div v-if="subCategory.id === selectedSubCategoryId" class="flex">
                 <div v-for="(region, i) in regionsData" :key="`region-${i}`" class="mr-2 mt-2">
-                  <v-btn outlined color="blue" @click="fetchPrefectures(region.id)" style="font-weight: bold;">
+                  <v-btn
+                    :disabled="loading"
+                    :loading="loading"
+                    :outlined="selectedRegionId != region.id"
+                    color="#FB515A"
+                    @click="fetchPrefectures(region.id)"
+                    style="font-weight: bold;"
+                    block
+                    >
                     {{ region.name }}
                   </v-btn>
                   <!-- 以下にprefecturesデータを羅列 -->
@@ -57,14 +76,14 @@
                     <div v-for="(prefecture, i) in prefecturesData" :key="`prefecture-${i}`" class="mr-2 mt-2">
                       <v-btn
                         outlined
-                        color="orange"
+                        color="#25BC91"
                         @click="fetchTrophies(prefecture.id)"
                         style="font-weight: bold;"
                       >
                         <nuxt-link
                           :to="{ name: 'results-param1-param2',
                           params:{ param1:selectedSubCategoryId, param2:prefecture.id }}"
-                          style="text-decoration: none;color: orange;"
+                          style="text-decoration: none;color: #25BC91;"
                         >
                         {{ prefecture.name }}
                       </nuxt-link>
@@ -79,7 +98,7 @@
       </v-container>
       <v-spacer></v-spacer>
     </v-sheet>
-    <v-btn color="error" class="text-center mt-8 mb-4" style="height:60px;border-radius: 0;">
+    <v-btn class="text-center mt-8 mb-4" style="height:60px;border-radius: 0;">
         <nuxt-link
           :to="{ name: 'about' }"
           style="text-decoration: none;color: white!important; font-size: 16px;"
@@ -112,6 +131,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       imgHeight: 150,
       recommendData: [],
       categoryData: [],
@@ -122,8 +142,13 @@ export default {
       selectedRegionId: null,
       prefecturesData: [],
       selectedPrefectureId: null,
-      trophies : [],
+      trophies: [],
       showButton: false,
+      category_image: [
+        "AdobeStock_273329877.jpeg",
+        "AdobeStock_174903790.jpeg",
+        "AdobeStock_629948844.jpeg"
+      ]
     }
   },
   mounted() {
@@ -165,14 +190,18 @@ export default {
   methods: {
     async fetchCategories () {
       try {
+        this.loading = true;
         const response = await this.$axios.$get(`/api/v1/categories_request/`);
         this.categoryData = response;
+        this.loading = false;
       } catch (error) {
-        console.error('データの取得に失敗しました', error);
+        console.error('カテゴリデータの取得に失敗しました', error);
+        this.loading = false;
       }
     },
     async fetchSubCategories (categoryId) {
       try {
+        this.loading = true;
         const response = await this.$axios.$get(`/api/v1/sub_categories_request/`,
           {
             params: {
@@ -183,13 +212,16 @@ export default {
         this.selectedCategoryId = categoryId;
         this.subCategoryData = response;
         console.log("サブカテゴリの取得に成功しました", response);
+        this.loading = false;
       } catch (error) {
         console.error('サブカテゴリの取得に失敗しました', error);
+        this.loading = false;
       }
     },
     async fetchRegions (subCategoryId) {
 
       try {
+        this.loading = true;
         const response = await this.$axios.$get(`/api/v1/regions_request/`,
           {
             params: {
@@ -200,12 +232,15 @@ export default {
         this.selectedSubCategoryId = subCategoryId;
         this.regionsData = response;
         console.log("地域の取得に成功しました", response);
+        this.loading = false;
       } catch (error) {
         console.error('地域の取得に失敗しました', error);
+        this.loading = false;
       }
     },
     async fetchPrefectures (regionId) {
       try {
+        this.loading = true;
         const response = await this.$axios.$get(`/api/v1/prefectures_request/`,
           {
             params: {
@@ -216,12 +251,15 @@ export default {
         this.selectedRegionId = regionId;
         this.prefecturesData = response;
         console.log("都道府県の取得に成功しました", response);
+        this.loading = false;
       } catch (error) {
         console.error('都道府県の取得に失敗しました', error);
+        this.loading = false;
       }
     },
     async fetchTrophies (subCategoryId) {
       try {
+        this.loading = true;
         const response = await this.$axios.$get(`/api/v1/trophies_request/`,
           {
             params: {
@@ -232,12 +270,19 @@ export default {
         this.selectedSubCategoryId = subCategoryId;
         this.trophies = response;
         console.log("トロフィーの取得に成功しました", response);
+        this.loading = false;
       } catch (error) {
         console.error('データの取得に失敗しました', error);
+        this.loading = false;
       }
     },
     toggleButtonVisibility() {
       this.showButton = !this.showButton;
+      this.buttonClicked = true;
+      this.selectedCategoryId = null;
+      this.selectedSubCategoryId = null;
+      this.selectedRegionId = null;
+      this.selectedPrefectureId = null;
     },
   }
 }
@@ -249,8 +294,7 @@ export default {
     flex-wrap: wrap;
   }
   h2 {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 30px!important;
     margin: 0;
   }
 
@@ -263,7 +307,7 @@ export default {
   }
 
   .v-card__subtitle, .v-card__text, .v-card__title {
-    padding: 0 8px 6px 8px;
+    padding: 0 8px 0 8px;
   }
 
   .v-btn:not(.v-btn--round).v-size--default {

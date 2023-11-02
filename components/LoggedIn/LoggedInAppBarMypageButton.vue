@@ -15,7 +15,7 @@
           <v-icon>mdi-account-circle</v-icon>
         </nuxt-link>
         <div :class="{ balloon: true, active: showBalloon }">
-            my page
+            マイページ
         </div>
       </v-layout>
     </v-container>
@@ -96,9 +96,13 @@ export default {
   /* 初期状態のスタイル */
   color: #F3DF4C;
   font-weight: bolder;
+  font-family: 'Dela Gothic One', sans-serif!important;
+  font-weight: 400!important;
   padding: 0 10px;
+  margin-top: -2px;
   display: inline-block;
   opacity: 0;
+  z-index: 99999;
   transform: translateY(50px);
   transition: opacity 0.4s, transform 0.4s;
 }

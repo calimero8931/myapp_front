@@ -9,7 +9,7 @@
       >
         <v-col
             cols="6"
-            class="py-0"
+            class="py-0 text-center"
           >
           <nuxt-link
             :to="{ name: 'contact' }"
@@ -21,7 +21,7 @@
         </v-col>
         <v-col
             cols="6"
-            class="py-0"
+            class="py-0 text-center"
           >
           <nuxt-link
             :to="{ name: 'privacy' }"

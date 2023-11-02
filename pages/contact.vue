@@ -1,7 +1,7 @@
 
 <template>
   <v-container>
-    <h1 class="text-center">お問い合わせ</h1>
+    <h1 class="text-center my-4">お問い合わせ</h1>
     <v-form ref="form" v-model="isValid">
       <v-text-field
         v-model="params.user.name"
@@ -23,12 +23,13 @@
         label="お問い合わせ内容"
         required
       ></v-textarea>
-      <v-row>
+      <v-row class="mt-4">
         <v-col col="6">
           <v-btn
             :disabled="!isValid"
             :loading="loading"
             color="appyellow"
+            class="black--text"
             @click="submit"
             block
           >

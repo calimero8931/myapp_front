@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <h1 class="text-center mt-8 mb-6">{{ trophyData.title }}</h1>
+      <h1 class="text-center mt-8 mb-4">{{ trophyData.title }}</h1>
       <p class="text-center">
         <v-avatar size="150"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
       </p>
@@ -16,10 +16,12 @@
       <p>取得率:{{ achievementRate.completion_rate }}%</p>
       <p>このトロフィーのサブカテ{{ trophyData.category_id }}</p> -->
       <v-divider class="my-6"></v-divider>
+      <h2 class="text-center" style="font-size: 24px!important;">レアリティ</h2>
       <apexchart
         :options="chartOptions"
         :labels="chartOptions.labels"
         :series="[this.rate]"
+        style="margin-top: -16px;"
       ></apexchart>
       <!-- <p>achievementRate2:{{ [achievementRate2[2]] }}%</p> -->
       <v-row v-if="this.$store.state.user.current" justify="center" align="center">
@@ -31,17 +33,17 @@
             </a>
           </p>
         </v-col>
-        <v-col v-if="this.$store.state.interest.already" cols="6">
+        <v-col v-if="this.$store.state.interest.already" cols="6" style="padding-left: 0;">
           <p v-if="this.$store.state.favorite.already">
-            <v-btn color="green" class="black--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon>リスト削除</v-btn>
+            <v-btn color="#FB515A" class="white--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon>リスト削除</v-btn>
           </p>
           <p v-else>
-            <v-btn color="appyellow" class="black--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon>チャレンジ</v-btn>
+            <v-btn color="#2AC4DB" class="black--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon>チャレンジ</v-btn>
           </p>
         </v-col>
-        <v-col v-else cols="6">
+        <v-col v-else cols="6" style="padding-left: 0;">
           <p>
-            <v-btn color="pink" class="white--text" @click="interest" block><v-icon>mdi-thumb-up</v-icon>気になる</v-btn>
+            <v-btn color="#25BC91" class="white--text" @click="interest" block><v-icon>mdi-exclamation-thick</v-icon>気になる</v-btn>
           </p>
         </v-col>
       </v-row>
@@ -88,7 +90,7 @@ export default {
         plotOptions: {
           radialBar: {
             hollow: {
-              size: '70%',
+              size: '60%',
             },
             dataLabels: {
               showOn: "always",
@@ -97,6 +99,7 @@ export default {
                 show: true,
                 color: "#F3DF4C",
                 fontSize: "30px",
+                fontFamily: "Dela Gothic One",
               },
               value: {
                 offsetY: 10,
@@ -191,12 +194,7 @@ export default {
             }
           }
         );
-        console.log("興味が返ってきたのでセットしました");
-        this.$router.go()
-        const msg = "興味に追加しました";
-        const color = 'success';
-        const timeout = 4000;
-        return this.$store.dispatch('getToast', { msg, color, timeout });
+        this.$router.go();
       } catch (error) {
         console.error('データの取得に失敗しました', error);
       }
@@ -228,7 +226,11 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+
+h1 {
+  font-size: 24px!important;
+}
 
 .trophy-page-btn {
   width: 300px;

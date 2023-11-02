@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-toaster />
-    <h2>パスワードの変更</h2>
+    <h2 class="text-center my-4">パスワードの変更</h2>
     <user-password-change-form
     :password.sync="params.user.password"
     :password2.sync="params.user.password2"
@@ -10,6 +10,8 @@
     <v-btn
       color="primary"
       @click="changePassword"
+      class="black--text mt-4"
+      block
     >
       変更を保存
     </v-btn>

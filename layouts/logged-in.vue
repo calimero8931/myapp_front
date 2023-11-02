@@ -18,7 +18,7 @@
       color="appyellow"
       style="height: 40px; border-radius: 7px 7px 0 0;"
       @click="drawer = !drawer">
-      <v-icon>mdi-menu</v-icon>
+      <v-icon>mdi-apps</v-icon>
     </v-btn>
   </v-app>
 </template>

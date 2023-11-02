@@ -10,9 +10,9 @@
     <v-text-field
       v-model="setConfirmEmail"
       :rules="[...rules, emailMatchRule]"
-      label="もう一度新しいメールアドレスを入力"
+      label="もう一度入力"
       :placeholder="placeholder ? 'your@email.com' : undefined"
-      style="margin-top: -12px;"
+      style="margin-top: -16px;"
       outlined
     />
   </div>

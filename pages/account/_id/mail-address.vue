@@ -10,9 +10,10 @@
       color="primary"
       class="black--text"
       @click="changeEmail"
+      style="margin-top: -16px;"
       block
     >
-      メールを送信
+      確認メールを送信
     </v-btn>
   </div>
 </template>

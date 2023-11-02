@@ -1,17 +1,42 @@
 // custom変数 => https://vuetifyjs.com/en/customization/sass-variables/#sass-variables
 
-@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@800&family=Pixelify+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@800&family=Dela+Gothic+One&family=Pixelify+Sans&display=swap');
 
 body {
+  max-width: 650px!important;
+  margin: 0 auto!important;
   background-color: #1B2440!important;
   color: #f6f6f4!important;
   text-decoration: none!important;
+  font-weight: 800!important;
 }
 
 h1 {
-  font-size: 24px!important;
+  font-size: 30px!important;
+  font-weight: 400!important;
   line-height: 1.2!important;
   text-align: center!important;
+  font-family: 'Dela Gothic One', sans-serif!important;
+}
+
+h2 {
+  font-size: 30px!important;
+  font-weight: 400!important;
+  line-height: 1.2!important;
+  font-family: 'Dela Gothic One', sans-serif!important;
+}
+
+.v-pagination .v-pagination__item.v-pagination__item--active.primary {
+  background-color: #fff!important;
+  color: #1B2440!important;
+}
+
+.v-card__title {
+  font-weight: 800!important;
+}
+
+.v-text-truncate {
+  font-size: 12px!important;
 }
 
 .theme--dark.v-application {
@@ -20,6 +45,7 @@ h1 {
 }
 
 .v-btn {
+  font-weight: 800!important;
   height: 40px!important;
 }
 
@@ -31,6 +57,10 @@ h1 {
 .container {
   background-color: #1B2440!important;
   background: none!important;
+}
+
+.cards {
+  padding: 4px!important;
 }
 
 .theme--dark.v-sheet {

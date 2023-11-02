@@ -19,15 +19,15 @@
       "password": "パスワード",
       "id": {
         "settings": "アカウント設定",
-        "mypage": "チャレンジ中",
-        "interest": "興味がある分野",
+        "mypage": "挑戦中",
+        "interest": "あなたの興味",
         "password": "パスワード変更",
         "delete": "アカウント削除",
         "edit": "プロフィール",
         "public": {
           "profile":  {
             "hash":{
-              "hash": "ゲットトロフィー"
+              "hash": "アチーブメント"
             }
           }
         },

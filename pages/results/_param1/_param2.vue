@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <div v-if="prefecture">
+      <h2 class="text-center mb-4">{{ prefecture }}</h2>
+    </div>
+    <p v-else></p>
     <v-row>
       <v-col
         v-for="(item, index) in paginatedData"
@@ -16,7 +20,7 @@
               style="border-radius: 7px 7px 0 0;"
             ></v-img>
           </nuxt-link>
-          <v-card-title style=" justify-content: center;">{{ item.title }}</v-card-title>
+          <v-card-title style="font-size: 16px; justify-content: center;">{{ item.title }}</v-card-title>
           <!-- <v-card-text>{{ item.description }}</v-card-text> -->
           <v-btn :to="`/trophy/${item.id}`" color="primary" style="color:black; border-radius: 0 0 7px 7px;" block>
               詳細
@@ -43,11 +47,11 @@ export default {
     return {
       responseData: [],
       currentPage: 1,
-      itemsPerPage: 10
+      itemsPerPage: 10,
+      prefecture: null
     }
   },
   mounted() {
-    // this.$store.dispatch('getRememberPath', { name: this.$route.name, params: { key: this.$route.params.id } })
     this.$store.dispatch('getRememberPath', {
       name: this.$route.name,
       params: {
@@ -57,7 +61,6 @@ export default {
     })
   },
   computed: {
-    // ページネーションされたデータを返す計算プロパティ
     paginatedData() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -73,6 +76,7 @@ export default {
         }
       });
       this.responseData = response;
+      this.prefecture = response[0].prefecture_name;
     } catch (error) {
       console.error(error);
     }

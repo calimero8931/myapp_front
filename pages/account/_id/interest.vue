@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>少しでも興味があるものがあれば選んでね</p>
+    <h2 class="text-center my-4">あなたの興味</h2>
     <app-toaster />
 
     <div>
@@ -9,7 +9,7 @@
         :key="`subCategory-${i}`"
         :color="subCategory.isSelected ? 'red' : ''"
         @click="handleButtonClick(subCategory)"
-        class="ma-2"
+        class="mr-2 mb-2"
         outlined
       >
         {{ subCategory.name }}

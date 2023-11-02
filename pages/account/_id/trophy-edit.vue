@@ -3,7 +3,7 @@
     <div v-if="profile.check_admin">
       <h1 class="text-center mb-10">トロフィー申請</h1>
       <v-form>
-        <h2>当てはまるカテゴリと県を選んでください</h2>
+        <p>当てはまるカテゴリと県を選んでください</p>
         <!-- 国選択 -->
         <!-- <v-select v-model="profile.selectedCountry" :items="countries" label="国を選択"></v-select> -->
         <div v-for="(category, i) in categoriesData" :key="`category-${i}`" class="mt-2">
@@ -39,7 +39,7 @@
             </div>
           </div>
         </div>
-        <h2 class="mt-10">以下の情報を入力してください</h2>
+        <p class="mt-10">以下の情報を入力してください</p>
         <v-text-field v-model="profile.user_name" label="登録したい場所の名前" required></v-text-field>
         <v-file-input
           v-model="profile.profile_image"
