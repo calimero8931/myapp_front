@@ -2,7 +2,7 @@
   <div>
     <div v-if="profile.check_admin">
       <h1 class="text-center mb-10">トロフィー申請</h1>
-      <v-form>
+      <v-form ref="form">
         <p>当てはまるカテゴリと県を選んでください</p>
         <!-- 国選択 -->
         <!-- <v-select v-model="profile.selectedCountry" :items="countries" label="国を選択"></v-select> -->
@@ -71,14 +71,14 @@ export default {
   data() {
     return {
       profile: {
-        user_name: "法隆寺",
+        user_name: "",
         profile_image_url: "",
         profile_image: null,
-        bio: "今丁度鍵がかかっているので、中に入れません。",
+        bio: "ローレムイプサム",
         website: "https://www.horyuji.or.jp/",
         check_admin: false,
-        latitude: "34.6728473",
-        longitude: "135.5346316",
+        latitude: "34.6752226",
+        longitude: "135.5308484",
       },
       showButton: false,
       selectedCountry: 1,
@@ -229,6 +229,11 @@ export default {
             }
           });
           console.log(response.message);
+          const msg = "トロフィーが申請されました";
+          const color = 'success';
+          const timeout = 4000;
+          this.$store.dispatch('getToast', { msg, color, timeout });
+          this.formReset();
         } catch (error) {
           console.error(error.message);
         }
@@ -236,6 +241,12 @@ export default {
           console.error('ファイルが選択されていません');
         }
     },
+    formReset () {
+      this.$refs.form.reset()
+      for (const key in this.params.user) {
+        this.params.user[key] = ''
+      }
+    }
   }
 }
 </script>

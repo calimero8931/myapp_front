@@ -2,7 +2,7 @@
   <v-container>
     <p v-if="img_url" class="text-center">
       <v-avatar size="150">
-        <v-img :src="'http://localhost:3000' + img_url" alt=""></v-img>
+        <v-img :src="img_url" alt="プロフィール画像"></v-img>
       </v-avatar>
     </p>
     <p v-else class="text-center">
@@ -29,50 +29,53 @@
     <v-divider class="my-6"></v-divider>
     <h2 class="text-center mb-8">achievements</h2>
     <!-- <p>{{ img_url }}</p> -->
-    <v-row>
-      <v-col
-        v-for="(item, index) in displayedAchievements"
-        :key="item.id"
-        cols="6"
-        class="cards"
-        :style="index % 2 === 1 ? 'padding-left: 0;' : ''"
-      >
-        <v-card>
-          <nuxt-link :to="`/trophy/${item.trophy_id}`">
-            <v-img
-              class="white--text align-end"
-              height="100px"
-              style="border-radius: 7px 7px 0 0;"
-              :src="item.image_url"
-            ></v-img>
-          </nuxt-link>
-          <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
-          <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
-          <v-btn color="#FB515A" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
-            <v-icon>mdi-image</v-icon> 記念写真
-          </v-btn>
-          <!-- プロフィール画像のアップロード -->
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-form>
-      <v-file-input
-        v-model="selectedFile"
-        label="ファイルを選択"
-        accept="image/*"
-        @change="uploadFile"
-        style="display: none;"
-        ref="fileInput"
-      ></v-file-input>
-    </v-form>
-
-    <!-- ページネーションを追加 -->
-    <v-pagination
-      v-model="page"
-      :length="totalPages"
-      @input="paginateAchievements"
-      class="my-8"
-    ></v-pagination>
+    <div v-if="achievements">
+      <v-row>
+        <v-col
+          v-for="(item, index) in displayedAchievements"
+          :key="item.id"
+          cols="6"
+          class="cards"
+          :style="index % 2 === 1 ? 'padding-left: 0;' : ''"
+        >
+          <v-card>
+            <nuxt-link :to="`/trophy/${item.trophy_id}`">
+              <v-img
+                class="white--text align-end"
+                height="100px"
+                style="border-radius: 7px 7px 0 0;"
+                :src="item.image_url"
+              ></v-img>
+            </nuxt-link>
+            <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
+            <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
+            <v-btn color="#FB515A" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
+              <v-icon>mdi-image</v-icon> 記念写真
+            </v-btn>
+            <!-- プロフィール画像のアップロード -->
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-form>
+        <v-file-input
+          v-model="selectedFile"
+          label="ファイルを選択"
+          accept="image/*"
+          @change="uploadFile"
+          style="display: none;"
+          ref="fileInput"
+        ></v-file-input>
+      </v-form>
+      <!-- ページネーションを追加 -->
+      <v-pagination
+        v-model="page"
+        :length="totalPages"
+        @input="paginateAchievements"
+        class="my-8"
+        v-if="achievements"
+      ></v-pagination>
+    </div>
+    <p v-else>まだ取得したトロフィーはありません</p>
   </v-container>
 </template>
 
@@ -123,10 +126,10 @@ export default {
       return `https://twitter.com/share?url=${this.postUrl}&text=${this.postText}%0a%0a#${this.postTitle}&hashtags=appyellow`
     },
     postUrl() {
-      // @postから投稿のURLを取得するコードを追加
-      // 例: return this.$route.fullPath;
-      return `http://localhost:8080/share/${this.userProfile.unique_hash}`;
-    },
+    // @postから投稿のURLを取得するコードを追加
+    // 例: return this.$route.fullPath;
+    return `${window.location.origin}/share/${this.userProfile.unique_hash}`;
+  },
     postTitle() {
       // @postから投稿のタイトルを取得するコードを追加
       // 例: return this.$route.meta.title;
@@ -164,7 +167,7 @@ export default {
       const img_url = img_response.image_url;
     },
     copyToClipboard() {
-      const textToCopy = "http://localhost:8080/share/" + this.userProfile.unique_hash;
+      const textToCopy = `${window.location.origin}` + "/share/" + this.userProfile.unique_hash;
       const textArea = document.createElement("textarea");
       textArea.value = textToCopy;
       document.body.appendChild(textArea);

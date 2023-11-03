@@ -56,7 +56,7 @@
     <!-- 画面の内容 -->
 
     <!-- 暗転用のオーバーレイ -->
-    <p @click="showCongratulations">スイッチ</p>
+    <!-- <p @click="showCongratulations">スイッチ</p> -->
     <div class="dark-overlay congratulations" @click="hideCongratulations">
       <!-- おめでとう！のメッセージ -->
       <div class="center">
@@ -169,8 +169,7 @@ export default {
                 trophy_id: trophyId
               }
             });
-
-            this.$router.push({ name: 'account-id-public-profile-hash-hash' });
+            this.showCongratulations();
           } else {
             // 一致しない場合の処理
             const msg = "トロフィー地点から離れています";
@@ -264,6 +263,7 @@ export default {
       // 非表示にする
       overlay.style.opacity = '0'; // 透明度を0に設定
       overlay.style.pointerEvents = 'none'; // クリックイベントを無効にする
+      this.$router.push({ name: 'account-id-public-profile-hash-hash' });
     }
   }
 }

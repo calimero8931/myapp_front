@@ -146,7 +146,7 @@ export default {
       showButton: false,
       category_image: [
         "AdobeStock_273329877.jpeg",
-        "AdobeStock_174903790.jpeg",
+        "AdobeStock_611857064.jpeg",
         "AdobeStock_629948844.jpeg"
       ]
     }
