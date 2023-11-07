@@ -1,6 +1,5 @@
 <template>
   <div>
-    <app-toaster />
     <h2 class="text-center my-4">パスワード<span class="h1-span">の</span>変更</h2>
     <user-password-change-form
     :password.sync="params.user.password"
