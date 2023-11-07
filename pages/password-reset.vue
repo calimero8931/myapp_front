@@ -14,7 +14,7 @@
           class="black--text"
           block
         >
-          変更を保存
+          メール送信
         </v-btn>
       </div>
     </div>
