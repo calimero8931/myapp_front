@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mb-4">メールアドレスの変更</h1>
+    <h1 class="mb-4">メールアドレス<span class="h1-span">の</span>変更</h1>
     <p>現在のあなたのメールアドレス<br>{{ now_email }}</p>
     <user-email-change-form
     :email.sync="params.user.email"
@@ -13,7 +13,7 @@
       style="margin-top: -16px;"
       block
     >
-      確認メールを送信
+      確認メール送信
     </v-btn>
   </div>
 </template>

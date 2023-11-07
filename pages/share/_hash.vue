@@ -39,9 +39,6 @@
             </nuxt-link>
             <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
             <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
-            <v-btn color="#FB515A" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
-              <v-icon>mdi-image</v-icon> 記念写真
-            </v-btn>
             <!-- プロフィール画像のアップロード -->
           </v-card>
         </v-col>

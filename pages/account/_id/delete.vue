@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <h1 class="my-4">アカウントを削除</h1>
+    <h1 class="my-4">アカウント<span class="h1-span">を</span>削除</h1>
     <user-form-password
       :password.sync="params.user.password"
     />
     <v-btn
-    color="error"
+    color="#FB5159"
     class="black--text mt-4"
     @click="confirmDeleteAccount"
     block

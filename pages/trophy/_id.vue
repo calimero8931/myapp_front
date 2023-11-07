@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container class="mb-8">
       <h1 class="text-center mt-8 mb-4">{{ trophyData.title }}</h1>
       <p class="text-center">
         <v-avatar size="150"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
@@ -26,7 +26,7 @@
       <!-- <p>achievementRate2:{{ [achievementRate2[2]] }}%</p> -->
       <v-row v-if="this.$store.state.user.current" justify="center" align="center">
         <v-col cols="6">
-          <p>
+          <p style="width: 45vw;">
             <a :href="googleMapUrl" target="_blank">
               <v-btn color="white" class="black--text no-text-decoration" block>
                 <v-icon>mdi-google-maps</v-icon> Google Map</v-btn>
@@ -34,14 +34,14 @@
           </p>
         </v-col>
         <v-col v-if="this.$store.state.interest.already" cols="6" style="padding-left: 0;">
-          <p v-if="this.$store.state.favorite.already">
+          <p v-if="this.$store.state.favorite.already" style="width: 45vw;">
             <v-btn color="#FB515A" class="white--text" @click="favorite" block><v-icon>mdi-star-minus</v-icon>リスト削除</v-btn>
           </p>
-          <p v-else>
+          <p v-else style="width: 45vw;">
             <v-btn color="#2AC4DB" class="black--text" @click="favorite" block><v-icon>mdi-star-plus</v-icon>チャレンジ</v-btn>
           </p>
         </v-col>
-        <v-col v-else cols="6" style="padding-left: 0;">
+        <v-col v-else cols="6" style="padding-left: 0; width: 45vw;">
           <p>
             <v-btn color="#25BC91" class="white--text" @click="interest" block><v-icon>mdi-exclamation-thick</v-icon>気になる</v-btn>
           </p>

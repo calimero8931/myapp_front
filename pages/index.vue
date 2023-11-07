@@ -33,6 +33,7 @@
               :src="category_image[i]"
               :height="imgHeight"
               style="border-radius: 7px 7px 0 0;"
+              @click="fetchSubCategories(category.id),toggleButtonVisibility()"
             ></v-img>
             <v-btn
               :disabled="loading"

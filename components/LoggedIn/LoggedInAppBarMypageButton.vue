@@ -2,22 +2,15 @@
   <v-footer v-if="state.user.current"
    app fixed >
     <v-container>
-      <v-layout
-        class="fixed-bottom d-flex justify-center align-center"
-        column
-      >
-        <nuxt-link
-          id="mypage_btn"
-          :class="{ mypage_btn: true, active: showBalloon }"
-          color="appyellow"
-          :to="`/account/${state.user.current.id}/mypage`"
+      <v-btn
+        id="menu-btn"
+        color="appyellow"
+        :to="`/account/${state.user.current.id}/mypage`"
+        class="black--text"
+        style="height: 40px; border-radius: 7px 7px 0 0;"
         >
-          <v-icon>mdi-account-circle</v-icon>
-        </nuxt-link>
-        <div :class="{ balloon: true, active: showBalloon }">
-            マイページ
-        </div>
-      </v-layout>
+        <v-icon>mdi-account-circle</v-icon>My Page
+      </v-btn>
     </v-container>
   </v-footer>
   <p v-else></p>
@@ -64,21 +57,31 @@ export default {
 }
 
 #mypage_btn {
+  font-family: 'Dela Gothic One', sans-serif!important;
+  text-decoration: none;
+  font-size: 20px!important;
+  padding: 4px 8px;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 60px;
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  transform: translateY(20px);
-  transition: transform 0.4s;
+  /* transform: translateY(20px); */
+  /* transition: transform 0.4s; */
   /* animation: shake 0.5s ease-in-out infinite; アニメーション名, 時間, イージング, 無限繰り返し */
 }
+
+#menu-btn {
+  font-family: 'Dela Gothic One', sans-serif!important;
+  font-weight: 400!important;
+  font-size: 16px!important;
+}
 .mypage_btn i {
-  font-size: 50px!important;
-  color: #F3DF4C!important;
+  /* font-size: 50px!important;
+  color: #F3DF4C!important; */
 }
 
 .mypage_btn.active i {
-  font-size: 60px!important;
+  /* font-size: 60px!important; */
 }
 
 #mypage_btn.active {
@@ -92,8 +95,7 @@ export default {
   75% { transform: translate(1px, 0); }
   100% { transform: translate(0px, 0); }
 } */
-.balloon {
-  /* 初期状態のスタイル */
+/* .balloon {
   color: #F3DF4C;
   font-weight: bolder;
   font-family: 'Dela Gothic One', sans-serif!important;
@@ -105,7 +107,7 @@ export default {
   z-index: 99999;
   transform: translateY(50px);
   transition: opacity 0.4s, transform 0.4s;
-}
+} */
 .balloon.active {
   opacity: 1;
   transform: translateY(0);

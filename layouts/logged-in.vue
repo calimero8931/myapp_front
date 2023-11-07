@@ -15,7 +15,7 @@
     />
     <v-btn
       id="menu-btn"
-      color="appyellow"
+      color="#FB515A"
       style="height: 40px; border-radius: 7px 7px 0 0;"
       @click="drawer = !drawer">
       <v-icon>mdi-apps</v-icon>

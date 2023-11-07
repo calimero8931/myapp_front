@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-center my-4">あなたの興味</h2>
+    <h2 class="text-center my-4">あなた<span class="h1-span">の</span>興味</h2>
     <app-toaster />
 
     <div>

@@ -33,7 +33,7 @@
         </v-col>
         <v-col
           cols="12"
-          class="py-0"
+          class="py-4"
         >
           <div class="text-center text-body-2">
             &copy;{{ copyRightYear }}

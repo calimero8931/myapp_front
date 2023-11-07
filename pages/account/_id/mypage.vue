@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-container>
-      <h1 class="text-center white--text my-4">挑戦中のトロフィー</h1>
+      <h1 class="text-center white--text my-4">挑戦中<span class="h1-span">の</span>トロフィー</h1>
       <v-btn
         :disabled="loading"
         :loading="loading"
-        color="#FB515A"
+        color="#2AC4DB"
         @click="clickGetGeoButton()"
         block>
         <v-icon>mdi-map-marker</v-icon>
@@ -41,7 +41,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <p v-else>
+      <p v-else class="my-8">
           挑戦中のトロフィーはありません
       </p>
       <v-pagination
