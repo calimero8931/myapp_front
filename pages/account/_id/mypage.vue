@@ -5,7 +5,7 @@
       <v-btn
         :disabled="loading"
         :loading="loading"
-        color="#2AC4DB"
+        color="#25BC91"
         @click="clickGetGeoButton()"
         block>
         <v-icon>mdi-map-marker</v-icon>
