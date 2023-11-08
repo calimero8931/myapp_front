@@ -6,6 +6,6 @@ build:
     web: Dockerfile
   config:
     WORKDIR: app
-    API_URL: "https://animal-app-api.herokuapp.com"
+    API_URL: "https://api.trophees.earth"
 run:
   web: yarn run start
