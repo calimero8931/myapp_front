@@ -74,7 +74,24 @@ export default {
   },
 
   serverMiddleware: [
-    '~/server/redirect-ssl'
+    '~/server/redirect-ssl',
+    (req, res, next) => {
+      if (process.env.NODE_ENV === 'production') {
+        const auth = { login: process.env.BASIC_AUTH_USER, password: process.env.BASIC_AUTH_PASSWORD };
+        const b64auth = (req.headers.authorization || '').split(' ')[1] || '';
+        const [login, password] = Buffer.from(b64auth, 'base64').toString().split(':');
+
+        if (!login || !password || login !== auth.login || password !== auth.password) {
+          res.statusCode = 401;
+          res.setHeader('WWW-Authenticate', 'Basic realm="Staging"');
+          res.end('Unauthorized');
+        } else {
+          next();
+        }
+      } else {
+        next();
+      }
+    }
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
