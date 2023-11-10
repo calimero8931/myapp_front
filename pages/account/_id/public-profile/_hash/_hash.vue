@@ -1,81 +1,86 @@
 <template>
   <v-container>
-    <p v-if="img_url" class="text-center">
-      <v-avatar size="150">
-        <v-img :src="img_url" alt="プロフィール画像"></v-img>
-      </v-avatar>
-    </p>
-    <p v-else class="text-center">
-      <v-avatar size="200" color="appyellow">
-        No Image
-      </v-avatar>
-    </p>
-    <!-- <h1>{{ userProfile }}</h1> -->
-    <h1 class="text-center" style="font-size: 20px;">{{ userProfile.username }}</h1>
-    <p class="mb-6">
-      {{ userProfile.bio }}<br>
-      <a :href="'http://'+userProfile.website" target="_blank">{{ userProfile.website }}</a>
-    </p>
-    <p>
-      <v-btn color="primary" @click="copyToClipboard" class="black--text" style="margin-bottom: -4px;" block><v-icon>mdi-clipboard</v-icon>shareページのURLをコピー</v-btn>
-    </p>
-    <p>
-      <v-btn outlined :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア" color="appyellow" class="black--text" block>
-          <v-icon>mdi-twitter</v-icon> share
-      </v-btn>
-      <!-- <a :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア">
-        </a> -->
-    </p>
-    <v-divider class="my-6"></v-divider>
-    <h2 class="text-center mb-8">achievements</h2>
-    <!-- <p>{{ img_url }}</p> -->
-    <div v-if="achievements">
-      <v-row>
-        <v-col
-          v-for="(item, index) in displayedAchievements"
-          :key="item.id"
-          cols="6"
-          class="cards"
-          :style="index % 2 === 1 ? 'padding-left: 0;' : ''"
-        >
-          <v-card>
-            <nuxt-link :to="`/trophy/${item.trophy_id}`">
-              <v-img
-                class="white--text align-end"
-                height="100px"
-                style="border-radius: 7px 7px 0 0;"
-                :src="item.image_url"
-              ></v-img>
-            </nuxt-link>
-            <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
-            <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
-            <v-btn color="#FB515A" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
-              <v-icon>mdi-image</v-icon> 記念写真
-            </v-btn>
-            <!-- プロフィール画像のアップロード -->
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-form>
-        <v-file-input
-          v-model="selectedFile"
-          label="ファイルを選択"
-          accept="image/*"
-          @change="uploadFile"
-          style="display: none;"
-          ref="fileInput"
-        ></v-file-input>
-      </v-form>
-      <!-- ページネーションを追加 -->
-      <v-pagination
-        v-model="page"
-        :length="totalPages"
-        @input="paginateAchievements"
-        class="my-8"
-        v-if="achievements"
-      ></v-pagination>
+    <div v-if="userProfile.username">
+      <p v-if="img_url" class="text-center">
+        <v-avatar size="150">
+          <v-img :src="img_url" alt="プロフィール画像"></v-img>
+        </v-avatar>
+      </p>
+      <p v-else class="text-center">
+        <v-avatar size="200" color="appyellow">
+          No Image
+        </v-avatar>
+      </p>
+      <!-- <h1>{{ userProfile }}</h1> -->
+      <h1 class="text-center" style="font-size: 20px;">{{ userProfile.username }}</h1>
+      <p class="mb-6">
+        {{ userProfile.bio }}<br>
+        <a :href="'http://'+userProfile.website" target="_blank">{{ userProfile.website }}</a>
+      </p>
+      <p>
+        <v-btn color="primary" @click="copyToClipboard" class="black--text" style="margin-bottom: -4px;" block><v-icon>mdi-clipboard</v-icon>shareページのURLをコピー</v-btn>
+      </p>
+      <p>
+        <v-btn outlined :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア" color="appyellow" class="black--text" block>
+            <v-icon>mdi-twitter</v-icon> share
+        </v-btn>
+        <!-- <a :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア">
+          </a> -->
+      </p>
+      <v-divider class="my-6"></v-divider>
+      <h2 class="text-center mb-8">achievements</h2>
+      <!-- <p>{{ img_url }}</p> -->
+      <div v-if="achievements[0]">
+        <v-row>
+          <v-col
+            v-for="(item, index) in displayedAchievements"
+            :key="item.id"
+            cols="6"
+            class="cards"
+            :style="index % 2 === 1 ? 'padding-left: 0;' : ''"
+          >
+            <v-card>
+              <nuxt-link :to="`/trophy/${item.trophy_id}`">
+                <v-img
+                  class="white--text align-end"
+                  height="100px"
+                  style="border-radius: 7px 7px 0 0;"
+                  :src="item.image_url"
+                ></v-img>
+              </nuxt-link>
+              <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
+              <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
+              <v-btn color="#FB515A" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
+                <v-icon>mdi-image</v-icon> 記念写真
+              </v-btn>
+              <!-- プロフィール画像のアップロード -->
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-form>
+          <v-file-input
+            v-model="selectedFile"
+            label="ファイルを選択"
+            accept="image/*"
+            @change="uploadFile"
+            style="display: none;"
+            ref="fileInput"
+          ></v-file-input>
+        </v-form>
+        <!-- ページネーションを追加 -->
+        <v-pagination
+          v-model="page"
+          :length="totalPages"
+          @input="paginateAchievements"
+          class="my-8"
+          v-if="achievements"
+        ></v-pagination>
+      </div>
+      <p v-else>まだ取得したトロフィーはありません</p>
     </div>
-    <p v-else>まだ取得したトロフィーはありません</p>
+    <div v-else>
+      <p>まずプロフィールを設定してください。</p>
+    </div>
   </v-container>
 </template>
 

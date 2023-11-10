@@ -6,9 +6,7 @@
     />
     <v-main>
       <app-toaster />
-      <div class="background-image111">
-        <nuxt />
-      </div>
+      <nuxt />
     </v-main>
     <logged-in-app-bar-mypage-button class="mypage_btn" />
   </v-app>
@@ -36,9 +34,9 @@ export default {
 .background-image111 {
   /* height: 2000px; */
   height: auto;
-  /* background-image: url('https://www.illust-box.jp/db_img/sozai/00011/118201/watermark.jpg'); */
-  /* background-size: cover; */
-  /* background-repeat: no-repeat; */
+  background-image: url('https://www.illust-box.jp/db_img/sozai/00011/118201/watermark.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .v-toolbar__content {

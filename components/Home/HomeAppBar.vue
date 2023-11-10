@@ -7,17 +7,16 @@
     :height="appBarHeight"
     style="width: 100vw;"
   >
-  <nuxt-link
-        to="/"
-        class="text-decoration-none white--text"
-      >
-    <app-logo
-      @click.native="$vuetify.goTo('#scroll-top')"
-    />
-  </nuxt-link>
+    <nuxt-link
+          to="/"
+          class="text-decoration-none white--text"
+        >
+      <app-logo
+        @click.native="$vuetify.goTo('#scroll-top')"
+      />
+    </nuxt-link>
     <!-- <app-title class="hidden-mobile-and-down" /> -->
-    <v-spacer v-if="!isLogin" />
-    <div v-else></div>
+    <v-spacer></v-spacer>
 
     <!-- <v-toolbar-items class="ml-2 hidden-ipad-and-down">
       <v-btn
@@ -36,9 +35,13 @@
       <before-login-app-bar-login-button />
     </div>
     <div v-else>
-      <!-- <logged-in-app-bar-mypage-button /> -->
-
     </div>
+    <nuxt-link
+      to="/about"
+      class="text-decoration-none white--text ml-2"
+    >
+      <v-icon>mdi-help-circle-outline</v-icon>
+    </nuxt-link>
 
     <!-- <v-menu
       bottom

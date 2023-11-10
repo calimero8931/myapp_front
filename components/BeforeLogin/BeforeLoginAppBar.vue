@@ -20,6 +20,12 @@
     <div>
       <before-login-app-bar-signup-button />
       <before-login-app-bar-login-button />
+      <nuxt-link
+        to="/about"
+        class="text-decoration-none white--text ml-2"
+      >
+        <v-icon>mdi-help-circle-outline</v-icon>
+      </nuxt-link>
     </div>
     <!-- <div v-else>
       <logged-in-app-bar-mypage-button />
