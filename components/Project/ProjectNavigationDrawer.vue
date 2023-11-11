@@ -60,11 +60,24 @@ export default {
   data () {
     return {
       mobileBreakpoint: 960,
-      navMenus: []
+      navMenus: [],
+      check_admin: false
     }
   },
-  mounted () {
-    this.dynamicNavMenus;
+  async created () {
+    try {
+        const response = await this.$axios.$post(`/api/v1/check_admin/`,
+          {
+            params: {
+              user_id: this.$store.state.user.current.id
+            }
+          }
+        );
+        this.check_admin = response.admin;
+        this.dynamicNavMenus;
+      } catch (error) {
+        console.error('データの取得に失敗しました', error);
+      }
   },
   computed: {
     setDrawer: {
@@ -88,7 +101,7 @@ export default {
       ];
 
       // アドミンのみトロフィー作成メニューを追加
-      if (this.$store.state.user.current.id === 1) {
+      if (this.check_admin) {
         dynamicMenus.push({ name: 'account-id-trophy-edit', icon: 'mdi-application-edit-outline' });
       }
 
