@@ -3,7 +3,7 @@
     <v-parallax :speed="1" :src="imageUrl" style="height: 100%;">
       <template>
         <h2 class="text-center my-4">リコメンド</h2>
-        <v-sheet class="slide">
+        <v-sheet class="slide" style="width: 100vw; padding-left: 12px;">
           <v-slide-group multiple style="margin: 0px 0;">
             <v-slide-item v-for="(recommend, i) in recommendData" :key="`recommend-${i}`">
               <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 10px 0 0; width: 150px; height: auto;">
@@ -28,9 +28,11 @@
       <section>
         <h2 class="text-center mt-8 mb-4">トロフィー<span style="font-size: 18px;">を</span>探<span style="font-size: 18px;">す</span></h2>
         <v-sheet style="margin-top: 0;">
-          <v-container class="elevation-6" style="padding-top: 0;">
+          <v-container class="elevation-6" >
             <div v-for="(category, i) in categoryData" :key="`category-${i}`" class="my-2">
-              <v-card>
+              <v-card
+                :class="{ 'mt-4': i !== 0 }"
+              >
                 <v-img
                   :src="category_image[i]"
                   :height="imgHeight"
@@ -48,7 +50,9 @@
                 </v-btn>
               </v-card>
               <div v-if="category.id === selectedCategoryId && showButton" class="flex">
-                <div v-for="(subCategory, i) in subCategoryData" :key="`subCategory-${i}`" class="mr-2 mt-2">
+                <div v-for="(subCategory, i) in subCategoryData" :key="`subCategory-${i}`"
+                  :class="{ 'mr-2': selectedSubCategoryId !== subCategory.id, 'mt-2': true }"
+                >
                   <v-btn
                     :disabled="loading"
                     :loading="loading"
@@ -62,7 +66,9 @@
                   </v-btn>
                   <!-- 以下にregionsデータを羅列 -->
                   <div v-if="subCategory.id === selectedSubCategoryId" class="flex">
-                    <div v-for="(region, i) in regionsData" :key="`region-${i}`" class="mr-2 mt-2">
+                    <div v-for="(region, i) in regionsData" :key="`region-${i}`"
+                      :class="{ 'mr-2': selectedRegionId !== region.id, 'mt-2': true }"
+                    >
                       <v-btn
                         :disabled="loading"
                         :loading="loading"
@@ -101,8 +107,7 @@
           </v-container>
         </v-sheet>
       </section>
-    </v-parallax>
-    <p class="my-4">
+      <p class="my-4" style="width: 100vw;margin-left: -1rem;">
         <nuxt-link
           :to="{ name: 'about' }"
           style="text-decoration: none;color: white!important; font-size: 16px;"
@@ -113,7 +118,8 @@
           ></v-img>
         </nuxt-link>
       </p>
-    <app-footer />
+      <app-footer />
+    </v-parallax>
   </v-app>
 </template>
 

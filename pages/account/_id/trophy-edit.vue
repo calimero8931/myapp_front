@@ -51,7 +51,15 @@
         <v-text-field v-model="profile.website" label="ウェブサイトリンク"></v-text-field>
 
 
-
+        <v-btn
+        :disabled="loading"
+        :loading="loading"
+        color="#25BC91"
+        @click="clickGetGeoButton()"
+        class="my-8"
+        block>
+        <v-icon>mdi-map-marker</v-icon>
+        現在の位置を取得して入力</v-btn>
         <v-text-field v-model="profile.latitude" label="緯度を入力"></v-text-field>
         <v-text-field v-model="profile.longitude" label="経度を入力"></v-text-field>
 
@@ -74,12 +82,13 @@ export default {
         user_name: "",
         profile_image_url: "",
         profile_image: null,
-        bio: "ローレムイプサム",
-        website: "https://www.horyuji.or.jp/",
+        bio: "",
+        website: "",
         check_admin: false,
-        latitude: "34.6752226",
-        longitude: "135.5308484",
+        latitude: "",
+        longitude: "",
       },
+      loading: false,
       showButton: false,
       selectedCountry: 1,
       categoriesData: [],
@@ -111,6 +120,36 @@ export default {
     }
   },
   methods: {
+    async clickGetGeoButton() {
+        try {
+            this.loading = true;
+            const position = await this.getGeoLocation();
+            this.profile.latitude = position.lat;
+            this.profile.longitude = position.lng;
+            const msg = "現在地を取得しました";
+            const color = 'success';
+            const timeout = 4000;
+            this.loading = false;
+            return this.$store.dispatch('getToast', { msg, color, timeout });
+        } catch (error) {
+            console.error("位置情報の取得に失敗しました", error);
+        }
+    },
+    getGeoLocation() {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const data = position.coords;
+                    const lat = data.latitude;
+                    const lng = data.longitude;
+                    resolve({ lat, lng });
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    },
     async uploadFile() {
       if (this.profile.profile_image) {
         const file = this.profile.profile_image;

@@ -94,30 +94,6 @@ export default {
         }
     },
     async saveProfile( $store ) {
-      // step1.プロフィール画像のアップロード
-      if (this.profile.profile_image) {
-        const file = this.profile.profile_image;
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-          const response = await this.$axios.$post(`/api/v1/uploads/`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            },
-            params: {
-              user_id: this.$store.state.user.current.id
-            }
-          });
-          console.log(response.message);
-          this.profile.profile_image_url = response.file_url;
-        } catch (error) {
-          console.error('ファイルのアップロードに失敗しました', error);
-        }
-        } else {
-          console.error('ファイルが選択されていません');
-        }
-      // step2.プロフィール情報の保存
-      console.log("プロフィールを保存します", this.profile);
       try {
         const response = await this.$axios.$post(`/api/v1/set_public_profile/`,
           {
@@ -129,6 +105,28 @@ export default {
             }
           }
         );
+      // プロフィール画像のアップロード
+        if (this.profile.profile_image) {
+          const file = this.profile.profile_image;
+          const formData = new FormData();
+          formData.append('file', file);
+        try {
+          const response = await this.$axios.$post(`/api/v1/uploads/`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            params: {
+              user_id: this.$store.state.user.current.id
+            }
+          });
+          console.log(response.message);
+          this.profile.profile_image_url = response.file_url;
+          } catch (error) {
+            console.error('ファイルのアップロードに失敗しました', error);
+          }
+        } else {
+          console.error('ファイルが選択されていません');
+        }
         console.log(response);
         const msg = response.message
         const color = 'success'

@@ -33,7 +33,7 @@
         </v-col>
         <v-col
           cols="12"
-          class="py-4"
+          class="pt-4"
         >
           <div class="text-center text-body-2">
             &copy;{{ copyRightYear }}
@@ -50,7 +50,7 @@ export default {
   data ({ $config: { appName } }) {
     return {
       appName,
-      height: 100
+      height: 120
     }
   },
   computed: {
