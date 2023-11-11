@@ -3,7 +3,7 @@
     <v-parallax :speed="1" :src="imageUrl" style="height: 100%;">
       <template>
         <h2 class="text-center my-4">リコメンド</h2>
-        <v-sheet class="slide" style="width: 100vw; padding-left: 12px;">
+        <v-sheet class="slide" style="width: 100vw; padding-left: 12px; margin-left: -1rem;">
           <v-slide-group multiple style="margin: 0px 0;">
             <v-slide-item v-for="(recommend, i) in recommendData" :key="`recommend-${i}`">
               <v-card :to="`/trophy/${recommend.id}`" style="margin: 0 10px 0 0; width: 150px; height: auto;">
