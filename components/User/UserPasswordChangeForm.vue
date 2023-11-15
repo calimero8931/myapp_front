@@ -43,7 +43,6 @@
       :type="toggle3.type"
       outlined
       autocomplete="on"
-      style="margin-top: -16px;"
       @click:append="show3 = !show3"
     />
   </div>
@@ -102,9 +101,6 @@ export default {
         return this.$emit('update:password3', newVal)
       },
     },
-    emailMatchRule () {
-      return this.newEmail == this.confirmEmail || 'メールアドレスが一致しません'
-    },
     form () {
       const min = "8文字以上"
       const msg = `${min}。半角英数字･ﾊｲﾌﾝ･ｱﾝﾀﾞｰﾊﾞｰが使えます`
@@ -115,6 +111,7 @@ export default {
       const rules = this.setValidation ? [format] : [required]
       const hint = this.setValidation ? msg : undefined
       const placeholder = this.setValidation ? min : undefined
+      console.log(rules, hint, placeholder)
       return { rules, hint, placeholder }
     },
     toggle () {

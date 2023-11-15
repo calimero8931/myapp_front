@@ -2,9 +2,9 @@
   <div>
     <h2 class="text-center my-4">パスワード<span class="h1-span">の</span>変更</h2>
     <user-password-change-form
-    :password.sync="params.user.password"
-    :password2.sync="params.user.password2"
-    :password3.sync="params.user.password3"
+      :password.sync="params.user.password"
+      :password2.sync="params.user.password2"
+      :password3.sync="params.user.password3"
     />
     <v-btn
       color="primary"
@@ -14,9 +14,6 @@
     >
       変更を保存
     </v-btn>
-    <!-- <p>{{ params.user.password }}</p>
-    <p>{{ params.user.password2 }}</p>
-    <p>{{ params.user.password3 }}</p> -->
   </div>
 </template>
 
@@ -34,37 +31,44 @@ export default {
       }
     };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     async changePassword() {
       if (this.params.user.password2 === this.params.user.password3) {
         try {
-          const response = await this.$axios.$post(`/api/v1/change_password/`,
-            {
-              params: {
-                user_id: this.$store.state.user.current.id,
-                old_password: this.params.user.password,
-                new_password: this.params.user.password2
-              }
+          const response = await this.$axios.$post(`/api/v1/change_password/`, {
+            params: {
+              user_id: this.$store.state.user.current.id,
+              old_password: this.params.user.password,
+              new_password: this.params.user.password2
             }
-          );
+          });
+
           const msg = response.message;
           const color = 'success';
           const timeout = 4000;
-          return this.$store.dispatch('getToast', { msg, color, timeout });
+          this.$store.dispatch('getToast', { msg, color, timeout });
+
+          // フォームをリセット
+          this.resetForm();
         } catch (error) {
-          const msg = error.response.data.message
-          const color = 'error'
-          const timeout = 3000
-          return this.$store.dispatch('getToast', {  msg, color, timeout })
+          const msg = error.response.data.message;
+          const color = 'error';
+          const timeout = 3000;
+          this.$store.dispatch('getToast', { msg, color, timeout });
         }
       } else {
-          const msg = 'メールアドレスが一致しません';
-          const color = 'error';
-          const timeout = 4000;
-          return this.$store.dispatch('getToast', { msg, color, timeout });
+        const msg = '一致しません';
+        const color = 'error';
+        const timeout = 4000;
+        this.$store.dispatch('getToast', { msg, color, timeout });
       }
+    },
+    resetForm() {
+      // フォームのデータを初期化
+      this.params.user.password = '';
+      this.params.user.password2 = '';
+      this.params.user.password3 = '';
     }
   }
 };

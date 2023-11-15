@@ -2,6 +2,10 @@
   <user-form-card>
     <template #user-form-card-content >
       <h1 class="mt-8 mb-4">新規登録</h1>
+      <p class="red--text">
+        ※現在デモンストレーションモードですので、以下で作成されたアカウントは、Admin権限が付与されます。<br>
+        Adminユーザーはトロフィーを作成することができます。
+      </p>
       <v-form
         ref="form"
         v-model="isValid"
@@ -43,9 +47,9 @@ export default {
       loading: false,
       params: {
         user: {
-          name: 'yuya',
-          email: 'hello.potechi@gmail.com',
-          password: 'password'
+          name: '',
+          email: '',
+          password: ''
         }
       }
     }

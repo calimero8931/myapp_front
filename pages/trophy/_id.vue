@@ -3,7 +3,7 @@
     <v-container class="mb-8">
       <h1 class="text-center mt-8 mb-4">{{ trophyData.title }}</h1>
       <p class="text-center">
-        <v-avatar size="150"><v-img :src="`${ trophyData.image_url }`"></v-img></v-avatar>
+        <v-img :src="`${ trophyData.image_url }`" max-height="250px" width="auto" style="border-radius: 8px;"></v-img>
       </p>
       <h2 class="text-center reality"><span>{{ getRareness() }}</span></h2>
       <p style="display: none;">{{ [rarenessLabel] }}</p>

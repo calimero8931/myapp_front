@@ -38,7 +38,7 @@
               ></v-img>
             </nuxt-link>
             <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
-            <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto;">{{ item.formattedSuccessAt }}</v-card-text>
+            <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto; padding-bottom: 10px;">{{ item.formattedSuccessAt }}</v-card-text>
             <!-- プロフィール画像のアップロード -->
           </v-card>
         </v-col>

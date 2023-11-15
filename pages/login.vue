@@ -2,6 +2,14 @@
   <user-form-card>
     <template #user-form-card-content >
       <h1 class="mt-8 mb-4">ログイン</h1>
+      <p>
+        デモ用アカウント<br>
+        ID:user0@example.com<br>
+        PW:password
+      </p>
+      <p>
+        ※上記でログインした場合は、メール認証が必要な機能のデモはできません。
+      </p>
       <v-form
         ref="form"
         v-model="isValid"
@@ -48,8 +56,8 @@ export default {
       loading: false,
       params: {
         auth: {
-          email: 'user0@example.com',
-          password: 'password'
+          email: '',
+          password: ''
         }
       },
       redirectPath: $store.state.loggedIn.rememberPath,
