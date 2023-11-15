@@ -197,13 +197,7 @@ export default {
   },
   async created( $store ) {
     try {
-        const response = await this.$axios.$get(`/api/v1/recommend_request/`,
-          {
-            params: {
-              user_id: this.$store.state.user.current.id
-            }
-          }
-        );
+        const response = await this.$axios.$get(`/api/v1/recommend_request/`);
         this.recommendData = response;
         const response_new_trophy = await this.$axios.$get(`/api/v1/get_new_trophy/`);
         this.newTrophyData = response_new_trophy;
