@@ -141,12 +141,12 @@ export default {
         this.loading = true;
         // pagedAchievementsからtrophyIdに対応するデータを検索
         const trophyData = this.pagedAchievements.find(achievement => achievement.trophy_id === trophyId);
-        console.log("今いる場所のラティ:"+this.geo1.lat);
-        console.log("今いる場所のロンティ:"+this.geo1.lng);
-        console.log("トロフィーラティ:"+trophyData.trophy_latitude);
-        console.log("トロフィーロンティ:"+trophyData.trophy_longitude);
-        console.log("今いる場所からトロフィラティを引く:"+Math.abs(this.geo1.lat - trophyData.trophy_latitude));
-        console.log("今いる場所からトロフィロンティを引く:"+Math.abs(this.geo1.lng - trophyData.trophy_longitude));
+        // console.log("今いる場所のラティ:"+this.geo1.lat);
+        // console.log("今いる場所のロンティ:"+this.geo1.lng);
+        // console.log("トロフィーラティ:"+trophyData.trophy_latitude);
+        // console.log("トロフィーロンティ:"+trophyData.trophy_longitude);
+        // console.log("今いる場所からトロフィラティを引く:"+Math.abs(this.geo1.lat - trophyData.trophy_latitude));
+        // console.log("今いる場所からトロフィロンティを引く:"+Math.abs(this.geo1.lng - trophyData.trophy_longitude));
 
         if (trophyData) {
           // trophyData内のlatitudeおよびlongitudeを取得
@@ -218,9 +218,9 @@ export default {
             }
           }
         );
-        console.log("レスポンスオブジェクト", response);
-        console.log("検索したID", response.id);
-        console.log("ヒットした名前", response.name);
+        // console.log("レスポンスオブジェクト", response);
+        // console.log("検索したID", response.id);
+        // console.log("ヒットした名前", response.name);
         this.friend_name = response.name;
       } catch (error) {
         console.error('データの取得に失敗しました', error);
@@ -229,7 +229,7 @@ export default {
     },
     async sendFriendship() {
       try {
-        console.log("フレンド申請を送りました");
+        // console.log("フレンド申請を送りました");
         const response = await this.$axios.$post(`/api/v1/friend_request/`,
           {
             params: {

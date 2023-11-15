@@ -85,7 +85,7 @@ export default {
       if (this.displayedAchievements) {
         this.displayedAchievements.forEach((item) => {
           item.formattedSuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
-          console.log("successあっと" + item.formattedSuccessAt);
+          // console.log("successあっと" + item.formattedSuccessAt);
         });
       }
     } catch (error) {
@@ -100,7 +100,7 @@ export default {
   methods: {
     async getProfileAndAchievements(hash) {
       try {
-        console.log("ハッシュ受け取れてるかな？" + hash);
+        // console.log("ハッシュ受け取れてるかな？" + hash);
         const response = await this.$axios.$get(`/api/v1/account/public-profile/${hash}`);
         this.userProfile = response.public_profile;
         this.achievements = response.achievements;
@@ -110,7 +110,7 @@ export default {
     },
     async getProfileImg (hash) {
       const img_response = await this.$axios.$get(`/api/v1/get_profile_img_hash/${hash}`);
-      console.log(img_response);
+      // console.log(img_response);
       const img_url = img_response.image_url;
     },
     paginateAchievements() {

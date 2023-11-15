@@ -165,7 +165,7 @@ export default {
         }
       });
       const trophyData = trophyResponse;
-      console.log("トロフィーの取得に成功しました", trophyData);
+      // console.log("トロフィーの取得に成功しました", trophyData);
 
       const achievementResponse = await $axios.$get(`/api/v1/compute_achievement_rate/`, {
         params: {
@@ -174,7 +174,7 @@ export default {
       });
       const achievementRate = achievementResponse;
       const achievementRate2 = Object.values(achievementResponse);
-      console.log("達成率の取得に成功しました", achievementRate);
+      // console.log("達成率の取得に成功しました", achievementRate);
       return { trophyData, achievementRate, achievementRate2 };
     } catch (error) {
       console.error('データの取得に失敗しました', error);
@@ -220,8 +220,8 @@ export default {
     },
     getRareness() {
       this.rate = 100 - this.achievementRate2[2];
-      console.log("レート" + this.achievementRate2[2]);
-      console.log("レアリティ" + this.rate);
+      // console.log("レート" + this.achievementRate2[2]);
+      // console.log("レアリティ" + this.rate);
     },
   }
 }

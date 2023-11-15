@@ -164,7 +164,7 @@ export default {
               user_id: this.$store.state.user.current.id
             }
           });
-          console.log(response.message);
+          // console.log(response.message);
           this.profile.profile_image_url = response.file_url;
         } catch (error) {
           console.error(error.message);
@@ -193,7 +193,7 @@ export default {
         );
         this.selectedCategoryId = categoryId;
         this.subCategoriesData = response;
-        console.log("サブカテゴリの取得に成功しました", response);
+        // console.log("サブカテゴリの取得に成功しました", response);
       } catch (error) {
         console.error('サブカテゴリの取得に失敗しました', error);
       }
@@ -209,7 +209,7 @@ export default {
         );
         this.selectedSubCategoryId = subCategoryId;
         this.regionsData = response;
-        console.log("地域の取得に成功しました", response);
+        // console.log("地域の取得に成功しました", response);
       } catch (error) {
         console.error('地域の取得に失敗しました', error);
       }
@@ -225,18 +225,18 @@ export default {
         );
         this.selectedRegionId = regionId;
         this.prefecturesData = response;
-        console.log("都道府県の取得に成功しました", response);
+        // console.log("都道府県の取得に成功しました", response);
       } catch (error) {
         console.error('都道府県の取得に失敗しました', error);
       }
     },
     async selectPrefecture(prifectureId) {
       this.selectedPrefectureId = prifectureId;
-      console.log("countryId:"+this.selectedCountry);
-      console.log("selectedCategoryId:"+this.selectedCategoryId);
-      console.log("selectedSubCategoryId:"+this.selectedSubCategoryId);
-      console.log("selectedRegionId:"+this.selectedRegionId);
-      console.log("selectedPrefectureId:"+this.selectedPrefectureId);
+      // console.log("countryId:"+this.selectedCountry);
+      // console.log("selectedCategoryId:"+this.selectedCategoryId);
+      // console.log("selectedSubCategoryId:"+this.selectedSubCategoryId);
+      // console.log("selectedRegionId:"+this.selectedRegionId);
+      // console.log("selectedPrefectureId:"+this.selectedPrefectureId);
     },
     toggleButtonVisibility() {
       this.showButton = !this.showButton;
@@ -247,7 +247,7 @@ export default {
         const file = this.profile.profile_image;
         const formData = new FormData();
         formData.append('file', file);
-        console.log("ファイル:"+this.profile.profile_image);
+        // console.log("ファイル:"+this.profile.profile_image);
         try {
           const response = await this.$axios.$post(`/api/v1/trophy/uploads/`, formData, {
             headers: {
@@ -267,7 +267,7 @@ export default {
               prefecture_id: this.selectedPrefectureId,
             }
           });
-          console.log(response.message);
+          // console.log(response.message);
           const msg = "トロフィーが申請されました";
           const color = 'success';
           const timeout = 4000;

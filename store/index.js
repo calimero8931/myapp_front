@@ -123,7 +123,7 @@ export const actions = {
   // ログイン前ユーザーがアクセスしたルートを記憶する
   getRememberPath ({ state, commit }, { name, params }) {
     // ログイン前パスが渡された場合はloggedIn.homePathに書き換える
-    console.log('リメンバー');
+    // console.log('リメンバー');
     if (state.loggedIn.redirectPaths.includes(name)) {
       name = state.loggedIn.homePath.name
     }

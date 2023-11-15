@@ -83,7 +83,7 @@ export default {
               user_id: this.$store.state.user.current.id
             }
           });
-          console.log(response.message);
+          // console.log(response.message);
           this.profile.profile_image_url = response.file_url;
         } catch (error) {
           console.error('ファイルのアップロードに失敗しました', error);
@@ -119,7 +119,7 @@ export default {
               user_id: this.$store.state.user.current.id
             }
           });
-          console.log(response.message);
+          // console.log(response.message);
           this.profile.profile_image_url = response.file_url;
           } catch (error) {
             console.error('ファイルのアップロードに失敗しました', error);
@@ -127,7 +127,7 @@ export default {
         } else {
           console.error('ファイルが選択されていません');
         }
-        console.log(response);
+        // console.log(response);
         const msg = response.message
         const color = 'success'
         const timeout = 3000

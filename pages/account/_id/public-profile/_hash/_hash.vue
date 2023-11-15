@@ -108,18 +108,18 @@ export default {
       const response = await this.$axios.$get(`/api/v1/account/get_hash/${this.$store.state.user.current.id}`);
       const hash = response.unique_hash;
       if (hash) {
-        console.log("ハッシュ取れてる？" + hash)
+        // console.log("ハッシュ取れてる？" + hash)
         await this.$router.push(`/account/public-profile/${hash}`);
         await this.getProfileAndAchievements(hash);
       } else {
-        console.log("リダイレクトできませんでした");
+        // console.log("リダイレクトできませんでした");
       }
       const img_response = await this.$axios.$get(`/api/v1/get_profile_img/${this.$store.state.user.current.id}`);
       this.img_url = img_response.image_url;
       if (this.displayedAchievements) {
         this.displayedAchievements.forEach((item) => {
           item.formattedSuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
-          console.log("successあっと" + item.formattedSuccessAt);
+          // console.log("successあっと" + item.formattedSuccessAt);
         });
       }
     } catch (error) {
@@ -157,7 +157,7 @@ export default {
   methods: {
     async getProfileAndAchievements(hash) {
       try {
-        console.log("ハッシュ受け取れてるかな？" + hash);
+        // console.log("ハッシュ受け取れてるかな？" + hash);
         const response = await this.$axios.$get(`/api/v1/account/public-profile/${hash}`);
         this.userProfile = response.public_profile;
         this.achievements = response.achievements;
@@ -168,7 +168,7 @@ export default {
     },
     async getProfileImg () {
       const img_response = await this.$axios.$get(`/api/v1/get_profile_img/${this.$store.state.user.current.id}`);
-      console.log(img_response);
+      // console.log(img_response);
       const img_url = img_response.image_url;
     },
     copyToClipboard() {

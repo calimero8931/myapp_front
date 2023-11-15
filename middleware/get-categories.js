@@ -14,5 +14,5 @@
 // }
 export default function (context) {
   context.app.contextValue = "これはミドルウェアからのデータです";
-  console.log("context オブジェクト:", context.app.contextValue);
+  // console.log("context オブジェクト:", context.app.contextValue);
 }
