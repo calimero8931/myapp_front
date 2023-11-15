@@ -25,6 +25,30 @@
           </v-slide-group>
         </v-sheet>
       </template>
+      <template>
+        <h2 class="text-center my-4">New!</h2>
+        <v-sheet class="slide" style="width: 100vw; padding-left: 12px; margin-left: -1rem;">
+          <v-slide-group multiple style="margin: 0px 0;">
+            <v-slide-item v-for="(new_trophy, i) in newTrophyData" :key="`recommend-${i}`">
+              <v-card :to="`/trophy/${new_trophy.id}`" style="margin: 0 10px 0 0; width: 150px; height: auto;">
+                <v-img
+                  class="white--text align-end"
+                  height="100px"
+                  :src="new_trophy.image_url"
+                ></v-img>
+                <v-card-title class="mt-2" style="font-size: 14px; justify-content: center;">
+                  {{ new_trophy.title  }}
+                </v-card-title>
+                <v-card-text class="text--primary mb-4" style="margin-top: -6px;">
+                  <div class="v-text-truncate text-center">
+                    {{ new_trophy.prefecture_name }}
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
+      </template>
       <section>
         <h2 class="text-center mt-8 mb-4">トロフィー<span style="font-size: 18px;">を</span>探<span style="font-size: 18px;">す</span></h2>
         <v-sheet style="margin-top: 0;">
@@ -159,6 +183,7 @@ export default {
       selectedPrefectureId: null,
       trophies: [],
       showButton: false,
+      newTrophyData: [],
       imageUrl: 'parallax.png',
       category_image: [
         "AdobeStock_273329877.jpeg",
@@ -171,8 +196,7 @@ export default {
     this.fetchCategories();
   },
   async created( $store ) {
-    if( !this.$store.state.user.current ){
-      try {
+    try {
         const response = await this.$axios.$get(`/api/v1/recommend_request/`,
           {
             params: {
@@ -181,23 +205,11 @@ export default {
           }
         );
         this.recommendData = response;
+        const response_new_trophy = await this.$axios.$get(`/api/v1/get_new_trophy/`);
+        this.newTrophyData = response_new_trophy;
       } catch (error) {
         console.error(error.message);
       }
-    } else {
-      try {
-        const response = await this.$axios.$get(`/api/v1/recommend_request/`,
-          {
-            params: {
-              user_id: this.$store.state.user.current.id
-            }
-          }
-        );
-        this.recommendData = response;
-      } catch (error) {
-        console.error(error.message);
-      }
-    }
   },
   methods: {
     async fetchCategories () {
