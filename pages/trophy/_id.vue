@@ -7,14 +7,7 @@
       </p>
       <h2 class="text-center reality"><span>{{ getRareness() }}</span></h2>
       <p style="display: none;">{{ [rarenessLabel] }}</p>
-      <!-- <p>{{ "ラベル:"+rarenessLabel }}</p> -->
-      <!-- <p>{{ [this.rate] }}</p> -->
       <p>{{ trophyData.description }}</p>
-      <!-- <p>completion_rate:{{ achievementRate }}</p>
-      <p>興味を持っている人数:{{ achievementRate.interested_users_count }}</p>
-      <p>トロフィー取った人:{{ achievementRate.earned_users_count }}</p>
-      <p>取得率:{{ achievementRate.completion_rate }}%</p>
-      <p>このトロフィーのサブカテ{{ trophyData.category_id }}</p> -->
       <v-divider class="my-6"></v-divider>
       <h2 class="text-center" style="font-size: 24px!important;">レアリティ</h2>
       <apexchart
@@ -23,7 +16,6 @@
         :series="[this.rate]"
         style="margin-top: -16px;"
       ></apexchart>
-      <!-- <p>achievementRate2:{{ [achievementRate2[2]] }}%</p> -->
       <v-row v-if="this.$store.state.user.current" justify="center" align="center">
         <v-col cols="6">
           <p style="width: 45vw;">
@@ -49,14 +41,6 @@
       </v-row>
       <div v-else></div>
     </v-container>
-    <!-- <iframe
-      width="600"
-      height="450"
-      frameborder="0"
-      style="border:0"
-      :src="googleMapUrl"
-      allowfullscreen
-    ></iframe> -->
   </div>
 </template>
 
@@ -76,7 +60,6 @@ export default {
   },
   data () {
     return {
-      apiKey: 'AIzaSyC6nX_ez1pxGPNEH4i6DVLUiRM52j5eZZU',
       trophyData: [],
       achievementRate: [],
       achievementRate2: [],
@@ -113,11 +96,9 @@ export default {
             },
           },
         },
-        // type: 'radialBar',
         colors: ['#F3DF4C'],
         labels: [],
         rarenessLabel: [],
-        // labels: ["Progress"]
       },
     }
   },
@@ -137,7 +118,6 @@ export default {
       }
     },
     rarenessLabel() {
-      // レアネスラベルを計算するコンピューテッドプロパティ
       if (this.rate >= 90) {
         this.chartOptions.labels.push("SS");
       } else if (this.rate >= 70) {
@@ -165,7 +145,6 @@ export default {
         }
       });
       const trophyData = trophyResponse;
-      // console.log("トロフィーの取得に成功しました", trophyData);
 
       const achievementResponse = await $axios.$get(`/api/v1/compute_achievement_rate/`, {
         params: {
@@ -174,7 +153,6 @@ export default {
       });
       const achievementRate = achievementResponse;
       const achievementRate2 = Object.values(achievementResponse);
-      // console.log("達成率の取得に成功しました", achievementRate);
       return { trophyData, achievementRate, achievementRate2 };
     } catch (error) {
       console.error('データの取得に失敗しました', error);
@@ -220,8 +198,6 @@ export default {
     },
     getRareness() {
       this.rate = 100 - this.achievementRate2[2];
-      // console.log("レート" + this.achievementRate2[2]);
-      // console.log("レアリティ" + this.rate);
     },
   }
 }

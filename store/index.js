@@ -48,7 +48,6 @@ export const state = () => ({
 // 算出プロパティ = computed
 export const getters = {}
 
-// stateの値を変更できる唯一の方法
 export const mutations = {
   setProjectList(state, payload) {
     state.project.list = payload
@@ -123,7 +122,6 @@ export const actions = {
   // ログイン前ユーザーがアクセスしたルートを記憶する
   getRememberPath ({ state, commit }, { name, params }) {
     // ログイン前パスが渡された場合はloggedIn.homePathに書き換える
-    // console.log('リメンバー');
     if (state.loggedIn.redirectPaths.includes(name)) {
       name = state.loggedIn.homePath.name
     }
@@ -131,11 +129,8 @@ export const actions = {
     commit('setRememberPath', { name, params })
   }
 ,
-  // サインアップ
-  // this.paramsを受け取って、APIを叩く
   async signup ({ dispatch }, params) {
     const res = await this.$axios.post('/api/v1/signup', params)
-    // 成功したらアラートを表示
     dispatch('getToast', { msg: 'success', color: 'success' })
     const { token, expires, payload } = res.data
     dispatch('getAuthToken', token)

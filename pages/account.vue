@@ -1,17 +1,5 @@
 <template>
   <v-container>
-    <!-- <v-btn
-      small
-      plain
-      color="primary"
-    >
-      <v-icon
-        left
-      >
-        mdi-chevron-double-left
-      </v-icon>
-      ここはaccount.vueの領域
-    </v-btn> -->
     <nuxt-child />
   </v-container>
 </template>

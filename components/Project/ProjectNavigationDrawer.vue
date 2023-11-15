@@ -73,7 +73,6 @@ export default {
             }
           }
         );
-        // console.log("adminです"+response.admin);
         this.check_admin = response.admin;
         this.dynamicNavMenus;
       } catch (error) {
@@ -108,7 +107,6 @@ export default {
 
       // dynamicMenusをnavMenusに代入
       this.navMenus = dynamicMenus;
-      // console.log("dynamicんきてる");
 
       return this.navMenus;
     }

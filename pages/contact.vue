@@ -108,8 +108,3 @@ export default {
   }
 }
 </script>
-<style>
-  .v-main {
-    /* padding-top: 70px!important; */
-  }
-</style>

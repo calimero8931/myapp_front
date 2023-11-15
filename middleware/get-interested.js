@@ -11,7 +11,6 @@ export default async ({ store, $axios, route }) => {
         }
       }
     );
-    // console.log('getインスタレティッドresponse', response);
     store.commit('setInterestAlready', response);
   } catch (error) {
     console.error('データの取得に失敗しました', error);

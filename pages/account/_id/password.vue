@@ -49,7 +49,6 @@ export default {
           const timeout = 4000;
           this.$store.dispatch('getToast', { msg, color, timeout });
 
-          // フォームをリセット
           this.resetForm();
         } catch (error) {
           const msg = error.response.data.message;
@@ -65,7 +64,6 @@ export default {
       }
     },
     resetForm() {
-      // フォームのデータを初期化
       this.params.user.password = '';
       this.params.user.password2 = '';
       this.params.user.password3 = '';

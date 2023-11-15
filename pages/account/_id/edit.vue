@@ -15,7 +15,6 @@
         outlined
         @input="validateForm"
         required></v-text-field>
-        <!-- {{ profile.user_name }} -->
       <v-file-input
         v-model="profile.profile_image"
         label="プロフィール画像のアップロード"
@@ -31,13 +30,11 @@
         :error-messages="errorBio"
         @input="validateForm"
         outlined></v-textarea>
-      <!-- {{ profile.bio }} -->
       <user-form-my-email
         v-model="profile.website"
         :email.sync="profile.website"
         placeholder="Email"
         ></user-form-my-email>
-      <!-- {{ profile.website }} -->
       <v-btn color="primary" @click="saveProfile" class="black--text" :disabled="isSubmitDisabled" block>保存</v-btn>
     </v-form>
   </div>
@@ -83,13 +80,11 @@ export default {
               user_id: this.$store.state.user.current.id
             }
           });
-          // console.log(response.message);
           this.profile.profile_image_url = response.file_url;
         } catch (error) {
           console.error('ファイルのアップロードに失敗しました', error);
         }
         } else {
-          // ファイルが選択されていないか、存在しない場合
           console.error('ファイルが選択されていません');
         }
     },
@@ -105,7 +100,6 @@ export default {
             }
           }
         );
-      // プロフィール画像のアップロード
         if (this.profile.profile_image) {
           const file = this.profile.profile_image;
           const formData = new FormData();
@@ -119,7 +113,6 @@ export default {
               user_id: this.$store.state.user.current.id
             }
           });
-          // console.log(response.message);
           this.profile.profile_image_url = response.file_url;
           } catch (error) {
             console.error('ファイルのアップロードに失敗しました', error);
@@ -127,7 +120,6 @@ export default {
         } else {
           console.error('ファイルが選択されていません');
         }
-        // console.log(response);
         const msg = response.message
         const color = 'success'
         const timeout = 3000

@@ -3,7 +3,6 @@ export default async ({ store, $axios, route }) => {
     return false
   }
   try {
-
     const response = await $axios.$get(`/api/v1/get_favorite/`,
       {
         params: {
@@ -12,7 +11,6 @@ export default async ({ store, $axios, route }) => {
         }
       }
     );
-    // console.log('response', response);
     store.commit('setFavoriteAlready', response);
   } catch (error) {
     console.error('データの取得に失敗しました', error);

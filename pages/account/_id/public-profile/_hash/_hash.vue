@@ -11,7 +11,6 @@
           No Image
         </v-avatar>
       </p>
-      <!-- <h1>{{ userProfile }}</h1> -->
       <h1 class="text-center" style="font-size: 20px;">{{ userProfile.username }}</h1>
       <p class="mb-6">
         {{ userProfile.bio }}<br>
@@ -24,12 +23,9 @@
         <v-btn outlined :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア" color="appyellow" class="black--text" block>
             <v-icon>mdi-twitter</v-icon> share
         </v-btn>
-        <!-- <a :href="xShareLink" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Xでシェア">
-          </a> -->
       </p>
       <v-divider class="my-6"></v-divider>
       <h2 class="text-center mb-8">achievements</h2>
-      <!-- <p>{{ img_url }}</p> -->
       <div v-if="achievements[0]">
         <v-row>
           <v-col
@@ -53,7 +49,6 @@
               <v-btn color="#FB515A" @click="openFileInput(item.id)" style="border-radius: 0 0 7px 7px;" block>
                 <v-icon>mdi-image</v-icon> 記念写真
               </v-btn>
-              <!-- プロフィール画像のアップロード -->
             </v-card>
           </v-col>
         </v-row>
@@ -67,7 +62,6 @@
             ref="fileInput"
           ></v-file-input>
         </v-form>
-        <!-- ページネーションを追加 -->
         <v-pagination
           v-model="page"
           :length="totalPages"
@@ -96,8 +90,8 @@ export default {
       img_url: "",
       achievements: [],
       displayedAchievements: [],
-      page: 1, // 現在のページ
-      itemsPerPage: 4, // 1ページに表示するアイテム数
+      page: 1,
+      itemsPerPage: 4,
       selectedFile: null,
       selectedTrophyId: null,
       formattedSuccessAt: '',
@@ -108,18 +102,16 @@ export default {
       const response = await this.$axios.$get(`/api/v1/account/get_hash/${this.$store.state.user.current.id}`);
       const hash = response.unique_hash;
       if (hash) {
-        // console.log("ハッシュ取れてる？" + hash)
         await this.$router.push(`/account/public-profile/${hash}`);
         await this.getProfileAndAchievements(hash);
       } else {
-        // console.log("リダイレクトできませんでした");
+        console.error("リダイレクトできませんでした");
       }
       const img_response = await this.$axios.$get(`/api/v1/get_profile_img/${this.$store.state.user.current.id}`);
       this.img_url = img_response.image_url;
       if (this.displayedAchievements) {
         this.displayedAchievements.forEach((item) => {
           item.formattedSuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
-          // console.log("successあっと" + item.formattedSuccessAt);
         });
       }
     } catch (error) {
@@ -131,13 +123,9 @@ export default {
       return `https://twitter.com/share?url=${this.postUrl}&text=${this.postText}%0a%0a#${this.postTitle}&hashtags=appyellow`
     },
     postUrl() {
-    // @postから投稿のURLを取得するコードを追加
-    // 例: return this.$route.fullPath;
-    return `${window.location.origin}/share/${this.userProfile.unique_hash}`;
-  },
+      return `${window.location.origin}/share/${this.userProfile.unique_hash}`;
+    },
     postTitle() {
-      // @postから投稿のタイトルを取得するコードを追加
-      // 例: return this.$route.meta.title;
       return this.userProfile.username;
     },
     postText() {
@@ -149,7 +137,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to.hash) { // hash が存在しない場合のみ実行
+      if (to.hash) {
         this.getProfileAndAchievements();
       }
     },
@@ -157,7 +145,6 @@ export default {
   methods: {
     async getProfileAndAchievements(hash) {
       try {
-        // console.log("ハッシュ受け取れてるかな？" + hash);
         const response = await this.$axios.$get(`/api/v1/account/public-profile/${hash}`);
         this.userProfile = response.public_profile;
         this.achievements = response.achievements;
@@ -168,7 +155,6 @@ export default {
     },
     async getProfileImg () {
       const img_response = await this.$axios.$get(`/api/v1/get_profile_img/${this.$store.state.user.current.id}`);
-      // console.log(img_response);
       const img_url = img_response.image_url;
     },
     copyToClipboard() {
@@ -194,52 +180,46 @@ export default {
       this.selectedTrophyId = trophyId;
     },
     async uploadFile() {
-  if (this.selectedFile) {
-    const file = this.selectedFile;
-
-    // ファイルがnullバイトを含まないかをチェック
-    if (this.containsNullByte(file)) {
-      console.error('ファイルにnullバイトが含まれています');
-      return; // アップロードを中止
-    }
-
-    const formData = new FormData();
-    formData.append('file', file);
-    try {
-      const response = await this.$axios.$post(`/api/v1/upload_achievement_image/`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        params: {
-          user_id: this.$store.state.user.current.id,
-          achievement_id: this.selectedTrophyId
+      if (this.selectedFile) {
+        const file = this.selectedFile;
+        if (this.containsNullByte(file)) {
+          console.error('ファイルにnullバイトが含まれています');
+          return; // アップロードを中止
         }
-      });
-      const msg = response.message;
-      const color = 'success';
-      const timeout = 4000;
-      this.getProfileAndAchievements(this.userProfile.unique_hash);
-      return this.$store.dispatch('getToast', { msg, color, timeout });
-    } catch (error) {
-      console.error('ファイルのアップロードに失敗しました', error);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+          const response = await this.$axios.$post(`/api/v1/upload_achievement_image/`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            params: {
+              user_id: this.$store.state.user.current.id,
+              achievement_id: this.selectedTrophyId
+            }
+          });
+          const msg = response.message;
+          const color = 'success';
+          const timeout = 4000;
+          this.getProfileAndAchievements(this.userProfile.unique_hash);
+          return this.$store.dispatch('getToast', { msg, color, timeout });
+        } catch (error) {
+          console.error('ファイルのアップロードに失敗しました', error);
+        }
+      } else {
+        console.error('ファイルが選択されていません');
+      }
+    },
+    containsNullByte(file) {
+      const fileData = new Uint8Array(file);
+      for (let i = 0; i < fileData.length; i++) {
+        if (fileData[i] === 0) {
+          return true;
+        }
+      }
+      return false;
     }
-  } else {
-    // ファイルが選択されていないか、存在しない場合
-    console.error('ファイルが選択されていません');
   }
-},
-containsNullByte(file) {
-  const fileData = new Uint8Array(file);
-
-  for (let i = 0; i < fileData.length; i++) {
-    if (fileData[i] === 0) {
-      return true; // nullバイトが見つかった場合
-    }
-  }
-
-  return false; // nullバイトが見つからなかった場合
-}
-
-  },
 }
 </script>

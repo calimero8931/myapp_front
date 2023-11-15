@@ -10,7 +10,6 @@
         No Image
       </v-avatar>
     </p>
-    <!-- <h1>{{ userProfile }}</h1> -->
     <h1 class="text-center" style="font-size: 20px;">{{ userProfile.username }}</h1>
     <p class="mb-6">
       {{ userProfile.bio }}<br>
@@ -18,7 +17,6 @@
     </p>
     <v-divider class="my-6"></v-divider>
     <h2 class="text-center mb-8">achievements</h2>
-    <!-- <p>{{ img_url }}</p> -->
     <div v-if="achievements">
       <v-row>
         <v-col
@@ -39,11 +37,9 @@
             </nuxt-link>
             <v-card-title style=" justify-content: center; margin: 10px auto 0 auto;font-size: 16px;line-height: 1.2;">{{ item.title }}</v-card-title>
             <v-card-text style=" justify-content: center; text-align: center; margin:0 auto 8px auto; padding-bottom: 10px;">{{ item.formattedSuccessAt }}</v-card-text>
-            <!-- プロフィール画像のアップロード -->
           </v-card>
         </v-col>
       </v-row>
-      <!-- ページネーションを追加 -->
       <v-pagination
         v-model="page"
         :length="totalPages"
@@ -66,8 +62,8 @@ export default {
       img_url: "",
       achievements: [],
       displayedAchievements: [],
-      page: 1, // 現在のページ
-      itemsPerPage: 4, // 1ページに表示するアイテム数
+      page: 1,
+      itemsPerPage: 4,
       selectedTrophyId: null,
       formattedSuccessAt: '',
     };
@@ -85,7 +81,6 @@ export default {
       if (this.displayedAchievements) {
         this.displayedAchievements.forEach((item) => {
           item.formattedSuccessAt = format(new Date(item.success_at), 'yyyy/MM/dd');
-          // console.log("successあっと" + item.formattedSuccessAt);
         });
       }
     } catch (error) {
@@ -100,7 +95,6 @@ export default {
   methods: {
     async getProfileAndAchievements(hash) {
       try {
-        // console.log("ハッシュ受け取れてるかな？" + hash);
         const response = await this.$axios.$get(`/api/v1/account/public-profile/${hash}`);
         this.userProfile = response.public_profile;
         this.achievements = response.achievements;
@@ -110,7 +104,6 @@ export default {
     },
     async getProfileImg (hash) {
       const img_response = await this.$axios.$get(`/api/v1/get_profile_img_hash/${hash}`);
-      // console.log(img_response);
       const img_url = img_response.image_url;
     },
     paginateAchievements() {

@@ -41,7 +41,6 @@ export default {
             user_id: loggedInUserId
           }
         });
-      // console.log("サブカテゴリの取得に成功しました", response);
       if (Array.isArray(response)) {
         this.processedData = response.map(data => {
         const isSelected = data.interested_sub_category_id === loggedInUserId ? true : false;

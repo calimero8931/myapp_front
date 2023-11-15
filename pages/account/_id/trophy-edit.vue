@@ -4,8 +4,6 @@
       <h1 class="text-center mb-10">トロフィー申請</h1>
       <v-form ref="form">
         <p>当てはまるカテゴリと県を選んでください</p>
-        <!-- 国選択 -->
-        <!-- <v-select v-model="profile.selectedCountry" :items="countries" label="国を選択"></v-select> -->
         <div v-for="(category, i) in categoriesData" :key="`category-${i}`" class="mt-2">
           <v-btn color="appyellow" @click="fetchSubCategories(category.id),toggleButtonVisibility()" style="font-weight: bold; color: #000;" block>
             {{ category.name }}
@@ -47,23 +45,19 @@
           accept="image/*"
         ></v-file-input>
         <v-textarea v-model="profile.bio" label="紹介文"></v-textarea>
-        <!-- ウェブサイトリンク -->
         <v-text-field v-model="profile.website" label="ウェブサイトリンク"></v-text-field>
-
-
         <v-btn
-        :disabled="loading"
-        :loading="loading"
-        color="#25BC91"
-        @click="clickGetGeoButton()"
-        class="my-8"
-        block>
-        <v-icon>mdi-map-marker</v-icon>
-        現在の位置を取得して入力</v-btn>
+          :disabled="loading"
+          :loading="loading"
+          color="#25BC91"
+          @click="clickGetGeoButton()"
+          class="my-8"
+          block>
+          <v-icon>mdi-map-marker</v-icon>
+          現在の位置を取得して入力
+        </v-btn>
         <v-text-field v-model="profile.latitude" label="緯度を入力"></v-text-field>
         <v-text-field v-model="profile.longitude" label="経度を入力"></v-text-field>
-
-        <!-- 保存ボタン -->
         <v-btn color="primary" @click="saveProfile" class="black--text" block>申請</v-btn>
       </v-form>
     </div>
@@ -164,13 +158,11 @@ export default {
               user_id: this.$store.state.user.current.id
             }
           });
-          // console.log(response.message);
           this.profile.profile_image_url = response.file_url;
         } catch (error) {
           console.error(error.message);
         }
         } else {
-          // ファイルが選択されていないか、存在しない場合
           console.error('ファイルが選択されていません');
         }
     },
@@ -193,7 +185,6 @@ export default {
         );
         this.selectedCategoryId = categoryId;
         this.subCategoriesData = response;
-        // console.log("サブカテゴリの取得に成功しました", response);
       } catch (error) {
         console.error('サブカテゴリの取得に失敗しました', error);
       }
@@ -209,7 +200,6 @@ export default {
         );
         this.selectedSubCategoryId = subCategoryId;
         this.regionsData = response;
-        // console.log("地域の取得に成功しました", response);
       } catch (error) {
         console.error('地域の取得に失敗しました', error);
       }
@@ -225,29 +215,21 @@ export default {
         );
         this.selectedRegionId = regionId;
         this.prefecturesData = response;
-        // console.log("都道府県の取得に成功しました", response);
       } catch (error) {
         console.error('都道府県の取得に失敗しました', error);
       }
     },
     async selectPrefecture(prifectureId) {
       this.selectedPrefectureId = prifectureId;
-      // console.log("countryId:"+this.selectedCountry);
-      // console.log("selectedCategoryId:"+this.selectedCategoryId);
-      // console.log("selectedSubCategoryId:"+this.selectedSubCategoryId);
-      // console.log("selectedRegionId:"+this.selectedRegionId);
-      // console.log("selectedPrefectureId:"+this.selectedPrefectureId);
     },
     toggleButtonVisibility() {
       this.showButton = !this.showButton;
     },
     async saveProfile( $store ) {
-      // step1.画像のアップロード
       if (this.profile.profile_image) {
         const file = this.profile.profile_image;
         const formData = new FormData();
         formData.append('file', file);
-        // console.log("ファイル:"+this.profile.profile_image);
         try {
           const response = await this.$axios.$post(`/api/v1/trophy/uploads/`, formData, {
             headers: {
@@ -267,7 +249,6 @@ export default {
               prefecture_id: this.selectedPrefectureId,
             }
           });
-          // console.log(response.message);
           const msg = "トロフィーが申請されました";
           const color = 'success';
           const timeout = 4000;

@@ -52,13 +52,10 @@ export default {
       }
     },
     async confirmDeleteAccount() {
-      // ユーザーに確認メッセージを表示する
       if (confirm('本当にアカウントを削除しますか？')) {
-        // ユーザーが確認した場合、アカウントを削除
         await this.deleteAccount();
       } else {
-        // ユーザーがキャンセルした場合の処理
-        // 何もしないか、必要に応じて別のアクションを実行できます
+        return;
       }
     }
   }

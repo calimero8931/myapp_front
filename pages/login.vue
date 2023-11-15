@@ -82,7 +82,6 @@ export default {
     authSuccessful (response) {
       this.$auth.login(response)
       this.$router.push(this.redirectPath)
-      // 記憶ルートを初期値に戻す
       this.$store.dispatch('getRememberPath', this.loggedInHomePath)
     },
     authFailure ({ response }) {

@@ -21,7 +21,6 @@
             ></v-img>
           </nuxt-link>
           <v-card-title style="font-size: 16px; justify-content: center;">{{ item.title }}</v-card-title>
-          <!-- <v-card-text>{{ item.description }}</v-card-text> -->
           <v-btn :to="`/trophy/${item.id}`" color="primary" style="color:black; border-radius: 0 0 7px 7px;" block>
               詳細
             </v-btn>

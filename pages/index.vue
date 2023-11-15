@@ -126,7 +126,7 @@
 <script>
 import VParallax from 'vue-parallax';
 import axios from 'axios';
-import AppFooter from '../components/App/AppFooter.vue'
+import AppFooter from '../components/App/AppFooter.vue';
 
 export default {
   layout: 'default',
@@ -176,15 +176,13 @@ export default {
         const response = await this.$axios.$get(`/api/v1/recommend_request/`,
           {
             params: {
-              // user_id: this.$store.state.user.current.id
+              user_id: this.$store.state.user.current.id
             }
           }
         );
         this.recommendData = response;
       } catch (error) {
-        // console.error('リコメンドデータの取得に失敗しました', error);
         console.error(error.message);
-        // console.log("送ったid"+ this.$store.state.user.current.id);
       }
     } else {
       try {
@@ -197,9 +195,7 @@ export default {
         );
         this.recommendData = response;
       } catch (error) {
-        // console.error('リコメンドデータの取得に失敗しました', error);
         console.error(error.message);
-        // console.log("送ったid"+ this.$store.state.user.current.id);
       }
     }
   },
@@ -227,10 +223,8 @@ export default {
         );
         this.selectedCategoryId = categoryId;
         this.subCategoryData = response;
-        // console.log("サブカテゴリの取得に成功しました", response);
         this.loading = false;
       } catch (error) {
-        console.error('サブカテゴリの取得に失敗しました', error);
         this.loading = false;
       }
     },
@@ -247,7 +241,6 @@ export default {
         );
         this.selectedSubCategoryId = subCategoryId;
         this.regionsData = response;
-        // console.log("地域の取得に成功しました", response);
         this.loading = false;
       } catch (error) {
         console.error('地域の取得に失敗しました', error);
@@ -266,7 +259,6 @@ export default {
         );
         this.selectedRegionId = regionId;
         this.prefecturesData = response;
-        // console.log("都道府県の取得に成功しました", response);
         this.loading = false;
       } catch (error) {
         console.error('都道府県の取得に失敗しました', error);
@@ -285,7 +277,6 @@ export default {
         );
         this.selectedSubCategoryId = subCategoryId;
         this.trophies = response;
-        // console.log("トロフィーの取得に成功しました", response);
         this.loading = false;
       } catch (error) {
         console.error('データの取得に失敗しました', error);
