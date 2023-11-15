@@ -37,7 +37,7 @@
         >
           <div class="text-center text-body-2">
             &copy;{{ copyRightYear }}
-            <strong>{{ appName }}. All Rights Reserved.</strong>
+            <strong>Trophées. All Rights Reserved.</strong>
           </div>
         </v-col>
       </v-footer>
