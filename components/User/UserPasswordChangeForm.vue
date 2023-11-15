@@ -111,7 +111,7 @@ export default {
       const rules = this.setValidation ? [format] : [required]
       const hint = this.setValidation ? msg : undefined
       const placeholder = this.setValidation ? min : undefined
-      console.log(rules, hint, placeholder)
+      // console.log(rules, hint, placeholder)
       return { rules, hint, placeholder }
     },
     toggle () {

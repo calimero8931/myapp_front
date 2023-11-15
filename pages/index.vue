@@ -227,7 +227,7 @@ export default {
         );
         this.selectedCategoryId = categoryId;
         this.subCategoryData = response;
-        console.log("サブカテゴリの取得に成功しました", response);
+        // console.log("サブカテゴリの取得に成功しました", response);
         this.loading = false;
       } catch (error) {
         console.error('サブカテゴリの取得に失敗しました', error);
@@ -247,7 +247,7 @@ export default {
         );
         this.selectedSubCategoryId = subCategoryId;
         this.regionsData = response;
-        console.log("地域の取得に成功しました", response);
+        // console.log("地域の取得に成功しました", response);
         this.loading = false;
       } catch (error) {
         console.error('地域の取得に失敗しました', error);
@@ -266,7 +266,7 @@ export default {
         );
         this.selectedRegionId = regionId;
         this.prefecturesData = response;
-        console.log("都道府県の取得に成功しました", response);
+        // console.log("都道府県の取得に成功しました", response);
         this.loading = false;
       } catch (error) {
         console.error('都道府県の取得に失敗しました', error);
@@ -285,7 +285,7 @@ export default {
         );
         this.selectedSubCategoryId = subCategoryId;
         this.trophies = response;
-        console.log("トロフィーの取得に成功しました", response);
+        // console.log("トロフィーの取得に成功しました", response);
         this.loading = false;
       } catch (error) {
         console.error('データの取得に失敗しました', error);
