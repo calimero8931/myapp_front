@@ -138,7 +138,7 @@
         >
           <v-img
             src="how_to.png"
-            style="width: 100vw;"
+            style="width: 100vw; max-width: 650px;"
           ></v-img>
         </nuxt-link>
       </p>

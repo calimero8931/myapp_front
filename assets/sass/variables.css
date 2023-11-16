@@ -1,1 +1,105 @@
-/*# sourceMappingURL=variables.css.map */
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@800&family=Dela+Gothic+One&family=Pixelify+Sans&display=swap");
+body {
+  max-width: 650px !important;
+  margin: 0 auto !important;
+  background-color: #1B2440 !important;
+  color: #f6f6f4 !important;
+  text-decoration: none !important;
+  font-weight: 800 !important;
+}
+
+h1 {
+  font-size: 30px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  font-family: "Dela Gothic One", sans-serif !important;
+}
+
+.h1-span {
+  font-size: 20px !important;
+}
+
+h2 {
+  font-size: 30px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+  font-family: "Dela Gothic One", sans-serif !important;
+}
+
+.v-pagination .v-pagination__item.v-pagination__item--active.primary {
+  color: #1B2440 !important;
+}
+
+.v-card__title {
+  font-weight: 800 !important;
+}
+
+.v-text-truncate {
+  font-size: 12px !important;
+}
+
+.theme--dark.v-application {
+  background-color: #1B2440;
+  background: none !important;
+}
+
+.v-btn {
+  font-weight: 800 !important;
+  height: 40px !important;
+}
+
+.v-application .black {
+  background-color: #1B2440 !important;
+  background: none !important;
+}
+
+.container {
+  background-color: #1B2440 !important;
+  background: none !important;
+}
+
+.v-snack__wrapper.theme--dark.success--text {
+  background-color: rgba(39, 95, 74, 0.9);
+}
+
+.v-snack__wrapper.theme--dark.error--text {
+  background-color: rgba(95, 39, 39, 0.9);
+}
+
+.theme--dark.v-list {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme--dark.v-card {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.v-footer.v-sheet.theme--dark.v-footer--absolute.black {
+  padding-bottom: 50px !important;
+}
+
+.v-application .black {
+  background-color: #1B2440;
+  background: none !important;
+}
+
+.theme--dark.v-footer {
+  background-color: #1B2440;
+  background: none !important;
+}
+
+body h1 {
+  font-family: "Pixelify Sans", cursive;
+}
+
+.ellipsis {
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.theme--light .v-footer {
+  background-color: rgba(255, 255, 255, 0);
+}/*# sourceMappingURL=variables.css.map */

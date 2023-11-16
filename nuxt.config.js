@@ -62,12 +62,10 @@ export default {
         {
           path: '/results/:param1/:param2',
           component: resolve(__dirname, 'pages/results/_param1/_param2.vue')
-          // name: 'results'
         },
         {
           path: '/account/public-profile/:hush',
           component: resolve(__dirname, 'pages/account/_id/public-profile/_hash/_hash.vue'),
-          // name: 'public-profile-show'
         }
       );
     }
@@ -118,14 +116,11 @@ export default {
           success: '44D69E',
           warning: 'FEB65E',
           error: 'FB8678',
-          // background: 'f6f6f4',
           background: '332F2E',
           appblue: '1867c0',
           color: '112F2E',
         },
         dark: {
-        // background: '1B2440',
-        // background: '000000',
           primary: 'F3DF4C',
           info: '4FC1E9',
           appblue: '1B2440',
