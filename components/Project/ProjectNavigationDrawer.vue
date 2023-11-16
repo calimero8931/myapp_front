@@ -103,6 +103,7 @@ export default {
       // アドミンのみトロフィー作成メニューを追加
       if (this.check_admin) {
         dynamicMenus.push({ name: 'account-id-trophy-edit', icon: 'mdi-application-edit-outline' });
+        dynamicMenus.push({ name: 'account-id-trophy-list', icon: 'mdi-application-edit-outline' });
       }
 
       // dynamicMenusをnavMenusに代入

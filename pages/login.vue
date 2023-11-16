@@ -56,8 +56,8 @@ export default {
       loading: false,
       params: {
         auth: {
-          email: '',
-          password: ''
+          email: 'hello.potechi@gmail.com',
+          password: 'password'
         }
       },
       redirectPath: $store.state.loggedIn.rememberPath,

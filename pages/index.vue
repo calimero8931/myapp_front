@@ -143,10 +143,6 @@
         </nuxt-link>
       </p>
       <v-dialog v-model="isDesktop" width="500">
-        <template v-slot:activator="{ props }">
-          <v-btn v-bind="props" text="Open Dialog"> </v-btn>
-        </template>
-
         <template v-slot:default="{ props }">
           <v-card title="Dialog">
             <h3 class="text-center pt-8 pb-4">notice</h3>
