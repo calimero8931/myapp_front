@@ -142,6 +142,21 @@
           ></v-img>
         </nuxt-link>
       </p>
+      <v-dialog v-model="isDesktop" width="500">
+        <template v-slot:activator="{ props }">
+          <v-btn v-bind="props" text="Open Dialog"> </v-btn>
+        </template>
+
+        <template v-slot:default="{ props }">
+          <v-card title="Dialog">
+            <h3 class="text-center pt-8 pb-4">notice</h3>
+            <v-card-text>
+              このwebアプリはGPSを使う特性上、スマートフォンでのご利用を推奨しております。<br>
+              デザインもスマートフォン向けに最適化しておりますので、ぜひスマートフォンでご利用ください。
+            </v-card-text>
+          </v-card>
+        </template>
+      </v-dialog>
       <app-footer />
     </v-parallax>
   </v-app>
@@ -184,6 +199,8 @@ export default {
       trophies: [],
       showButton: false,
       newTrophyData: [],
+      isDesktop: false,
+      isDialogOpen: false,
       imageUrl: 'parallax.png',
       category_image: [
         "AdobeStock_273329877.jpeg",
@@ -194,6 +211,7 @@ export default {
   },
   mounted() {
     this.fetchCategories();
+    this.isDesktop = window.innerWidth > 768;
   },
   async created( $store ) {
     try {
@@ -329,5 +347,15 @@ export default {
 
   v-spacer {
     height: 20px;
+  }
+
+  .v-dialog.v-dialog--active {
+    z-index: 10000;
+    background-color: #1B2440!important;
+  }
+
+  .v-dialog.v-dialog--active .v-card__text {
+    color: #fff!important;
+    padding: 0 30px 30px 30px;
   }
 </style>
