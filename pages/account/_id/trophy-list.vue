@@ -90,13 +90,13 @@ export default {
     deleteTrophy(id) {
       if (confirm('本当に削除しますか？')) {
         try {
-          const response = this.$axios.$post(`/api/v1/delete_trophy/`, {
+          const response = this.$axios.$get(`/api/v1/delete_trophy/`, {
             params: {
               trophy_id: id,
             },
           });
           alert('削除しました');
-          this.$router.go();
+          // this.$router.go();
         } catch (error) {
           alert(error.message);
         }
