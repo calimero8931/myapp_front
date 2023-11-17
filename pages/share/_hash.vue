@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2>Share Page</h2>
+    <h2 class="text-center mb-4">Share Page</h2>
     <p v-if="img_url" class="text-center">
       <v-avatar size="150">
         <v-img :src="img_url" alt="プロフィール画像"></v-img>
