@@ -256,10 +256,17 @@ export default {
           this.formReset();
         } catch (error) {
           console.error(error.message);
+          const msg = error.message;
+          const color = 'error';
+          const timeout = 8000;
+          this.$store.dispatch('getToast', { msg, color, timeout });
         }
-        } else {
-          console.error('ファイルが選択されていません');
-        }
+      } else {
+        const msg = "画像が選択されていません";
+        const color = 'error';
+        const timeout = 4000;
+        this.$store.dispatch('getToast', { msg, color, timeout });
+      }
     },
     formReset () {
       this.$refs.form.reset()
