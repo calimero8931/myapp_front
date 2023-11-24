@@ -96,7 +96,7 @@ export default {
             },
           });
           alert('削除しました');
-          this.$router.go();
+          // this.$router.go();
         } catch (error) {
           alert(error.message);
         }

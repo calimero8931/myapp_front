@@ -1,7 +1,6 @@
 
 <template>
   <v-container>
-
     <h1 class="my-4">Trophées(トロフェ)<br>ってなに？</h1>
     <p>
       トロフェは、今まであなたが訪れた場所を記録してトロフィーとして残すことができます。<br>

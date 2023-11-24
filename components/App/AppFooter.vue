@@ -37,7 +37,8 @@
         >
           <div class="text-center text-body-2">
             &copy;{{ copyRightYear }}
-            <strong>Trophées. All Rights Reserved.</strong>
+            <strong>Trophées. All Rights Reserved.</strong><br>
+            <span class="red-text">現在はデモンストレーションモードです。</span>
           </div>
         </v-col>
       </v-footer>
