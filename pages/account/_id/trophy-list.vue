@@ -95,8 +95,13 @@ export default {
               trophy_id: id,
             },
           });
-          alert('削除しました');
-          // this.$router.go();
+          const msg = "削除しました。リロードします。";
+          const color = 'success';
+          const timeout = 4000;
+          this.$store.dispatch('getToast', { msg, color, timeout });
+          setTimeout(() => {
+          this.$router.go();
+          }, 4000);
         } catch (error) {
           alert(error.message);
         }
