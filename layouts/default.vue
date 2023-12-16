@@ -29,6 +29,7 @@ export default {
     }
   }
 }
+
 </script>
 <style>
 .v-application .display-1 {

@@ -142,14 +142,22 @@
           ></v-img>
         </nuxt-link>
       </p>
-      <v-dialog v-model="isDesktop" width="500">
+      <v-dialog v-model="isDesktop" width="500" rounded>
         <template v-slot:default="{ props }">
           <v-card title="Dialog">
-            <h3 class="text-center pt-8 pb-4">notice</h3>
+            <h3
+            class="text-center pt-6 pb-4"
+            style="font-weight: bold; font-size: 28px;"
+            >notice</h3>
             <v-card-text>
-              このwebアプリはGPSを使う特性上、スマートフォンでのご利用を推奨しております。<br>
+              このwebアプリはGPSを使う特性上、スマートフォンでのみご利用できます。<br>
               デザインもスマートフォン向けに最適化しておりますので、ぜひスマートフォンでご利用ください。
             </v-card-text>
+            <v-btn
+              id="close_btn"
+              color="error"
+              @click="closeDialog"
+              block>閉じる</v-btn>
           </v-card>
         </template>
       </v-dialog>
@@ -311,6 +319,9 @@ export default {
       this.selectedRegionId = null;
       this.selectedPrefectureId = null;
     },
+    closeDialog(){
+      this.isDesktop = false;
+    }
   }
 }
 </script>
